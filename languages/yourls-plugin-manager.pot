@@ -1,0 +1,186 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: YOURLS Plugin Manager\n"
+"POT-Creation-Date: 2025-05-26\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: yourls__\n"
+"X-Poedit-SearchPath-0: plugin.php\n"
+
+#: plugin.php:22
+msgid "Plugin Manager"
+msgstr ""
+
+#: plugin.php:181
+msgid "GitHub token saved successfully."
+msgstr ""
+
+#: plugin.php:187
+msgid "GitHub token deleted. You are now using unauthenticated API requests."
+msgstr ""
+
+#: plugin.php:202
+msgid "Plugin deleted successfully."
+msgstr ""
+
+#: plugin.php:203
+msgid "Failed to delete plugin."
+msgstr ""
+
+#: plugin.php:208
+msgid "YOURLS Plugin Manager"
+msgstr ""
+
+#: plugin.php:209
+msgid "Version: "
+msgstr ""
+
+#: plugin.php:219
+msgid "GitHub Repository URL:"
+msgstr ""
+
+#: plugin.php:222
+msgid "Download and Install Plugin"
+msgstr ""
+
+#: plugin.php:230
+msgid "GitHub Personal Access Token (optional):"
+msgstr ""
+
+#: plugin.php:238
+msgid "By default, GitHub allows 60 unauthenticated API requests per hour per IP."
+msgstr ""
+
+#: plugin.php:239
+msgid "With a personal access token, this limit increases to 5,000 requests per hour."
+msgstr ""
+
+#: plugin.php:240
+msgid "To generate a token, visit your GitHub account settings:"
+msgstr ""
+
+#: plugin.php:242
+msgid "Create a new GitHub token"
+msgstr ""
+
+#: plugin.php:243
+msgid "No scopes are required – you can leave all permissions unchecked."
+msgstr ""
+
+#: plugin.php:250
+msgid "Delete Token"
+msgstr ""
+
+#: plugin.php:251
+msgid "Edit Token"
+msgstr ""
+
+#: plugin.php:253
+msgid "Save Token"
+msgstr ""
+
+#: plugin.php:269
+msgid "Installed Plugins"
+msgstr ""
+
+#: plugin.php:307
+msgid "Unknown Plugin"
+msgstr ""
+
+#: plugin.php:310
+msgid "Unknown Author"
+msgstr ""
+
+#: plugin.php:313
+msgid "Unknown Version"
+msgstr ""
+
+#: plugin.php:332
+msgid "Plugin Name"
+msgstr ""
+
+#: plugin.php:333
+msgid "Author"
+msgstr ""
+
+#: plugin.php:334
+msgid "Version"
+msgstr ""
+
+#: plugin.php:335
+msgid "Last Updated"
+msgstr ""
+
+#: plugin.php:336
+msgid "Status"
+msgstr ""
+
+#: plugin.php:337
+msgid "Actions"
+msgstr ""
+
+#: plugin.php:352
+msgid "Today"
+msgstr ""
+
+#: plugin.php:358
+msgid "Installed by default"
+msgstr ""
+
+#: plugin.php:360
+msgid "Never"
+msgstr ""
+
+#: plugin.php:372
+msgid "Active"
+msgstr ""
+
+#: plugin.php:373
+msgid "Inactive"
+msgstr ""
+
+#: plugin.php:381 plugin.php:383 plugin.php:385
+msgid "Delete"
+msgstr ""
+
+#: plugin.php:383
+msgid "This plugin is active and cannot be deleted."
+msgstr ""
+
+#: plugin.php:385
+msgid "Are you sure you want to delete this plugin?"
+msgstr ""
+
+#: plugin.php:412
+msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
+msgstr ""
+
+#: plugin.php:419
+msgid "Invalid GitHub URL."
+msgstr ""
+
+#: plugin.php:435
+msgid "Could not fetch any release or tag from GitHub."
+msgstr ""
+
+#: plugin.php:446
+msgid "Download failed."
+msgstr ""
+
+#: plugin.php:460
+msgid "Extraction failed: unable to open ZIP archive."
+msgstr ""
+
+#: plugin.php:510
+msgid "plugin.php not found in final plugin directory."
+msgstr ""
+
+#: plugin.php:520
+msgid "plugin.php does not contain a valid YOURLS plugin header."
+msgstr ""
+
+#: plugin.php:528
+msgid "Plugin installed or updated successfully."
+msgstr ""
