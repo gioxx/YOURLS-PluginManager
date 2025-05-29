@@ -48,7 +48,7 @@ To increase the limit to **5000 req/hour**, use a **[GitHub Personal Access Toke
 
 ---
 
-## 📘 Localization
+## 🌐 Localization
 
 - English (`en_US`) — default
 - Italian (`it_IT`) — included  
@@ -67,7 +67,38 @@ The plugin will automatically fetch the latest release or fallback to the latest
 
 ---
 
-## ⚠️ License
+## 🧩 Plugin Compatibility
+
+To make your YOURLS plugin compatible with **Plugin Manager**, follow these simple guidelines:
+
+### ✔️ What to do
+
+- **Create a release** on your GitHub repository.  
+  This will generate a `.zip` package that Plugin Manager can detect and download.
+- Ensure your `plugin.php` file is:
+  - in the **root** of the ZIP, **or**
+  - in a **single subfolder** along with the rest of your plugin files.
+
+### ❌ What to avoid
+
+- Do not leave your repository in a flat layout without a release:  
+  in this case, Plugin Manager will **not find any installable content**.
+- Avoid deeply nested folders like `your-plugin/another-folder/plugin.php`.
+
+### 📦 Example structure
+
+```text
+your-plugin/
+├── plugin.php
+├── readme.md
+└── ...
+```
+
+Then publish a release starting with the link: https://github.com/tuo-utente/tuo-plugin/releases/new (replace your-user and your-plugin with the correct informations).
+
+---
+
+## 📄 License
 
 This plugin is licensed under the [MIT License](LICENSE).  
 It uses only native PHP features — no bundled third-party code or copyleft libraries.
@@ -76,12 +107,11 @@ It uses only native PHP features — no bundled third-party code or copyleft lib
 
 ## 💬 About
 
-Lovingly developed by the usually-on-vacation brain cell of [Gioxx](https://github.com/gioxx).  
-Visit [gioxx.org](https://gioxx.org) for blog posts, tech, and other things.
+Lovingly developed by the usually-on-vacation brain cell of [Gioxx](https://github.com/gioxx), using ChatGPT to speed up some of the development and correct some rubbish.  
 
 ---
 
-## 🙌 Contributing
+## 🤝 Contributing
 
 Pull requests and feature suggestions are welcome.  
 If you find bugs or have feature requests, [open an issue](https://github.com/gioxx/YOURLS-PluginManager/issues).  
