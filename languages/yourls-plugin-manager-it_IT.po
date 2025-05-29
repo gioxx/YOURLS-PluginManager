@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YOURLS Plugin Manager\n"
 "POT-Creation-Date: 2025-05-26 16:15+0200\n"
-"PO-Revision-Date: 2025-05-26 16:21+0200\n"
+"PO-Revision-Date: 2025-05-29 10:02+0200\n"
 "Last-Translator: Giovanni Solone <giovanni@solone.it>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -127,8 +127,8 @@ msgid "Actions"
 msgstr "Azioni"
 
 #: plugin.php:352
-msgid "Today"
-msgstr "Oggi"
+msgid "Updated recently"
+msgstr "Aggiornato di recente"
 
 #: plugin.php:358
 msgid "Installed by default"

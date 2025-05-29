@@ -3,7 +3,7 @@
 Plugin Name: YOURLS Plugin Manager
 Plugin URI: https://github.com/gioxx/YOURLS-PluginManager
 Description: Download and install plugins from GitHub repositories directly from the YOURLS admin interface.
-Version: 1.0.11
+Version: 1.0.12
 Author: Gioxx
 Author URI: https://gioxx.org
 Text Domain: yourls-plugin-manager
@@ -12,7 +12,7 @@ Domain Path: /languages
 
 if ( !defined( 'YOURLS_ABSPATH' ) ) die();
 
-define( 'YPM_VERSION', '1.0.11' );
+define( 'YPM_VERSION', '1.0.12' );
 
 // Hook: register admin page
 yourls_add_action('plugins_loaded', 'ypm_register_plugin_page');
@@ -349,7 +349,7 @@ function ypm_render_plugin_page() {
             $formatted = date('Y-m-d H:i', $last_updated_ts);
 
             if (($now - $last_updated_ts) <= $recent_threshold) {
-                $plugin['last_updated'] = '<span title="' . $formatted . '">🆕 ' . yourls__('Today', 'yourls-plugin-manager') . '</span>';
+                $plugin['last_updated'] = '<span title="' . $formatted . '">🆕 ' . yourls__('Updated recently', 'yourls-plugin-manager') . '</span>';
             } else {
                 $plugin['last_updated'] = $formatted;
             }
@@ -411,7 +411,7 @@ function ypm_process_github_url($url) {
             'success' => false,
             'message' => yourls__('ZIP extraction requires the PHP ZipArchive extension, which is not available on this server.', 'yourls-plugin-manager')
         ];
-    }    
+    }
 
     // Validate GitHub URL format
     $url = rtrim($url, '/');
@@ -421,6 +421,15 @@ function ypm_process_github_url($url) {
 
     $owner = $m[1];
     $repo = $m[2];
+
+    // Check if the plugin is already installed and active, and if so, deactivate it before update it
+    $active_plugins = yourls_get_option('active_plugins');
+    $plugin_basename = $repo . '/plugin.php';
+    $was_active = in_array($plugin_basename, $active_plugins);
+    if ($was_active) {
+        $active_plugins = array_filter($active_plugins, fn($p) => $p !== $plugin_basename);
+        yourls_update_option('active_plugins', array_values($active_plugins));
+    }
 
     // Try to get latest release
     $api_url = "https://api.github.com/repos/$owner/$repo/releases/latest";
@@ -477,7 +486,7 @@ function ypm_process_github_url($url) {
                 if (is_dir($target_dir)) {
                     ypm_delete_dir($target_dir);
                 }
-                rename($extracted, $target_dir);                
+                rename($extracted, $target_dir);
             }
         } else {
             // 2. Otherwise look for subfolders with plugin.php inside
@@ -492,7 +501,7 @@ function ypm_process_github_url($url) {
                             ypm_delete_dir($target_dir);
                         }
                         rename($dir, $target_dir);
-                        ypm_delete_dir($extracted);                        
+                        ypm_delete_dir($extracted);
                         break;
                     }
                 }
@@ -522,6 +531,15 @@ function ypm_process_github_url($url) {
     }
 
     yourls_update_option('ypm_last_updated_' . $repo, time());
+
+    // Re-enable plugin if it was previously active
+    if ($was_active) {
+        $active_plugins = yourls_get_option('active_plugins');
+        if (!in_array($plugin_basename, $active_plugins)) {
+            $active_plugins[] = $plugin_basename;
+            yourls_update_option('active_plugins', array_values($active_plugins));
+        }
+    }
 
     return [
         'success' => true,

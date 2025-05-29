@@ -48,7 +48,7 @@ Per aumentare il limite a **5.000 richieste/ora**, puoi usare un **[token person
 
 ---
 
-## 📘 Localizzazione
+## 🌐 Localizzazione
 
 - Inglese (`en_US`) — predefinito
 - Italiano (`it_IT`) — incluso  
@@ -67,7 +67,38 @@ Il plugin cercherà automaticamente l’ultima release o, se assente, il tag pi�
 
 ---
 
-## ⚠️ Licenza
+## 🧩 Compatibilità dei plugin
+
+Per rendere il tuo plugin YOURLS compatibile con **Plugin Manager**, segui queste semplici indicazioni:
+
+### ✔️ Cosa fare
+
+- **Crea una release** nel repository GitHub del tuo plugin.  
+  In questo modo verrà generato un pacchetto `.zip` che Plugin Manager potrà rilevare e installare.
+- Assicurati che il file `plugin.php` sia:
+  - nella **root** dell’archivio ZIP, **oppure**
+  - in **una sola sottocartella** insieme agli altri file del plugin.
+
+### ❌ Cosa evitare
+
+- Non lasciare il repository in formato *flat* senza una release:  
+  in tal caso, Plugin Manager **non troverà alcun contenuto installabile**.
+- Evita strutture annidate come `tuo-plugin/cartella/plugin.php`.
+
+### 📦 Struttura corretta
+
+```text
+tuo-plugin/
+├── plugin.php
+├── readme.md
+└── ...
+```
+
+Poi pubblica una release partendo dal link: https://github.com/tuo-utente/tuo-plugin/releases/new (sostituisci tuo-utente e tuo-plugin con i dati corretti).
+
+---
+
+## 📄 Licenza
 
 Questo plugin è distribuito con licenza [MIT](LICENSE).  
 Utilizza solo funzionalità native PHP — nessuna libreria copyleft o esterna inclusa.
@@ -76,12 +107,11 @@ Utilizza solo funzionalità native PHP — nessuna libreria copyleft o esterna i
 
 ## 💬 Info
 
-Sviluppato con ❤️ dal neurone solitamente in ferie di [Gioxx](https://github.com/gioxx).  
-Visita [gioxx.org](https://gioxx.org) per articoli, tecnologia e altro ancora.
+Sviluppato con ❤️ dal neurone solitamente in ferie di [Gioxx](https://github.com/gioxx), utilizzando anche ChatGPT per velocizzare parte dello sviluppo e correggere alcune baggianate.
 
 ---
 
-## 🙌 Contribuisci
+## 🤝 Contribuisci
 
 Pull request e suggerimenti sono benvenuti.  
 Se trovi bug o hai richieste di funzionalità, [apri una issue](https://github.com/gioxx/YOURLS-PluginManager/issues).  
