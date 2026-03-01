@@ -286,3 +286,31 @@ function ypm_asset_url($relative_path) {
 
     return '';
 }
+
+function ypm_filter_admin_view_per_page($default_per_page) {
+    $custom_per_page = (int) yourls_get_option('ypm_admin_view_per_page');
+    if ($custom_per_page > 0) {
+        return $custom_per_page;
+    }
+
+    return $default_per_page;
+}
+
+function ypm_sort_admin_plugin_sublinks($admin_sublinks) {
+    if (!is_array($admin_sublinks) || !isset($admin_sublinks['plugins']) || !is_array($admin_sublinks['plugins'])) {
+        return $admin_sublinks;
+    }
+
+    $plugin_sublinks = $admin_sublinks['plugins'];
+    uasort($plugin_sublinks, 'ypm_compare_admin_plugin_sublinks');
+    $admin_sublinks['plugins'] = $plugin_sublinks;
+
+    return $admin_sublinks;
+}
+
+function ypm_compare_admin_plugin_sublinks($a, $b) {
+    $anchor_a = isset($a['anchor']) ? trim((string) $a['anchor']) : '';
+    $anchor_b = isset($b['anchor']) ? trim((string) $b['anchor']) : '';
+
+    return strcasecmp($anchor_a, $anchor_b);
+}

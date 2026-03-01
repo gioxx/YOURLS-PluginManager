@@ -113,8 +113,8 @@ msgstr "Token personale GitHub (facoltativo):"
 msgid "GitHub Repository URL:"
 msgstr "URL del repository GitHub:"
 
-msgid "GitHub token"
-msgstr "Token GitHub"
+msgid "Settings"
+msgstr "Impostazioni"
 
 msgid "GitHub token deleted. You are now using unauthenticated API requests."
 msgstr "Token GitHub eliminato. Le richieste API saranno ora non autenticate."
@@ -161,6 +161,9 @@ msgstr "Ultimo controllo manuale:"
 msgid "Last Updated"
 msgstr "Ultimo aggiornamento"
 
+msgid "Manage"
+msgstr "Gestisci"
+
 msgid "Never"
 msgstr "Mai"
 
@@ -200,8 +203,8 @@ msgstr "Note"
 msgid "Plugin installed or updated successfully."
 msgstr "Plugin installato o aggiornato correttamente."
 
-msgid "Plugin Manager"
-msgstr "Plugin Manager"
+msgid "Advanced Plugin Manager"
+msgstr "Advanced Plugin Manager"
 
 msgid "Plugin Name"
 msgstr "Nome Plugin"
@@ -269,8 +272,41 @@ msgstr "Aggiornato di recente"
 msgid "Version"
 msgstr "Versione"
 
-msgid "YOURLS Plugin Manager"
-msgstr "YOURLS Plugin Manager"
+msgid "YOURLS Advanced Plugin Manager"
+msgstr "YOURLS Advanced Plugin Manager"
 
 msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
 msgstr "L'estrazione dello ZIP richiede l'estensione PHP ZipArchive, che non è disponibile su questo server."
+
+msgid "Based on the snippet shared by ozh in YOURLS issue #2339."
+msgstr "Basato sullo snippet condiviso da ozh nel ticket YOURLS #2339."
+
+msgid "Custom links-per-page value removed. YOURLS default is now active."
+msgstr "Valore personalizzato link per pagina rimosso. Ora è attivo il valore predefinito di YOURLS."
+
+msgid "Custom links-per-page value saved."
+msgstr "Valore personalizzato link per pagina salvato."
+
+msgid "Leave this field empty to use the YOURLS default value."
+msgstr "Lascia questo campo vuoto per usare il valore predefinito di YOURLS."
+
+msgid "Links displayed per page in YOURLS admin:"
+msgstr "Link mostrati per pagina nell'admin di YOURLS:"
+
+msgid "Links-per-page must be an integer between 1 and 999."
+msgstr "Il valore link per pagina deve essere un numero intero tra 1 e 999."
+
+msgid "The plugin \"Custom number of displayed links\" appears to be installed. You can deactivate and delete it, because this feature is now built into Plugin Manager."
+msgstr "Sembra installato il plugin \"Custom number of displayed links\". Puoi disattivarlo ed eliminarlo, perché questa funzione è ora integrata in Plugin Manager."
+
+msgid "No updates currently available. Run \"Check updates now\" first."
+msgstr "Nessun aggiornamento disponibile al momento. Esegui prima \"Controlla aggiornamenti ora\"."
+
+msgid "Save links-per-page"
+msgstr "Salva link per pagina"
+
+msgid "Update all available (%d)"
+msgstr "Aggiorna tutti i disponibili (%d)"
+
+msgid "YOURLS default"
+msgstr "Predefinito YOURLS"

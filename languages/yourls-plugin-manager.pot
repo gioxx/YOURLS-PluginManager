@@ -141,8 +141,8 @@ msgstr ""
 msgid "GitHub Repository URL:"
 msgstr ""
 
-#: inc/admin-page.php:272
-msgid "GitHub token"
+#: inc/admin-page.php:371
+msgid "Settings"
 msgstr ""
 
 #: inc/admin-page.php:77
@@ -206,6 +206,10 @@ msgid "Last Updated"
 msgstr ""
 
 #: inc/admin-page.php:409
+msgid "Manage"
+msgstr ""
+
+#: inc/admin-page.php:409
 msgid "Never"
 msgstr ""
 
@@ -258,7 +262,7 @@ msgid "Plugin installed or updated successfully."
 msgstr ""
 
 #: inc/admin-page.php:8
-msgid "Plugin Manager"
+msgid "Advanced Plugin Manager"
 msgstr ""
 
 #: inc/admin-page.php:383
@@ -350,9 +354,53 @@ msgid "Version"
 msgstr ""
 
 #: inc/admin-page.php:200
-msgid "YOURLS Plugin Manager"
+msgid "YOURLS Advanced Plugin Manager"
 msgstr ""
 
 #: inc/installer.php:7
 msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
+msgstr ""
+
+#: inc/admin-page.php:355
+msgid "Based on the snippet shared by ozh in YOURLS issue #2339."
+msgstr ""
+
+#: inc/admin-page.php:98
+msgid "Custom links-per-page value removed. YOURLS default is now active."
+msgstr ""
+
+#: inc/admin-page.php:101
+msgid "Custom links-per-page value saved."
+msgstr ""
+
+#: inc/admin-page.php:354
+msgid "Leave this field empty to use the YOURLS default value."
+msgstr ""
+
+#: inc/admin-page.php:353
+msgid "Links displayed per page in YOURLS admin:"
+msgstr ""
+
+#: inc/admin-page.php:103
+msgid "Links-per-page must be an integer between 1 and 999."
+msgstr ""
+
+#: inc/admin-page.php:376
+msgid "The plugin \"Custom number of displayed links\" appears to be installed. You can deactivate and delete it, because this feature is now built into Plugin Manager."
+msgstr ""
+
+#: inc/admin-page.php:383
+msgid "No updates currently available. Run \"Check updates now\" first."
+msgstr ""
+
+#: inc/admin-page.php:358
+msgid "Save links-per-page"
+msgstr ""
+
+#: inc/admin-page.php:381
+msgid "Update all available (%d)"
+msgstr ""
+
+#: inc/admin-page.php:355
+msgid "YOURLS default"
 msgstr ""
