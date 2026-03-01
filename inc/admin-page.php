@@ -5,7 +5,7 @@ yourls_add_action('plugins_loaded', 'ypm_register_plugin_page');
 function ypm_register_plugin_page() {
     yourls_register_plugin_page(
         'plugin_manager',
-        yourls__('Plugin Manager', 'yourls-plugin-manager'),
+        yourls__('Advanced Plugin Manager', 'yourls-plugin-manager'),
         'ypm_render_plugin_page'
     );
 }
@@ -89,6 +89,20 @@ function ypm_render_plugin_page() {
 
     if (isset($_POST['ypm_edit_token']) && yourls_verify_nonce('ypm_save_token')) {
         $force_edit_token = true;
+    }
+
+    if (isset($_POST['ypm_save_links_per_page']) && yourls_verify_nonce('ypm_save_links_per_page')) {
+        $raw_links_per_page = trim((string) ($_POST['ypm_links_per_page'] ?? ''));
+        if ($raw_links_per_page === '') {
+            yourls_delete_option('ypm_admin_view_per_page');
+            $result = ['success' => true, 'message' => yourls__('Custom links-per-page value removed. YOURLS default is now active.', 'yourls-plugin-manager')];
+        } elseif (ctype_digit($raw_links_per_page) && (int) $raw_links_per_page >= 1 && (int) $raw_links_per_page <= 999) {
+            yourls_update_option('ypm_admin_view_per_page', (int) $raw_links_per_page);
+            $result = ['success' => true, 'message' => yourls__('Custom links-per-page value saved.', 'yourls-plugin-manager')];
+        } else {
+            $result = ['success' => false, 'message' => yourls__('Links-per-page must be an integer between 1 and 999.', 'yourls-plugin-manager')];
+        }
+        $message = $result['message'];
     }
 
     if (isset($_POST['ypm_delete_plugin']) && yourls_verify_nonce('ypm_delete_plugin')) {
@@ -234,7 +248,7 @@ function ypm_render_plugin_page() {
     }
 
     echo '<div class="plugin-header">';
-    echo '<h2 class="plugin-title">🔌 ' . yourls__('YOURLS Plugin Manager', 'yourls-plugin-manager') . '</h2>';
+    echo '<h2 class="plugin-title">🔌 ' . yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</h2>';
     echo '<p class="plugin-version">' . yourls__('Version: ' . YPM_VERSION, 'yourls-plugin-manager') . '</p>';
     echo '</div>';
 
@@ -244,9 +258,36 @@ function ypm_render_plugin_page() {
 
     $installed_slugs = ypm_get_installed_plugin_slugs();
     ypm_auto_associate_repo_bindings($installed_slugs);
+    $update_statuses = ypm_get_update_statuses();
+    $available_updates_count = 0;
+    foreach ($installed_slugs as $installed_slug) {
+        if (
+            isset($update_statuses[$installed_slug]['status'])
+            && $update_statuses[$installed_slug]['status'] === 'update_available'
+        ) {
+            $available_updates_count++;
+        }
+    }
     $active_plugins = yourls_get_option('active_plugins');
     if (!is_array($active_plugins)) {
         $active_plugins = [];
+    }
+    $legacy_display_links_plugin_installed = false;
+    foreach ($installed_slugs as $installed_slug) {
+        $normalized_slug = basename((string) $installed_slug);
+        if ($normalized_slug === 'display-links' || $normalized_slug === 'custom-number-of-displayed-links') {
+            $legacy_display_links_plugin_installed = true;
+            break;
+        }
+        $legacy_plugin_file = ypm_get_header_plugin_file_for_slug($normalized_slug, $active_plugins);
+        if ($legacy_plugin_file === '') {
+            continue;
+        }
+        $legacy_plugin_name = strtolower(trim((string) ypm_get_plugin_header_value_from_file($legacy_plugin_file, 'Plugin Name')));
+        if ($legacy_plugin_name === 'custom number of displayed links') {
+            $legacy_display_links_plugin_installed = true;
+            break;
+        }
     }
     $active_installed_count = 0;
     foreach ($installed_slugs as $installed_slug) {
@@ -268,11 +309,13 @@ function ypm_render_plugin_page() {
     $next_auto_check_ts = $last_auto_check > 0 ? ($last_auto_check + 86400) : (time() + 86400);
     $next_auto_check_label = ypm_format_datetime($next_auto_check_ts);
     $stored_token = yourls_get_option('ypm_github_token');
+    $stored_links_per_page = (int) yourls_get_option('ypm_admin_view_per_page');
     $has_token = !empty($stored_token);
     $token_box_visible = $force_edit_token
         || isset($_POST['ypm_save_token_submit'])
         || isset($_POST['ypm_delete_token'])
-        || isset($_POST['ypm_edit_token']);
+        || isset($_POST['ypm_edit_token'])
+        || isset($_POST['ypm_save_links_per_page']);
 
     $drawer_is_token = $token_box_visible;
     echo '<div class="ypm-drawer ' . ($drawer_is_token ? 'is-token-open' : 'is-main-open') . '" id="ypm-main-drawer">';
@@ -308,8 +351,10 @@ function ypm_render_plugin_page() {
         . yourls__('Create a new GitHub token', 'yourls-plugin-manager') . '</a>. '
         . yourls__('No scopes are required – you can leave all permissions unchecked.', 'yourls-plugin-manager')
         . '</small>';
+    echo '<div class="ypm-token-input-row">';
     echo '<input type="password" name="ypm_github_token" id="ypm_github_token" class="ypm-token-input" value="' . yourls_esc_attr($stored_token) . '" ' . ($has_token && !$force_edit_token ? 'readonly' : '') . ' />';
     echo '<button type="button" class="button ypm-token-toggle ypm-token-visibility-toggle">👁</button>';
+    echo '</div>';
     echo '</div>';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_save_token') . '" />';
     if ($has_token) {
@@ -320,12 +365,33 @@ function ypm_render_plugin_page() {
     }
     echo '</form>';
     echo '</div>';
+
+    echo '<div class="form-section">';
+    echo '<form method="post" id="ypm-links-per-page-form">';
+    echo '<div class="form-row">';
+    echo '<label for="ypm_links_per_page"><strong>' . yourls__('Links displayed per page in YOURLS admin:', 'yourls-plugin-manager') . '</strong></label>';
+    echo '<small class="ypm-help-text ypm-help-token">' . yourls__('Leave this field empty to use the YOURLS default value.', 'yourls-plugin-manager') . '</small>';
+    if ($legacy_display_links_plugin_installed) {
+        echo '<small class="ypm-help-text ypm-help-token ypm-settings-alert">'
+            . '<span class="ypm-settings-alert-icon" aria-hidden="true">⚠️</span> '
+            . yourls__('The plugin "Custom number of displayed links" appears to be installed. You can deactivate and delete it, because this feature is now built into Plugin Manager.', 'yourls-plugin-manager')
+            . '</small>';
+    }
+    echo '<input type="number" name="ypm_links_per_page" id="ypm_links_per_page" class="ypm-token-input" min="1" max="999" step="1" value="' . ($stored_links_per_page > 0 ? (int) $stored_links_per_page : '') . '" placeholder="' . yourls_esc_attr(yourls__('YOURLS default', 'yourls-plugin-manager')) . '" />';
+    echo '</div>';
+    echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_save_links_per_page') . '" />';
+    echo '<input type="submit" name="ypm_save_links_per_page" value="💾 ' . yourls__('Save links-per-page', 'yourls-plugin-manager') . '" class="button button-primary" />';
+    echo '<small class="ypm-help-text ypm-help-token"><a href="https://github.com/YOURLS/YOURLS/issues/2339#issuecomment-352127623" target="_blank" rel="noopener noreferrer">'
+        . yourls__('Based on the snippet shared by ozh in YOURLS issue #2339.', 'yourls-plugin-manager')
+        . '</a></small>';
+    echo '</form>';
+    echo '</div>';
     echo '</div>';
 
     echo '</div>';
     echo '</div>';
     echo '<button type="button" class="ypm-drawer-toggle ypm-drawer-toggle-token ypm-drawer-panel-toggle ' . ($drawer_is_token ? 'is-active' : '') . '" id="ypm-main-drawer-toggle-token" data-panel="token" aria-expanded="' . ($drawer_is_token ? 'true' : 'false') . '">';
-    echo yourls__('GitHub token', 'yourls-plugin-manager');
+    echo yourls__('Settings', 'yourls-plugin-manager');
     echo '</button>';
     echo '</div>';
 
@@ -333,13 +399,20 @@ function ypm_render_plugin_page() {
     echo '<div class="ypm-installed-header-top">';
     echo '<h1 class="ypm-section-title">' . yourls__('Installed Plugins', 'yourls-plugin-manager') . '</h1>';
     echo '<div class="ypm-installed-actions">';
+    echo '<form method="get" action="' . yourls_esc_attr(yourls_admin_url('plugins.php')) . '">';
+    echo '<button type="submit" class="button">🧩 ' . yourls__('Manage', 'yourls-plugin-manager') . '</button>';
+    echo '</form>';
     echo '<form method="post">';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_updates') . '" />';
-    echo '<input type="submit" name="ypm_check_updates" value="🔎 ' . yourls__('Check updates now', 'yourls-plugin-manager') . '" class="button" />';
+    echo '<button type="submit" name="ypm_check_updates" class="button">🔎 ' . yourls__('Check updates now', 'yourls-plugin-manager') . '</button>';
     echo '</form>';
     echo '<form method="post">';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_all') . '" />';
-    echo '<input type="submit" name="ypm_update_all" value="⬆️ ' . yourls__('Update all available', 'yourls-plugin-manager') . '" class="button button-primary" />';
+    $update_all_label = $available_updates_count > 0
+        ? sprintf(yourls__('Update all available (%d)', 'yourls-plugin-manager'), $available_updates_count)
+        : yourls__('Update all available', 'yourls-plugin-manager');
+    $update_all_disabled_attr = $available_updates_count > 0 ? '' : ' disabled title="' . yourls_esc_attr(yourls__('No updates currently available. Run "Check updates now" first.', 'yourls-plugin-manager')) . '"';
+    echo '<button type="submit" name="ypm_update_all" class="button"' . $update_all_disabled_attr . '>⬆️ ' . $update_all_label . '</button>';
     echo '</form>';
     echo '</div>';
     echo '</div>';
@@ -376,7 +449,6 @@ function ypm_render_plugin_page() {
     echo '</div>';
 
     $plugins = [];
-    $update_statuses = ypm_get_update_statuses();
 
     foreach ($installed_slugs as $slug) {
         $slug = basename((string) $slug);

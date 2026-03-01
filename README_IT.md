@@ -53,25 +53,21 @@ I plugin predefiniti di YOURLS non richiedono associazione repository, e l'inter
 
 ---
 
-## 🆕 Novità nella 1.1.0
+## 🆕 Novità nella 1.1.1
 
-- Importante refresh UX nell'admin:
-  - miglioramenti al drawer install/token
-  - layout più pulito delle azioni nella tabella plugin installati
-  - stile coerente dei pulsanti azione
-- Miglioramenti del flusso associazione repository:
-  - modale dedicato per Associa/Cambia repository
-  - associazione consentita anche se il repository esiste ma non ha ancora release/tag
-- Gestione metadati più intelligente:
-  - pre-associazione automatica repository da `Plugin URI`
-  - correzione del conteggio legacy (i plugin default non vengono conteggiati)
-  - parsing header compatibile sia con formato classico sia docblock (`Plugin Name:` e `* Plugin Name:`), per una rilevazione più robusta
-  - rilevamento plugin migliorato per plugin in file singolo e in cartella, con conteggi installati/attivi allineati a YOURLS
-- Migliore gestione degli orari:
-  - orari allineati al fuso YOURLS, con fallback all'orario server se non disponibile
-- Pulizia del codice:
-  - CSS e JS separati in asset dedicati (`assets/admin.css`, `assets/admin.js`)
-  - forte riduzione di stili/handler inline per miglior manutenibilità
+- Aggiornamenti naming UI:
+  - voce menu plugin rinominata in **Advanced Plugin Manager**
+  - titolo pagina aggiornato in **YOURLS Advanced Plugin Manager**
+- Qualità vita sottomenu plugin:
+  - le voci sotto **Manage Plugins** ora sono ordinate alfabeticamente
+- Azioni header plugin installati:
+  - aggiunto pulsante **Manage** che punta direttamente alla pagina nativa di gestione plugin YOURLS (`admin/plugins.php`)
+  - pulsanti azione ora visivamente coerenti
+  - **Aggiorna tutti i disponibili** viene disabilitato quando non ci sono aggiornamenti
+- Nuova funzionalità integrata nelle impostazioni:
+  - personalizzazione nativa di `admin_view_per_page` (senza plugin separato)
+  - se è presente il plugin legacy **Custom number of displayed links**, viene mostrato un avviso per disattivarlo/rimuoverlo
+  - credito: integrazione basata sullo snippet condiviso da **ozh** nel ticket YOURLS #2339: https://github.com/YOURLS/YOURLS/issues/2339#issuecomment-352127623
 
 ---
 

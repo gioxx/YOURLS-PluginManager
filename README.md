@@ -53,25 +53,21 @@ Default YOURLS plugins do not require repository association, and the UI now ref
 
 ---
 
-## 🆕 What’s New in 1.1.0
+## 🆕 What’s New in 1.1.1
 
-- Major admin UX refresh:
-  - install/token drawer refinements
-  - cleaner actions layout in the installed plugins table
-  - consistent action button styling
-- Repository association workflow improvements:
-  - modal-based Associate/Change repo flow
-  - allows association even when a repository exists but has no release/tag yet
-- Smarter metadata handling:
-  - automatic repo pre-association from plugin `Plugin URI` headers
-  - corrected legacy metadata counts (default plugins are excluded)
-  - header parsing now supports both classic and docblock formats (`Plugin Name:` and `* Plugin Name:`), improving detection compatibility
-  - improved plugin discovery for file-based and folder-based plugins to keep installed/active counts aligned with YOURLS
-- Time display improvements:
-  - times follow YOURLS timezone configuration, with server-time fallback when unavailable
-- Codebase cleanup:
-  - CSS and JS moved to dedicated assets (`assets/admin.css`, `assets/admin.js`)
-  - inline handlers/styles significantly reduced for maintainability
+- UI naming updates:
+  - plugin menu entry is now **Advanced Plugin Manager**
+  - page title is now **YOURLS Advanced Plugin Manager**
+- Plugin submenu quality of life:
+  - plugin admin sublinks under **Manage Plugins** are now sorted alphabetically
+- Installed plugins header actions:
+  - added a **Manage** button that links directly to YOURLS native plugin management page (`admin/plugins.php`)
+  - action buttons are now visually consistent
+  - **Update all available** is disabled when no updates are available
+- New integrated settings feature:
+  - built-in `admin_view_per_page` customization (no separate plugin needed)
+  - if legacy plugin **Custom number of displayed links** is detected, an in-panel warning suggests deactivating/removing it
+  - credit: based on the snippet shared by **ozh** in YOURLS issue #2339: https://github.com/YOURLS/YOURLS/issues/2339#issuecomment-352127623
 
 ---
 
