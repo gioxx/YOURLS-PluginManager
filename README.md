@@ -14,10 +14,13 @@ Just feed it a GitHub URL and it handles the rest 🧙‍♂️
 
 - 🧲 Install plugins from any public GitHub repo (release or tag)
 - 🔁 Auto-overwrite existing plugin folder (works like "update")
+- ⏱️ Automatic update checks every 24 hours (plus manual on-demand checks)
+- 🤖 Auto-associates repository metadata from `Plugin URI` (when valid GitHub URLs are available)
 - ✅ Verifies `plugin.php` structure before installing
 - 🔐 Supports GitHub Personal Access Token (to avoid API limits)
 - 📦 Extracts ZIP via `ZipArchive` (no dependencies)
 - 📊 Shows version, author, status, and last update time
+- 🔗 Associate/Change repo via dedicated modal UI (with pre-filled URL on change)
 - 🧼 Can delete inactive plugins safely
 - 💬 Fully translatable (`.po/.mo` ready — Italian included 🇮🇹)
 
@@ -37,6 +40,38 @@ Just feed it a GitHub URL and it handles the rest 🧙‍♂️
 3. (Optional) Create a `/languages` folder and add `.mo` translations
 4. Activate the plugin from the YOURLS admin interface
 5. Go to **Tools > Plugin Manager** to start using it!
+
+---
+
+## ℹ️ Update Metadata Note
+
+Plugins installed **before** repository metadata tracking was introduced may temporarily show **"No repository metadata"**.
+
+To enable update checks and one-click updates for those plugins, reinstall or update each one once via Plugin Manager.
+
+Default YOURLS plugins do not require repository association, and the UI now reflects this explicitly.
+
+---
+
+## 🆕 What’s New in 1.1.0
+
+- Major admin UX refresh:
+  - install/token drawer refinements
+  - cleaner actions layout in the installed plugins table
+  - consistent action button styling
+- Repository association workflow improvements:
+  - modal-based Associate/Change repo flow
+  - allows association even when a repository exists but has no release/tag yet
+- Smarter metadata handling:
+  - automatic repo pre-association from plugin `Plugin URI` headers
+  - corrected legacy metadata counts (default plugins are excluded)
+  - header parsing now supports both classic and docblock formats (`Plugin Name:` and `* Plugin Name:`), improving detection compatibility
+  - improved plugin discovery for file-based and folder-based plugins to keep installed/active counts aligned with YOURLS
+- Time display improvements:
+  - times follow YOURLS timezone configuration, with server-time fallback when unavailable
+- Codebase cleanup:
+  - CSS and JS moved to dedicated assets (`assets/admin.css`, `assets/admin.js`)
+  - inline handlers/styles significantly reduced for maintainability
 
 ---
 

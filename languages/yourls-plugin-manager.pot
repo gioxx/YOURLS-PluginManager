@@ -9,178 +9,350 @@ msgstr ""
 "X-Poedit-KeywordsList: yourls__\n"
 "X-Poedit-SearchPath-0: plugin.php\n"
 
-#: plugin.php:22
-msgid "Plugin Manager"
+#: inc/admin-page.php:286
+msgid "%d plugin(s) were installed before repository metadata tracking and may show \"No repository metadata\" until reinstalled/updated once via Plugin Manager."
 msgstr ""
 
-#: plugin.php:181
-msgid "GitHub token saved successfully."
-msgstr ""
-
-#: plugin.php:187
-msgid "GitHub token deleted. You are now using unauthenticated API requests."
-msgstr ""
-
-#: plugin.php:202
-msgid "Plugin deleted successfully."
-msgstr ""
-
-#: plugin.php:203
-msgid "Failed to delete plugin."
-msgstr ""
-
-#: plugin.php:208
-msgid "YOURLS Plugin Manager"
-msgstr ""
-
-#: plugin.php:209
-msgid "Version: "
-msgstr ""
-
-#: plugin.php:219
-msgid "GitHub Repository URL:"
-msgstr ""
-
-#: plugin.php:222
-msgid "Download and Install Plugin"
-msgstr ""
-
-#: plugin.php:230
-msgid "GitHub Personal Access Token (optional):"
-msgstr ""
-
-#: plugin.php:238
-msgid "By default, GitHub allows 60 unauthenticated API requests per hour per IP."
-msgstr ""
-
-#: plugin.php:239
-msgid "With a personal access token, this limit increases to 5,000 requests per hour."
-msgstr ""
-
-#: plugin.php:240
-msgid "To generate a token, visit your GitHub account settings:"
-msgstr ""
-
-#: plugin.php:242
-msgid "Create a new GitHub token"
-msgstr ""
-
-#: plugin.php:243
-msgid "No scopes are required – you can leave all permissions unchecked."
-msgstr ""
-
-#: plugin.php:250
-msgid "Delete Token"
-msgstr ""
-
-#: plugin.php:251
-msgid "Edit Token"
-msgstr ""
-
-#: plugin.php:253
-msgid "Save Token"
-msgstr ""
-
-#: plugin.php:269
-msgid "Installed Plugins"
-msgstr ""
-
-#: plugin.php:307
-msgid "Unknown Plugin"
-msgstr ""
-
-#: plugin.php:310
-msgid "Unknown Author"
-msgstr ""
-
-#: plugin.php:313
-msgid "Unknown Version"
-msgstr ""
-
-#: plugin.php:332
-msgid "Plugin Name"
-msgstr ""
-
-#: plugin.php:333
-msgid "Author"
-msgstr ""
-
-#: plugin.php:334
-msgid "Version"
-msgstr ""
-
-#: plugin.php:335
-msgid "Last Updated"
-msgstr ""
-
-#: plugin.php:336
-msgid "Status"
-msgstr ""
-
-#: plugin.php:337
+#: inc/admin-page.php:388
 msgid "Actions"
 msgstr ""
 
-#: plugin.php:352
-msgid "Updated recently"
-msgstr ""
-
-#: plugin.php:358
-msgid "Installed by default"
-msgstr ""
-
-#: plugin.php:360
-msgid "Never"
-msgstr ""
-
-#: plugin.php:372
+#: inc/admin-page.php:444
 msgid "Active"
 msgstr ""
 
-#: plugin.php:373
-msgid "Inactive"
+#: inc/admin-page.php:375
+msgid "All"
 msgstr ""
 
-#: plugin.php:381 plugin.php:383 plugin.php:385
-msgid "Delete"
-msgstr ""
-
-#: plugin.php:383
-msgid "This plugin is active and cannot be deleted."
-msgstr ""
-
-#: plugin.php:385
+#: inc/admin-page.php:479
 msgid "Are you sure you want to delete this plugin?"
 msgstr ""
 
-#: plugin.php:412
-msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
+#: inc/admin-page.php:467
+msgid "Associate repo"
 msgstr ""
 
-#: plugin.php:419
-msgid "Invalid GitHub URL."
+#: inc/admin-page.php:384
+msgid "Author"
 msgstr ""
 
-#: plugin.php:435
-msgid "Could not fetch any release or tag from GitHub."
+#: inc/admin-page.php:278
+msgid "Automatic checks"
 msgstr ""
 
-#: plugin.php:446
+#: inc/admin-page.php:161
+msgid "Bulk update completed: %d updated, %d failed."
+msgstr ""
+
+#: inc/admin-page.php:251
+msgid "By default, GitHub allows 60 unauthenticated API requests per hour per IP; with a personal access token, this limit increases to 5,000 requests per hour."
+msgstr ""
+
+#: inc/admin-page.php:184
+msgid "Cannot verify repository (HTTP %d): %s"
+msgstr ""
+
+#: inc/admin-page.php:321
+msgid "%d plugin(s) do not require repository association because they are installed by default."
+msgstr ""
+
+#: inc/admin-page.php:345
+msgid "%d plugin(s) installed, %d active."
+msgstr ""
+
+#: inc/admin-page.php:535
+msgid "Cancel"
+msgstr ""
+
+#: inc/admin-page.php:315
+msgid "Check updates now"
+msgstr ""
+
+#: inc/admin-page.php:460
+msgid "Change repo"
+msgstr ""
+
+#: inc/admin-page.php:429
+msgid "Checked:"
+msgstr ""
+
+#: inc/admin-page.php:526
+msgid "Close"
+msgstr ""
+
+#: inc/admin-page.php:254
+msgid "Create a new GitHub token"
+msgstr ""
+
+#: inc/admin-page.php:475 inc/admin-page.php:477 inc/admin-page.php:479
+msgid "Delete"
+msgstr ""
+
+#: inc/admin-page.php:260
+msgid "Delete Token"
+msgstr ""
+
+#: inc/admin-page.php:238
+msgid "Download and Install Plugin"
+msgstr ""
+
+#: inc/installer.php:34
 msgid "Download failed."
 msgstr ""
 
-#: plugin.php:460
+#: inc/admin-page.php:261
+msgid "Edit Token"
+msgstr ""
+
+#: inc/admin-page.php:378
+msgid "Errors"
+msgstr ""
+
+#: inc/installer.php:46
+msgid "Extraction failed: unable to extract ZIP archive."
+msgstr ""
+
+#: inc/installer.php:53
 msgid "Extraction failed: unable to open ZIP archive."
 msgstr ""
 
-#: plugin.php:510
-msgid "plugin.php not found in final plugin directory."
+#: inc/admin-page.php:99
+msgid "Failed to delete plugin."
 msgstr ""
 
-#: plugin.php:520
+#: inc/installer.php:108 inc/installer.php:133
+msgid "Failed to move extracted plugin directory."
+msgstr ""
+
+#: inc/installer.php:103 inc/installer.php:128
+msgid "Failed to replace existing plugin directory."
+msgstr ""
+
+#: inc/installer.php:25
+msgid "GitHub API request failed (HTTP %d): %s"
+msgstr ""
+
+#: inc/admin-page.php:247
+msgid "GitHub Personal Access Token (optional):"
+msgstr ""
+
+#: inc/admin-page.php:232
+msgid "GitHub Repository URL:"
+msgstr ""
+
+#: inc/admin-page.php:272
+msgid "GitHub token"
+msgstr ""
+
+#: inc/admin-page.php:77
+msgid "GitHub token deleted. You are now using unauthenticated API requests."
+msgstr ""
+
+#: inc/admin-page.php:71
+msgid "GitHub token saved successfully."
+msgstr ""
+
+#: inc/admin-page.php:279
+msgid "GitHub update checks run automatically every 24 hours."
+msgstr ""
+
+#: inc/admin-page.php:445
+msgid "Inactive"
+msgstr ""
+
+#: inc/admin-page.php:234
+msgid "Insert a public GitHub repository URL (owner/repo). The plugin downloads the latest Release package, or falls back to the latest Tag when no Release is available."
+msgstr ""
+
+#: inc/admin-page.php:408
+msgid "Installed by default"
+msgstr ""
+
+#: inc/admin-page.php:175
+msgid "Default plugins do not require repository association."
+msgstr ""
+
+#: inc/admin-page.php:472
+msgid "Repository association not needed for default plugins."
+msgstr ""
+
+#: inc/admin-page.php:480
+msgid "Times shown in this page follow your YOURLS timezone configuration, or server time if that configuration is unavailable."
+msgstr ""
+
+#: inc/admin-page.php:312
+msgid "Installed Plugins"
+msgstr ""
+
+#: inc/admin-page.php:176 inc/installer.php:13
+msgid "Invalid GitHub URL."
+msgstr ""
+
+#: inc/admin-page.php:118 inc/admin-page.php:172 inc/admin-page.php:88
+msgid "Invalid plugin slug."
+msgstr ""
+
+#: inc/admin-page.php:281
+msgid "Last automatic check:"
+msgstr ""
+
+#: inc/admin-page.php:282
+msgid "Last manual check:"
+msgstr ""
+
+#: inc/admin-page.php:386
+msgid "Last Updated"
+msgstr ""
+
+#: inc/admin-page.php:409
+msgid "Never"
+msgstr ""
+
+#: inc/admin-page.php:282
+msgid "Next scheduled check:"
+msgstr ""
+
+#: inc/admin-page.php:122
+msgid "No GitHub repository metadata available for this plugin."
+msgstr ""
+
+#: inc/admin-page.php:377
+msgid "No metadata"
+msgstr ""
+
+#: inc/admin-page.php:392
+msgid "No plugins match the selected filter."
+msgstr ""
+
+#: inc/admin-page.php:424
+msgid "No repository metadata"
+msgstr ""
+
+#: inc/admin-page.php:255
+msgid "No scopes are required – you can leave all permissions unchecked."
+msgstr ""
+
+#: inc/admin-page.php:140
+msgid "No updates available right now."
+msgstr ""
+
+#: inc/admin-page.php:211
+msgid "Not run yet"
+msgstr ""
+
+#: inc/admin-page.php:98
+msgid "Plugin deleted successfully."
+msgstr ""
+
+#: inc/admin-page.php:224
+msgid "Plugin install"
+msgstr ""
+
+#: inc/admin-page.php:478
+msgid "Notes"
+msgstr ""
+
+#: inc/installer.php:186
+msgid "Plugin installed or updated successfully."
+msgstr ""
+
+#: inc/admin-page.php:8
+msgid "Plugin Manager"
+msgstr ""
+
+#: inc/admin-page.php:383
+msgid "Plugin Name"
+msgstr ""
+
+#: inc/installer.php:168
 msgid "plugin.php does not contain a valid YOURLS plugin header."
 msgstr ""
 
-#: plugin.php:528
-msgid "Plugin installed or updated successfully."
+#: inc/installer.php:153
+msgid "plugin.php not found in final plugin directory."
+msgstr ""
+
+#: inc/admin-page.php:451
+msgid "Repository"
+msgstr ""
+
+#: inc/admin-page.php:192
+msgid "Repository associated successfully."
+msgstr ""
+
+#: inc/admin-page.php:205
+msgid "Repository associated successfully. No release/tag is available yet; update checks may fail until one is published."
+msgstr ""
+
+#: inc/admin-page.php:263
+msgid "Save Token"
+msgstr ""
+
+#: inc/admin-page.php:387
+msgid "Status"
+msgstr ""
+
+#: inc/admin-page.php:477
+msgid "This plugin is active and cannot be deleted."
+msgstr ""
+
+#: inc/admin-page.php:252
+msgid "To generate a token, visit your GitHub account settings:"
+msgstr ""
+
+#: inc/admin-page.php:353
+msgid "Unknown Author"
+msgstr ""
+
+#: inc/admin-page.php:350
+msgid "Unknown Plugin"
+msgstr ""
+
+#: inc/admin-page.php:356
+msgid "Unknown Version"
+msgstr ""
+
+#: inc/admin-page.php:422
+msgid "Up to date"
+msgstr ""
+
+#: inc/admin-page.php:376
+msgid "Updatable"
+msgstr ""
+
+#: inc/admin-page.php:458
+msgid "Update"
+msgstr ""
+
+#: inc/admin-page.php:319
+msgid "Update all available"
+msgstr ""
+
+#: inc/admin-page.php:420
+msgid "Update available"
+msgstr ""
+
+#: inc/admin-page.php:110
+msgid "Update check completed for %d plugin(s)."
+msgstr ""
+
+#: inc/admin-page.php:426
+msgid "Update check failed"
+msgstr ""
+
+#: inc/admin-page.php:402
+msgid "Updated recently"
+msgstr ""
+
+#: inc/admin-page.php:385
+msgid "Version"
+msgstr ""
+
+#: inc/admin-page.php:200
+msgid "YOURLS Plugin Manager"
+msgstr ""
+
+#: inc/installer.php:7
+msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
 msgstr ""
