@@ -14,10 +14,13 @@ Ti basta incollare un URL GitHub e fa tutto da solo 🧙‍♂️
 
 - 🧲 Installa plugin da qualsiasi repository GitHub pubblico (release o tag)
 - 🔁 Sovrascrive automaticamente i plugin esistenti (come un aggiornamento)
+- ⏱️ Controllo aggiornamenti automatico ogni 24 ore (oltre al controllo manuale)
+- 🤖 Auto-associa i metadati repository leggendo `Plugin URI` (quando l'URL GitHub è valido)
 - ✅ Verifica la struttura di `plugin.php` prima di installare
 - 🔐 Supporta GitHub Personal Access Token (per evitare i limiti API)
 - 📦 Estrae i file ZIP tramite `ZipArchive` (senza dipendenze esterne)
 - 📊 Mostra versione, autore, stato e data dell’ultimo aggiornamento
+- 🔗 Associazione/Cambio repository tramite modale dedicato (con URL precompilato in modifica)
 - 🧼 Permette di eliminare i plugin non attivi
 - 💬 Completamente localizzabile (file `.po/.mo` pronti — incluso italiano 🇮🇹)
 
@@ -37,6 +40,38 @@ Ti basta incollare un URL GitHub e fa tutto da solo 🧙‍♂️
 3. (Facoltativo) Crea la cartella `/languages` e aggiungi i file `.mo`
 4. Attiva il plugin dal pannello amministrativo di YOURLS
 5. Vai su **Strumenti > Plugin Manager** per iniziare a usarlo!
+
+---
+
+## ℹ️ Nota sui metadati aggiornamenti
+
+I plugin installati **prima** dell'introduzione del tracciamento dei metadati repository potrebbero mostrare temporaneamente **"No repository metadata"**.
+
+Per abilitare controllo aggiornamenti e update con un click anche su questi plugin, reinstallali o aggiornali una volta tramite Plugin Manager.
+
+I plugin predefiniti di YOURLS non richiedono associazione repository, e l'interfaccia ora lo esplicita chiaramente.
+
+---
+
+## 🆕 Novità nella 1.1.0
+
+- Importante refresh UX nell'admin:
+  - miglioramenti al drawer install/token
+  - layout più pulito delle azioni nella tabella plugin installati
+  - stile coerente dei pulsanti azione
+- Miglioramenti del flusso associazione repository:
+  - modale dedicato per Associa/Cambia repository
+  - associazione consentita anche se il repository esiste ma non ha ancora release/tag
+- Gestione metadati più intelligente:
+  - pre-associazione automatica repository da `Plugin URI`
+  - correzione del conteggio legacy (i plugin default non vengono conteggiati)
+  - parsing header compatibile sia con formato classico sia docblock (`Plugin Name:` e `* Plugin Name:`), per una rilevazione più robusta
+  - rilevamento plugin migliorato per plugin in file singolo e in cartella, con conteggi installati/attivi allineati a YOURLS
+- Migliore gestione degli orari:
+  - orari allineati al fuso YOURLS, con fallback all'orario server se non disponibile
+- Pulizia del codice:
+  - CSS e JS separati in asset dedicati (`assets/admin.css`, `assets/admin.js`)
+  - forte riduzione di stili/handler inline per miglior manutenibilità
 
 ---
 
