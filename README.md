@@ -1,4 +1,4 @@
-# 🔌 YOURLS Plugin Manager
+# 🔌 YOURLS Advanced Plugin Manager
 
 [Readme file is also available in italian](README_IT.md).
 
@@ -39,7 +39,7 @@ Just feed it a GitHub URL and it handles the rest 🧙‍♂️
 2. Copy the folder `yourls-plugin-manager` into your `user/plugins/` directory
 3. (Optional) Create a `/languages` folder and add `.mo` translations
 4. Activate the plugin from the YOURLS admin interface
-5. Go to **Tools > Plugin Manager** to start using it!
+5. Go to **Tools > Advanced Plugin Manager** to start using it!
 
 ---
 
@@ -47,13 +47,18 @@ Just feed it a GitHub URL and it handles the rest 🧙‍♂️
 
 Plugins installed **before** repository metadata tracking was introduced may temporarily show **"No repository metadata"**.
 
-To enable update checks and one-click updates for those plugins, reinstall or update each one once via Plugin Manager.
+To enable update checks and one-click updates for those plugins, reinstall or update each one once via Advanced Plugin Manager.
 
 Default YOURLS plugins do not require repository association, and the UI now reflects this explicitly.
 
 ---
 
-## 🆕 What’s New in 1.1.1
+## 🆕 What’s New in 1.1.2
+
+- Minor consistency fix:
+  - unified product naming across plugin metadata, UI copy, translations, and docs to **YOURLS Advanced Plugin Manager**
+
+## 🧾 Previous highlights (1.1.1)
 
 - UI naming updates:
   - plugin menu entry is now **Advanced Plugin Manager**
@@ -100,12 +105,12 @@ The plugin will automatically fetch the latest release or fallback to the latest
 
 ## 🧩 Plugin Compatibility
 
-To make your YOURLS plugin compatible with **Plugin Manager**, follow these simple guidelines:
+To make your YOURLS plugin compatible with **Advanced Plugin Manager**, follow these simple guidelines:
 
 ### ✔️ What to do
 
 - **Create a release** on your GitHub repository.  
-  This will generate a `.zip` package that Plugin Manager can detect and download.
+  This will generate a `.zip` package that Advanced Plugin Manager can detect and download.
 - Ensure your `plugin.php` file is:
   - in the **root** of the ZIP, **or**
   - in a **single subfolder** along with the rest of your plugin files.
@@ -113,7 +118,7 @@ To make your YOURLS plugin compatible with **Plugin Manager**, follow these simp
 ### ❌ What to avoid
 
 - Do not leave your repository in a flat layout without a release:  
-  in this case, Plugin Manager will **not find any installable content**.
+  in this case, Advanced Plugin Manager will **not find any installable content**.
 - Avoid deeply nested folders like `your-plugin/another-folder/plugin.php`.
 
 ### 📦 Example structure

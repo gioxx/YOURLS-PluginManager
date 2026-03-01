@@ -374,7 +374,7 @@ function ypm_render_plugin_page() {
     if ($legacy_display_links_plugin_installed) {
         echo '<small class="ypm-help-text ypm-help-token ypm-settings-alert">'
             . '<span class="ypm-settings-alert-icon" aria-hidden="true">⚠️</span> '
-            . yourls__('The plugin "Custom number of displayed links" appears to be installed. You can deactivate and delete it, because this feature is now built into Plugin Manager.', 'yourls-plugin-manager')
+            . yourls__('The plugin "Custom number of displayed links" appears to be installed. You can deactivate and delete it, because this feature is now built into Advanced Plugin Manager.', 'yourls-plugin-manager')
             . '</small>';
     }
     echo '<input type="number" name="ypm_links_per_page" id="ypm_links_per_page" class="ypm-token-input" min="1" max="999" step="1" value="' . ($stored_links_per_page > 0 ? (int) $stored_links_per_page : '') . '" placeholder="' . yourls_esc_attr(yourls__('YOURLS default', 'yourls-plugin-manager')) . '" />';
@@ -426,7 +426,7 @@ function ypm_render_plugin_page() {
         $notes = [];
         if ($legacy_count > 0) {
             $notes[] = sprintf(
-                yourls__('%d plugin(s) were installed before repository metadata tracking and may show "No repository metadata" until reinstalled/updated once via Plugin Manager.', 'yourls-plugin-manager'),
+                yourls__('%d plugin(s) were installed before repository metadata tracking and may show "No repository metadata" until reinstalled/updated once via Advanced Plugin Manager.', 'yourls-plugin-manager'),
                 $legacy_count
             );
         }
@@ -664,7 +664,7 @@ function ypm_render_plugin_page() {
     echo '<div class="plugin-footer">';
     echo '<a href="https://github.com/gioxx/YOURLS-PluginManager" target="_blank" rel="noopener noreferrer">';
     echo '<img src="https://github.githubassets.com/favicons/favicon.png" class="github-icon" alt="GitHub Icon" />';
-    echo 'YOURLS Plugin Manager</a><br>';
+    echo yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</a><br>';
     echo '❤️ Lovingly developed by the usually-on-vacation brain cell of ';
     echo '<a href="https://github.com/gioxx" target="_blank" rel="noopener noreferrer">Gioxx</a> – ';
     echo '<a href="https://gioxx.org" target="_blank" rel="noopener noreferrer">Gioxx\'s Wall</a>';

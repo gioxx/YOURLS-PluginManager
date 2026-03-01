@@ -1,4 +1,4 @@
-# 🔌 YOURLS Plugin Manager
+# 🔌 YOURLS Advanced Plugin Manager
 
 [Il file README è disponibile anche in inglese](README.md).
 
@@ -39,7 +39,7 @@ Ti basta incollare un URL GitHub e fa tutto da solo 🧙‍♂️
 2. Copia la cartella `yourls-plugin-manager` dentro `user/plugins/`
 3. (Facoltativo) Crea la cartella `/languages` e aggiungi i file `.mo`
 4. Attiva il plugin dal pannello amministrativo di YOURLS
-5. Vai su **Strumenti > Plugin Manager** per iniziare a usarlo!
+5. Vai su **Strumenti > Advanced Plugin Manager** per iniziare a usarlo!
 
 ---
 
@@ -47,13 +47,18 @@ Ti basta incollare un URL GitHub e fa tutto da solo 🧙‍♂️
 
 I plugin installati **prima** dell'introduzione del tracciamento dei metadati repository potrebbero mostrare temporaneamente **"No repository metadata"**.
 
-Per abilitare controllo aggiornamenti e update con un click anche su questi plugin, reinstallali o aggiornali una volta tramite Plugin Manager.
+Per abilitare controllo aggiornamenti e update con un click anche su questi plugin, reinstallali o aggiornali una volta tramite Advanced Plugin Manager.
 
 I plugin predefiniti di YOURLS non richiedono associazione repository, e l'interfaccia ora lo esplicita chiaramente.
 
 ---
 
-## 🆕 Novità nella 1.1.1
+## 🆕 Novità nella 1.1.2
+
+- Minor fix di coerenza:
+  - naming del prodotto uniformato in metadati plugin, testi UI, traduzioni e documentazione a **YOURLS Advanced Plugin Manager**
+
+## 🧾 Highlight precedenti (1.1.1)
 
 - Aggiornamenti naming UI:
   - voce menu plugin rinominata in **Advanced Plugin Manager**
@@ -100,12 +105,12 @@ Il plugin cercherà automaticamente l’ultima release o, se assente, il tag pi�
 
 ## 🧩 Compatibilità dei plugin
 
-Per rendere il tuo plugin YOURLS compatibile con **Plugin Manager**, segui queste semplici indicazioni:
+Per rendere il tuo plugin YOURLS compatibile con **Advanced Plugin Manager**, segui queste semplici indicazioni:
 
 ### ✔️ Cosa fare
 
 - **Crea una release** nel repository GitHub del tuo plugin.  
-  In questo modo verrà generato un pacchetto `.zip` che Plugin Manager potrà rilevare e installare.
+  In questo modo verrà generato un pacchetto `.zip` che Advanced Plugin Manager potrà rilevare e installare.
 - Assicurati che il file `plugin.php` sia:
   - nella **root** dell’archivio ZIP, **oppure**
   - in **una sola sottocartella** insieme agli altri file del plugin.
@@ -113,7 +118,7 @@ Per rendere il tuo plugin YOURLS compatibile con **Plugin Manager**, segui quest
 ### ❌ Cosa evitare
 
 - Non lasciare il repository in formato *flat* senza una release:  
-  in tal caso, Plugin Manager **non troverà alcun contenuto installabile**.
+  in tal caso, Advanced Plugin Manager **non troverà alcun contenuto installabile**.
 - Evita strutture annidate come `tuo-plugin/cartella/plugin.php`.
 
 ### 📦 Struttura corretta
