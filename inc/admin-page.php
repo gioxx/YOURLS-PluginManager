@@ -302,12 +302,8 @@ function ypm_render_plugin_page() {
             $default_installed_count++;
         }
     }
-    $last_auto_check = (int) yourls_get_option('ypm_scheduled_update_check_at');
     $last_manual_check = (int) yourls_get_option('ypm_last_manual_check_at');
-    $auto_check_label = $last_auto_check > 0 ? ypm_format_datetime($last_auto_check) : yourls__('Not run yet', 'yourls-plugin-manager');
     $manual_check_label = $last_manual_check > 0 ? ypm_format_datetime($last_manual_check) : yourls__('Not run yet', 'yourls-plugin-manager');
-    $next_auto_check_ts = $last_auto_check > 0 ? ($last_auto_check + 86400) : (time() + 86400);
-    $next_auto_check_label = ypm_format_datetime($next_auto_check_ts);
     $stored_token = yourls_get_option('ypm_github_token');
     $stored_links_per_page = (int) yourls_get_option('ypm_admin_view_per_page');
     $has_token = !empty($stored_token);
@@ -438,12 +434,10 @@ function ypm_render_plugin_page() {
         }
         echo '<div class="ypm-installed-meta-note">' . implode(' ', $notes) . '</div>';
     }
-    echo '<div><strong>' . yourls__('Automatic checks', 'yourls-plugin-manager') . ':</strong> ';
-    echo yourls__('GitHub update checks run automatically every 24 hours.', 'yourls-plugin-manager') . '</div>';
+    echo '<div><strong>' . yourls__('Update checks', 'yourls-plugin-manager') . ':</strong> ';
+    echo yourls__('GitHub update checks run only on demand when you use "Check updates now" or start a bulk update.', 'yourls-plugin-manager') . '</div>';
     echo '<div class="ypm-installed-meta-times">';
-    echo '<div><strong>' . yourls__('Last automatic check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($auto_check_label) . '</span></div>';
-    echo '<div class="ypm-next-check-row"><strong>' . yourls__('Last manual check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($manual_check_label) . '</span></div>';
-    echo '<div class="ypm-next-check-row"><strong>' . yourls__('Next scheduled check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($next_auto_check_label) . '</span></div>';
+    echo '<div><strong>' . yourls__('Last manual check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($manual_check_label) . '</span></div>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -654,7 +648,7 @@ function ypm_render_plugin_page() {
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_associate_repo') . '" />';
     echo '<input type="url" name="ypm_associate_repo_url" id="ypm-associate-repo-url" class="ypm-associate-input ypm-associate-input-modal" placeholder="https://github.com/owner/repo" required />';
     echo '<div class="ypm-modal-actions">';
-    echo '<button type="button" class="button ypm-modal-close-action">' . yourls__('Cancel', 'yourls-plugin-manager') . '</button>';
+    echo '<button type="button" class="button ypm-modal-close-action ypm-modal-secondary-button">' . yourls__('Cancel', 'yourls-plugin-manager') . '</button>';
     echo '<input type="submit" name="ypm_associate_repo_submit" class="button button-primary" value="🔗 ' . yourls__('Associate repo', 'yourls-plugin-manager') . '" />';
     echo '</div>';
     echo '</form>';

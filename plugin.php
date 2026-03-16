@@ -20,7 +20,6 @@ require_once $ypm_inc . 'github-api.php';
 require_once $ypm_inc . 'repository-metadata.php';
 require_once $ypm_inc . 'installer.php';
 require_once $ypm_inc . 'admin-page.php';
-require_once $ypm_inc . 'scheduler.php';
 
 yourls_add_filter('admin_view_per_page', 'ypm_filter_admin_view_per_page');
 yourls_add_filter('admin_sublinks', 'ypm_sort_admin_plugin_sublinks');

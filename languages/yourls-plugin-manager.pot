@@ -38,7 +38,7 @@ msgid "Author"
 msgstr ""
 
 #: inc/admin-page.php:278
-msgid "Automatic checks"
+msgid "Update checks"
 msgstr ""
 
 #: inc/admin-page.php:161
@@ -154,7 +154,7 @@ msgid "GitHub token saved successfully."
 msgstr ""
 
 #: inc/admin-page.php:279
-msgid "GitHub update checks run automatically every 24 hours."
+msgid "GitHub update checks run only on demand when you use \"Check updates now\" or start a bulk update."
 msgstr ""
 
 #: inc/admin-page.php:445
@@ -194,10 +194,6 @@ msgid "Invalid plugin slug."
 msgstr ""
 
 #: inc/admin-page.php:281
-msgid "Last automatic check:"
-msgstr ""
-
-#: inc/admin-page.php:282
 msgid "Last manual check:"
 msgstr ""
 
@@ -211,10 +207,6 @@ msgstr ""
 
 #: inc/admin-page.php:409
 msgid "Never"
-msgstr ""
-
-#: inc/admin-page.php:282
-msgid "Next scheduled check:"
 msgstr ""
 
 #: inc/admin-page.php:122

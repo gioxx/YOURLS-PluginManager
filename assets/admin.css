@@ -16,14 +16,29 @@
 .ypm-installed-header .ypm-section-title { margin:0; display:flex; align-items:center; min-height:38px; line-height:1.1; }
 .ypm-installed-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
 .ypm-installed-actions form { margin:0; }
-.ypm-installed-actions .button { margin:0; }
-.ypm-installed-actions .button { border-radius:0 !important; }
+.ypm-installed-actions .button {
+    margin:0;
+    padding:8px 18px;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    box-shadow:none !important;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-installed-actions .button:hover:not(:disabled),
+.ypm-installed-actions .button:focus:not(:disabled),
+.ypm-installed-actions .button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+}
 .ypm-installed-actions .button[disabled] {
-    opacity:0.45;
-    background:#f0f0f1;
-    border-color:#c3c4c7;
-    color:#8c8f94;
-    box-shadow:none;
+    opacity:0.55;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    box-shadow:none !important;
     cursor:not-allowed;
 }
 .ypm-installed-meta { width:100%; font-size:13px; color:#1f2328; }
@@ -57,6 +72,40 @@ button.button { padding:8px 14px; font-size:13px; border-radius:5px; cursor:poin
 .ypm-settings-alert-icon { margin-right:4px; }
 .ypm-install-url { margin-top:5px; padding:5px; }
 .ypm-submit-row { margin-top:8px; }
+.ypm-panel-main input[type="submit"].button,
+#github-token-form input[type="submit"].button,
+#ypm-links-per-page-form input[type="submit"].button {
+    padding:8px 18px;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    font-weight:400 !important;
+    box-shadow:none !important;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-panel-main input[type="submit"].button:hover:not(:disabled),
+.ypm-panel-main input[type="submit"].button:focus:not(:disabled),
+.ypm-panel-main input[type="submit"].button:active:not(:disabled),
+#github-token-form input[type="submit"].button:hover:not(:disabled),
+#github-token-form input[type="submit"].button:focus:not(:disabled),
+#github-token-form input[type="submit"].button:active:not(:disabled),
+#ypm-links-per-page-form input[type="submit"].button:hover:not(:disabled),
+#ypm-links-per-page-form input[type="submit"].button:focus:not(:disabled),
+#ypm-links-per-page-form input[type="submit"].button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+}
+.ypm-panel-main input[type="submit"].button:disabled,
+#github-token-form input[type="submit"].button:disabled,
+#ypm-links-per-page-form input[type="submit"].button:disabled {
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    opacity:0.55;
+    cursor:not-allowed;
+}
 .ypm-token-input { width:100%; max-width:600px; margin-top:6px; }
 .ypm-token-input-row {
     display:flex;
@@ -202,10 +251,10 @@ table.widefat tbody tr:nth-child(even) { background-color:#ffffff; }
 .ypm-actions-cell button.button {
     text-align:center;
     box-sizing:border-box;
-    border-radius:0 !important;
-    background:#f6f7f7 !important;
-    border:1px solid #8c8f9a !important;
-    color:#2c3338 !important;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
     box-shadow:none !important;
     transition:background-color .15s ease, border-color .15s ease, color .15s ease;
 }
@@ -215,16 +264,16 @@ table.widefat tbody tr:nth-child(even) { background-color:#ffffff; }
 .ypm-actions-cell button.button:hover:not(:disabled),
 .ypm-actions-cell button.button:focus:not(:disabled),
 .ypm-actions-cell button.button:active:not(:disabled) {
-    background:#f0f0f1 !important;
-    border-color:#646970 !important;
-    color:#1d2327 !important;
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
 }
 .ypm-actions-cell input.button:disabled,
 .ypm-actions-cell button.button:disabled {
-    background:#f6f7f7 !important;
-    border-color:#8c8f9a !important;
-    color:#2c3338 !important;
-    opacity:0.6;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    opacity:0.55;
     cursor:not-allowed;
 }
 .ypm-update-form { width:100%; }
@@ -241,7 +290,8 @@ table.widefat tbody tr:nth-child(even) { background-color:#ffffff; }
 .ypm-actions-row .button { height:38px; }
 .ypm-open-associate {
     white-space:nowrap;
-    min-width:130px;
+    width:154px;
+    min-width:154px;
     display:inline-flex;
     align-items:center;
     justify-content:center;
@@ -364,13 +414,29 @@ body.ypm-modal-open { overflow:hidden; }
     justify-content:flex-end;
     gap:8px;
 }
+.ypm-modal-actions .button {
+    padding:8px 18px;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    box-shadow:none !important;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-modal-actions .button:hover:not(:disabled),
+.ypm-modal-actions .button:focus:not(:disabled),
+.ypm-modal-actions .button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+}
 input[type="submit"].button:disabled,
 input[type="button"].button:disabled { background-color:#ccc; color:#666; border:1px solid #bbb; cursor:not-allowed; opacity:0.6; }
 .ypm-delete-icon-button:disabled {
-    background-color:#f6f7f7;
-    border-color:#8c8f9a;
-    color:#2c3338;
-    opacity:0.6;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    opacity:0.55;
 }
 .plugin-footer { margin-top:40px; padding-top:20px; border-top:1px solid #ddd; font-size:0.9em; color:#666; text-align:center; opacity:0.85; }
 .plugin-footer a { color:#0073aa; text-decoration:none; }
