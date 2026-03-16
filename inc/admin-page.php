@@ -302,12 +302,8 @@ function ypm_render_plugin_page() {
             $default_installed_count++;
         }
     }
-    $last_auto_check = (int) yourls_get_option('ypm_scheduled_update_check_at');
     $last_manual_check = (int) yourls_get_option('ypm_last_manual_check_at');
-    $auto_check_label = $last_auto_check > 0 ? ypm_format_datetime($last_auto_check) : yourls__('Not run yet', 'yourls-plugin-manager');
     $manual_check_label = $last_manual_check > 0 ? ypm_format_datetime($last_manual_check) : yourls__('Not run yet', 'yourls-plugin-manager');
-    $next_auto_check_ts = $last_auto_check > 0 ? ($last_auto_check + 86400) : (time() + 86400);
-    $next_auto_check_label = ypm_format_datetime($next_auto_check_ts);
     $stored_token = yourls_get_option('ypm_github_token');
     $stored_links_per_page = (int) yourls_get_option('ypm_admin_view_per_page');
     $has_token = !empty($stored_token);
@@ -374,7 +370,7 @@ function ypm_render_plugin_page() {
     if ($legacy_display_links_plugin_installed) {
         echo '<small class="ypm-help-text ypm-help-token ypm-settings-alert">'
             . '<span class="ypm-settings-alert-icon" aria-hidden="true">⚠️</span> '
-            . yourls__('The plugin "Custom number of displayed links" appears to be installed. You can deactivate and delete it, because this feature is now built into Plugin Manager.', 'yourls-plugin-manager')
+            . yourls__('The plugin "Custom number of displayed links" appears to be installed. You can deactivate and delete it, because this feature is now built into Advanced Plugin Manager.', 'yourls-plugin-manager')
             . '</small>';
     }
     echo '<input type="number" name="ypm_links_per_page" id="ypm_links_per_page" class="ypm-token-input" min="1" max="999" step="1" value="' . ($stored_links_per_page > 0 ? (int) $stored_links_per_page : '') . '" placeholder="' . yourls_esc_attr(yourls__('YOURLS default', 'yourls-plugin-manager')) . '" />';
@@ -426,7 +422,7 @@ function ypm_render_plugin_page() {
         $notes = [];
         if ($legacy_count > 0) {
             $notes[] = sprintf(
-                yourls__('%d plugin(s) were installed before repository metadata tracking and may show "No repository metadata" until reinstalled/updated once via Plugin Manager.', 'yourls-plugin-manager'),
+                yourls__('%d plugin(s) were installed before repository metadata tracking and may show "No repository metadata" until reinstalled/updated once via Advanced Plugin Manager.', 'yourls-plugin-manager'),
                 $legacy_count
             );
         }
@@ -438,12 +434,10 @@ function ypm_render_plugin_page() {
         }
         echo '<div class="ypm-installed-meta-note">' . implode(' ', $notes) . '</div>';
     }
-    echo '<div><strong>' . yourls__('Automatic checks', 'yourls-plugin-manager') . ':</strong> ';
-    echo yourls__('GitHub update checks run automatically every 24 hours.', 'yourls-plugin-manager') . '</div>';
+    echo '<div><strong>' . yourls__('Update checks', 'yourls-plugin-manager') . ':</strong> ';
+    echo yourls__('GitHub update checks run only on demand when you use "Check updates now" or start a bulk update.', 'yourls-plugin-manager') . '</div>';
     echo '<div class="ypm-installed-meta-times">';
-    echo '<div><strong>' . yourls__('Last automatic check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($auto_check_label) . '</span></div>';
-    echo '<div class="ypm-next-check-row"><strong>' . yourls__('Last manual check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($manual_check_label) . '</span></div>';
-    echo '<div class="ypm-next-check-row"><strong>' . yourls__('Next scheduled check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($next_auto_check_label) . '</span></div>';
+    echo '<div><strong>' . yourls__('Last manual check:', 'yourls-plugin-manager') . '</strong> <span class="ypm-meta-time">' . htmlentities($manual_check_label) . '</span></div>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -654,7 +648,7 @@ function ypm_render_plugin_page() {
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_associate_repo') . '" />';
     echo '<input type="url" name="ypm_associate_repo_url" id="ypm-associate-repo-url" class="ypm-associate-input ypm-associate-input-modal" placeholder="https://github.com/owner/repo" required />';
     echo '<div class="ypm-modal-actions">';
-    echo '<button type="button" class="button ypm-modal-close-action">' . yourls__('Cancel', 'yourls-plugin-manager') . '</button>';
+    echo '<button type="button" class="button ypm-modal-close-action ypm-modal-secondary-button">' . yourls__('Cancel', 'yourls-plugin-manager') . '</button>';
     echo '<input type="submit" name="ypm_associate_repo_submit" class="button button-primary" value="🔗 ' . yourls__('Associate repo', 'yourls-plugin-manager') . '" />';
     echo '</div>';
     echo '</form>';
@@ -664,7 +658,7 @@ function ypm_render_plugin_page() {
     echo '<div class="plugin-footer">';
     echo '<a href="https://github.com/gioxx/YOURLS-PluginManager" target="_blank" rel="noopener noreferrer">';
     echo '<img src="https://github.githubassets.com/favicons/favicon.png" class="github-icon" alt="GitHub Icon" />';
-    echo 'YOURLS Plugin Manager</a><br>';
+    echo yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</a><br>';
     echo '❤️ Lovingly developed by the usually-on-vacation brain cell of ';
     echo '<a href="https://github.com/gioxx" target="_blank" rel="noopener noreferrer">Gioxx</a> – ';
     echo '<a href="https://gioxx.org" target="_blank" rel="noopener noreferrer">Gioxx\'s Wall</a>';

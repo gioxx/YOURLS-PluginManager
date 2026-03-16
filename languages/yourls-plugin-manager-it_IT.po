@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: YOURLS Plugin Manager\n"
+"Project-Id-Version: YOURLS Advanced Plugin Manager\n"
 "POT-Creation-Date: 2025-05-26 16:15+0200\n"
 "PO-Revision-Date: 2025-05-29 10:02+0200\n"
 "Last-Translator: Giovanni Solone <giovanni@solone.it>\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Poedit-KeywordsList: yourls__\n"
 "X-Poedit-SearchPath-0: plugin.php\n"
 
-msgid "%d plugin(s) were installed before repository metadata tracking and may show \"No repository metadata\" until reinstalled/updated once via Plugin Manager."
-msgstr "%d plugin installati prima dell'introduzione dei metadati repository potrebbero mostrare \"Nessun metadato repository\" finché non vengono reinstallati/aggiornati una volta tramite Plugin Manager."
+msgid "%d plugin(s) were installed before repository metadata tracking and may show \"No repository metadata\" until reinstalled/updated once via Advanced Plugin Manager."
+msgstr "%d plugin installati prima dell'introduzione dei metadati repository potrebbero mostrare \"Nessun metadato repository\" finché non vengono reinstallati/aggiornati una volta tramite Advanced Plugin Manager."
 
 msgid "%d plugin(s) do not require repository association because they are installed by default."
 msgstr "%d plugin non richiedono l'associazione di un repository perché installati di default."
@@ -41,8 +41,8 @@ msgstr "Associa repository"
 msgid "Author"
 msgstr "Autore"
 
-msgid "Automatic checks"
-msgstr "Controlli automatici"
+msgid "Update checks"
+msgstr "Controlli aggiornamenti"
 
 msgid "Bulk update completed: %d updated, %d failed."
 msgstr "Aggiornamento multiplo completato: %d aggiornati, %d falliti."
@@ -122,8 +122,8 @@ msgstr "Token GitHub eliminato. Le richieste API saranno ora non autenticate."
 msgid "GitHub token saved successfully."
 msgstr "Token GitHub salvato correttamente."
 
-msgid "GitHub update checks run automatically every 24 hours."
-msgstr "I controlli aggiornamenti GitHub vengono eseguiti automaticamente ogni 24 ore."
+msgid "GitHub update checks run only on demand when you use \"Check updates now\" or start a bulk update."
+msgstr "I controlli aggiornamenti GitHub vengono eseguiti solo su richiesta quando usi \"Controlla aggiornamenti ora\" o avvii un aggiornamento massivo."
 
 msgid "Inactive"
 msgstr "Inattivo"
@@ -152,9 +152,6 @@ msgstr "URL GitHub non valido."
 msgid "Invalid plugin slug."
 msgstr "Slug plugin non valido."
 
-msgid "Last automatic check:"
-msgstr "Ultimo controllo automatico:"
-
 msgid "Last manual check:"
 msgstr "Ultimo controllo manuale:"
 
@@ -167,8 +164,6 @@ msgstr "Gestisci"
 msgid "Never"
 msgstr "Mai"
 
-msgid "Next scheduled check:"
-msgstr "Prossimo controllo pianificato:"
 
 msgid "No GitHub repository metadata available for this plugin."
 msgstr "Nessun metadato repository GitHub disponibile per questo plugin."
@@ -296,8 +291,8 @@ msgstr "Link mostrati per pagina nell'admin di YOURLS:"
 msgid "Links-per-page must be an integer between 1 and 999."
 msgstr "Il valore link per pagina deve essere un numero intero tra 1 e 999."
 
-msgid "The plugin \"Custom number of displayed links\" appears to be installed. You can deactivate and delete it, because this feature is now built into Plugin Manager."
-msgstr "Sembra installato il plugin \"Custom number of displayed links\". Puoi disattivarlo ed eliminarlo, perché questa funzione è ora integrata in Plugin Manager."
+msgid "The plugin \"Custom number of displayed links\" appears to be installed. You can deactivate and delete it, because this feature is now built into Advanced Plugin Manager."
+msgstr "Sembra installato il plugin \"Custom number of displayed links\". Puoi disattivarlo ed eliminarlo, perché questa funzione è ora integrata in Advanced Plugin Manager."
 
 msgid "No updates currently available. Run \"Check updates now\" first."
 msgstr "Nessun aggiornamento disponibile al momento. Esegui prima \"Controlla aggiornamenti ora\"."
