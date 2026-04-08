@@ -53,6 +53,12 @@ I plugin predefiniti di YOURLS non richiedono associazione repository, e l'inter
 
 ---
 
+## 🆕 Novità nella 1.1.5
+
+- Notifiche di auto-aggiornamento:
+  - il plugin controlla le proprie release su GitHub e mostra un avviso in dashboard quando è disponibile una versione più recente
+  - il titolo della pagina plugin mostra anche un badge di aggiornamento quando necessario
+
 ## 🆕 Novità nella 1.1.4
 
 - Rafforzato il flusso di cancellazione:
@@ -155,7 +161,7 @@ Utilizza solo funzionalità native PHP — nessuna libreria copyleft o esterna i
 
 ## 💬 Info
 
-Sviluppato con ❤️ dal neurone solitamente in ferie di [Gioxx](https://github.com/gioxx), utilizzando anche ChatGPT per velocizzare parte dello sviluppo e correggere alcune baggianate.
+Sviluppato con ❤️ dal neurone solitamente in ferie di [Gioxx](https://github.com/gioxx), utilizzando anche Codex per velocizzare parte dello sviluppo e correggere alcune baggianate.
 
 ---
 

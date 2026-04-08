@@ -50,6 +50,18 @@
 .ypm-notice { margin:10px 0; padding:10px; border-left:4px solid; }
 .ypm-notice-success { border-left-color:#46b450; background:#e6ffed; }
 .ypm-notice-error { border-left-color:#dc3232; background:#fbeaea; }
+.ypm-update-badge {
+    display:inline-block;
+    margin-left:6px;
+    padding:2px 8px;
+    border-radius:999px;
+    background:#e6f4ff;
+    border:1px solid #8ec5f7;
+    color:#0a4b78;
+    font-size:12px;
+    font-weight:600;
+    vertical-align:middle;
+}
 .plugin-version { font-size:0.85em; color:#666; margin-top:4px; }
 .form-section { margin:20px 0; padding:20px; border:1px solid #ddd; background:#f9f9f9; border-radius:5px; }
 .form-row { margin-bottom:15px; }

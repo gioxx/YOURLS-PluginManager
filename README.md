@@ -53,6 +53,12 @@ Default YOURLS plugins do not require repository association, and the UI now ref
 
 ---
 
+## 🆕 What’s New in 1.1.5
+
+- Self-update notifications:
+  - the plugin now checks its own GitHub releases and shows a dashboard notice when a newer version is available
+  - the plugin page title now shows an update badge when applicable
+
 ## 🆕 What’s New in 1.1.4
 
 - Delete flow hardened:
@@ -155,7 +161,7 @@ It uses only native PHP features — no bundled third-party code or copyleft lib
 
 ## 💬 About
 
-Lovingly developed by the usually-on-vacation brain cell of [Gioxx](https://github.com/gioxx), using ChatGPT to speed up some of the development and correct some rubbish.  
+Lovingly developed by the usually-on-vacation brain cell of [Gioxx](https://github.com/gioxx), using Codex to speed up some of the development and correct some rubbish.  
 
 ---
 

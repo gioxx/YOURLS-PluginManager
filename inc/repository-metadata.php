@@ -221,3 +221,85 @@ function ypm_is_remote_version_newer($local_version, $remote_version) {
 
     return $normalized_remote !== $normalized_local;
 }
+
+function ypm_get_self_update_status($force_refresh = false) {
+    $cached = yourls_get_option('ypm_self_update_status');
+    if (
+        !$force_refresh
+        && is_array($cached)
+        && !empty($cached['checked_at'])
+        && !empty($cached['local_version'])
+        && (string) $cached['local_version'] === (string) YPM_VERSION
+        && (time() - (int) $cached['checked_at']) < 86400
+    ) {
+        return $cached;
+    }
+
+    $token = trim((string) yourls_get_option('ypm_github_token'));
+    $latest = ypm_get_latest_package_info(YPM_GITHUB_OWNER, YPM_GITHUB_REPO, $token);
+    $checked_at = time();
+
+    $status = [
+        'status' => 'error',
+        'local_version' => (string) YPM_VERSION,
+        'remote_version' => '',
+        'checked_at' => $checked_at,
+        'source' => '',
+        'release_url' => YPM_GITHUB_RELEASES_URL,
+        'message' => '',
+    ];
+
+    if (!$latest['success']) {
+        $status['message'] = (string) ($latest['error'] ?? '');
+        yourls_update_option('ypm_self_update_status', $status);
+        return $status;
+    }
+
+    $remote_version = trim((string) $latest['version']);
+    $update_available = ypm_is_remote_version_newer(YPM_VERSION, $remote_version);
+
+    $status = [
+        'status' => $update_available ? 'update_available' : 'up_to_date',
+        'local_version' => (string) YPM_VERSION,
+        'remote_version' => $remote_version,
+        'checked_at' => $checked_at,
+        'source' => (string) $latest['source'],
+        'release_url' => YPM_GITHUB_RELEASES_URL,
+        'message' => '',
+    ];
+
+    yourls_update_option('ypm_self_update_status', $status);
+    return $status;
+}
+
+function ypm_show_self_update_notice() {
+    static $checked = false;
+    static $status = null;
+
+    if (!$checked) {
+        $checked = true;
+        $status = ypm_get_self_update_status();
+    }
+
+    if (!is_array($status) || ($status['status'] ?? '') !== 'update_available') {
+        return;
+    }
+
+    $latest_version = htmlentities((string) ($status['remote_version'] ?? ''));
+    $release_url = yourls_esc_attr((string) ($status['release_url'] ?? YPM_GITHUB_RELEASES_URL));
+
+    echo '<div class="notice notice-info ypm-update-notice">';
+    echo '<p>🆕 <strong>' . yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</strong>: ';
+    echo yourls__('New version available:', 'yourls-plugin-manager') . ' <strong>' . $latest_version . '</strong>! ';
+    echo '<a href="' . $release_url . '" target="_blank" rel="noopener noreferrer">' . yourls__('View details on GitHub', 'yourls-plugin-manager') . '</a></p>';
+    echo '</div>';
+}
+
+function ypm_self_update_page_title_with_badge($title) {
+    $status = ypm_get_self_update_status();
+    if (is_array($status) && ($status['status'] ?? '') === 'update_available') {
+        return $title . ' <span class="ypm-update-badge">' . yourls__('Update available', 'yourls-plugin-manager') . '</span>';
+    }
+
+    return $title;
+}
