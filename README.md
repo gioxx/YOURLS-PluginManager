@@ -53,6 +53,12 @@ Default YOURLS plugins do not require repository association, and the UI now ref
 
 ---
 
+## 🆕 What’s New in 1.1.5
+
+- Self-update notifications:
+  - the plugin now checks its own GitHub releases and shows a dashboard notice when a newer version is available
+  - the plugin page title now shows an update badge when applicable
+
 ## 🆕 What’s New in 1.1.4
 
 - Delete flow hardened:

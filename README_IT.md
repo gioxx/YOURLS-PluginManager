@@ -53,6 +53,12 @@ I plugin predefiniti di YOURLS non richiedono associazione repository, e l'inter
 
 ---
 
+## 🆕 Novità nella 1.1.5
+
+- Notifiche di auto-aggiornamento:
+  - il plugin controlla le proprie release su GitHub e mostra un avviso in dashboard quando è disponibile una versione più recente
+  - il titolo della pagina plugin mostra anche un badge di aggiornamento quando necessario
+
 ## 🆕 Novità nella 1.1.4
 
 - Rafforzato il flusso di cancellazione:

@@ -89,6 +89,9 @@ msgstr "Scarica pacchetto ZIP"
 msgid "Automatic deletion is not possible because YOURLS cannot remove this plugin directory. Delete it manually on the server:"
 msgstr "La cancellazione automatica non è possibile perché YOURLS non riesce a rimuovere questa directory del plugin. Eliminala manualmente sul server:"
 
+msgid "New version available:"
+msgstr "Nuova versione disponibile:"
+
 msgid "Edit Token"
 msgstr "Modifica Token"
 
@@ -263,6 +266,9 @@ msgstr "Aggiorna tutti i disponibili"
 
 msgid "Update available"
 msgstr "Aggiornamento disponibile"
+
+msgid "View details on GitHub"
+msgstr "Vedi i dettagli su GitHub"
 
 msgid "Automatic installation is not possible because YOURLS cannot write to %s. Download the ZIP package below and extract it manually into that directory."
 msgstr "L'installazione automatica non è possibile perché YOURLS non può scrivere in %s. Scarica il pacchetto ZIP qui sotto ed estrailo manualmente in quella directory."

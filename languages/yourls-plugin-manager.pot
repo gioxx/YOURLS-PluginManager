@@ -108,6 +108,10 @@ msgstr ""
 msgid "Automatic deletion is not possible because YOURLS cannot remove this plugin directory. Delete it manually on the server:"
 msgstr ""
 
+#: inc/repository-metadata.php:293
+msgid "New version available:"
+msgstr ""
+
 #: inc/admin-page.php:261
 msgid "Edit Token"
 msgstr ""
@@ -337,6 +341,10 @@ msgstr ""
 
 #: inc/admin-page.php:420
 msgid "Update available"
+msgstr ""
+
+#: inc/repository-metadata.php:294
+msgid "View details on GitHub"
 msgstr ""
 
 msgid "Automatic installation is not possible because YOURLS cannot write to %s. Download the ZIP package below and extract it manually into that directory."
