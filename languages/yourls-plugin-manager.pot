@@ -104,6 +104,10 @@ msgstr ""
 msgid "Download ZIP package"
 msgstr ""
 
+#: inc/admin-page.php:46
+msgid "Automatic deletion is not possible because YOURLS cannot remove this plugin directory. Delete it manually on the server:"
+msgstr ""
+
 #: inc/admin-page.php:261
 msgid "Edit Token"
 msgstr ""

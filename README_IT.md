@@ -53,6 +53,12 @@ I plugin predefiniti di YOURLS non richiedono associazione repository, e l'inter
 
 ---
 
+## 🆕 Novità nella 1.1.4
+
+- Rafforzato il flusso di cancellazione:
+  - la cancellazione automatica ora segnala la directory esatta del plugin quando YOURLS non riesce a rimuoverla
+  - l'admin può eliminare manualmente quella cartella sul server
+
 ## 🆕 Novità nella 1.1.3
 
 - Rafforzato il flusso di installazione:

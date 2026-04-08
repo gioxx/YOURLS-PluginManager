@@ -86,6 +86,9 @@ msgstr "Download fallito."
 msgid "Download ZIP package"
 msgstr "Scarica pacchetto ZIP"
 
+msgid "Automatic deletion is not possible because YOURLS cannot remove this plugin directory. Delete it manually on the server:"
+msgstr "La cancellazione automatica non è possibile perché YOURLS non riesce a rimuovere questa directory del plugin. Eliminala manualmente sul server:"
+
 msgid "Edit Token"
 msgstr "Modifica Token"
 
