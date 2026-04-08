@@ -3,7 +3,7 @@
 Plugin Name: YOURLS Advanced Plugin Manager
 Plugin URI: https://github.com/gioxx/YOURLS-PluginManager
 Description: Download and install plugins from GitHub repositories directly from the YOURLS admin interface.
-Version: 1.1.2
+Version: 1.1.3
 Author: Gioxx
 Author URI: https://gioxx.org
 Text Domain: yourls-plugin-manager
@@ -12,7 +12,7 @@ Domain Path: /languages
 
 if ( !defined( 'YOURLS_ABSPATH' ) ) die();
 
-define( 'YPM_VERSION', '1.1.2' );
+define( 'YPM_VERSION', '1.1.3' );
 
 $ypm_inc = dirname(__FILE__) . '/inc/';
 require_once $ypm_inc . 'helpers.php';

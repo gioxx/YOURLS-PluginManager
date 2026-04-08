@@ -53,6 +53,12 @@ Default YOURLS plugins do not require repository association, and the UI now ref
 
 ---
 
+## 🆕 What’s New in 1.1.3
+
+- Install flow hardened:
+  - automatic extraction now runs only when `user/plugins` is writable by PHP
+  - when permissions are missing, the plugin stops with a clear message and a direct ZIP download link for manual installation
+
 ## 🆕 What’s New in 1.1.2
 
 - Minor consistency fix:

@@ -29,12 +29,19 @@ function ypm_process_github_url($url) {
         ];
     }
 
+    $plugins_dir = YOURLS_USERDIR . '/plugins';
+    if (!is_dir($plugins_dir) || !is_writable($plugins_dir)) {
+        return [
+            'success' => false,
+            'message' => ypm_build_manual_install_message($latest['zip_url'], $plugins_dir, $latest),
+        ];
+    }
+
     $tmp_file = download_url($latest['zip_url'], $token);
     if (!$tmp_file || !is_string($tmp_file) || !file_exists($tmp_file)) {
         return ['success' => false, 'message' => yourls__('Download failed.', 'yourls-plugin-manager')];
     }
 
-    $plugins_dir = YOURLS_USERDIR . '/plugins';
     $zip = new ZipArchive();
     if ($zip->open($tmp_file) === true) {
         $extract_ok = $zip->extractTo($plugins_dir);
@@ -185,4 +192,37 @@ function ypm_process_github_url($url) {
         'success' => true,
         'message' => yourls__('Plugin installed or updated successfully.', 'yourls-plugin-manager'),
     ];
+}
+
+function ypm_build_manual_install_message($zip_url, $plugins_dir, $latest = []) {
+    $plugins_dir = (string) $plugins_dir;
+    $zip_url = (string) $zip_url;
+    $version = '';
+    $source = '';
+
+    if (is_array($latest)) {
+        $version = trim((string) ($latest['version'] ?? ''));
+        $source = trim((string) ($latest['source'] ?? ''));
+    }
+
+    $intro = sprintf(
+        yourls__('Automatic installation is not possible because YOURLS cannot write to %s. Download the ZIP package below and extract it manually into that directory.', 'yourls-plugin-manager'),
+        htmlentities($plugins_dir)
+    );
+    $meta = '';
+    if ($version !== '' || $source !== '') {
+        $meta = sprintf(
+            '<br /><em>%s %s</em>',
+            htmlentities(yourls__('Latest package:', 'yourls-plugin-manager')),
+            htmlentities(trim($version . ($source !== '' ? ' (' . $source . ')' : '')))
+        );
+    }
+
+    return sprintf(
+        '<p>%s%s</p><p><a class="button button-primary" href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
+        $intro,
+        $meta,
+        htmlentities($zip_url),
+        htmlentities(yourls__('Download ZIP package', 'yourls-plugin-manager'))
+    );
 }

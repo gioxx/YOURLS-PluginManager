@@ -53,6 +53,12 @@ I plugin predefiniti di YOURLS non richiedono associazione repository, e l'inter
 
 ---
 
+## 🆕 Novità nella 1.1.3
+
+- Rafforzato il flusso di installazione:
+  - l’estrazione automatica parte solo se `user/plugins` è scrivibile da PHP
+  - in caso contrario il plugin si ferma con un messaggio chiaro e un link diretto al file ZIP per l’installazione manuale
+
 ## 🆕 Novità nella 1.1.2
 
 - Minor fix di coerenza:
