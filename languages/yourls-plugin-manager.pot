@@ -101,6 +101,9 @@ msgstr ""
 msgid "Download failed."
 msgstr ""
 
+msgid "Download ZIP package"
+msgstr ""
+
 #: inc/admin-page.php:261
 msgid "Edit Token"
 msgstr ""
@@ -167,6 +170,9 @@ msgstr ""
 
 #: inc/admin-page.php:408
 msgid "Installed by default"
+msgstr ""
+
+msgid "Latest package:"
 msgstr ""
 
 #: inc/admin-page.php:175
@@ -327,6 +333,9 @@ msgstr ""
 
 #: inc/admin-page.php:420
 msgid "Update available"
+msgstr ""
+
+msgid "Automatic installation is not possible because YOURLS cannot write to %s. Download the ZIP package below and extract it manually into that directory."
 msgstr ""
 
 #: inc/admin-page.php:110
