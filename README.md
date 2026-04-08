@@ -161,7 +161,7 @@ It uses only native PHP features — no bundled third-party code or copyleft lib
 
 ## 💬 About
 
-Lovingly developed by the usually-on-vacation brain cell of [Gioxx](https://github.com/gioxx), using ChatGPT to speed up some of the development and correct some rubbish.  
+Lovingly developed by the usually-on-vacation brain cell of [Gioxx](https://github.com/gioxx), using Codex to speed up some of the development and correct some rubbish.  
 
 ---
 
