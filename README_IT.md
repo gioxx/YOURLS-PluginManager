@@ -161,7 +161,7 @@ Utilizza solo funzionalità native PHP — nessuna libreria copyleft o esterna i
 
 ## 💬 Info
 
-Sviluppato con ❤️ dal neurone solitamente in ferie di [Gioxx](https://github.com/gioxx), utilizzando anche ChatGPT per velocizzare parte dello sviluppo e correggere alcune baggianate.
+Sviluppato con ❤️ dal neurone solitamente in ferie di [Gioxx](https://github.com/gioxx), utilizzando anche Codex per velocizzare parte dello sviluppo e correggere alcune baggianate.
 
 ---
 
