@@ -53,6 +53,12 @@ Default YOURLS plugins do not require repository association, and the UI now ref
 
 ---
 
+## 🆕 What’s New in 1.1.4
+
+- Delete flow hardened:
+  - automatic deletion now reports the exact plugin directory when YOURLS cannot remove it
+  - the admin can delete that folder manually on the server
+
 ## 🆕 What’s New in 1.1.3
 
 - Install flow hardened:

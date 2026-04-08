@@ -43,6 +43,14 @@ function ypm_delete_dir($dir) {
     return rmdir($dir);
 }
 
+function ypm_build_manual_delete_message($path) {
+    return sprintf(
+        '<p>%s</p><p><code>%s</code></p>',
+        yourls__('Automatic deletion is not possible because YOURLS cannot remove this plugin directory. Delete it manually on the server:', 'yourls-plugin-manager'),
+        htmlentities($path)
+    );
+}
+
 function ypm_render_plugin_page() {
     $admin_css = ypm_asset_url('assets/admin.css');
     if ($admin_css !== '') {
@@ -119,7 +127,7 @@ function ypm_render_plugin_page() {
                 'success' => $success,
                 'message' => $success
                     ? yourls__('Plugin deleted successfully.', 'yourls-plugin-manager')
-                    : yourls__('Failed to delete plugin.', 'yourls-plugin-manager'),
+                    : ypm_build_manual_delete_message($path),
             ];
         }
         $message = $result['message'];
