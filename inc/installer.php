@@ -1,6 +1,6 @@
 <?php
 
-function ypm_process_github_url($url) {
+function ypm_process_github_url($url, $branch = '', $version = '') {
     if (!class_exists('ZipArchive')) {
         return [
             'success' => false,
@@ -17,7 +17,7 @@ function ypm_process_github_url($url) {
     $repo = $parsed['repo'];
     $token = trim((string) yourls_get_option('ypm_github_token'));
 
-    $latest = ypm_get_latest_package_info($owner, $repo, $token);
+    $latest = ypm_resolve_package_info($owner, $repo, $token, $branch, $version);
     if (!$latest['success']) {
         return [
             'success' => false,

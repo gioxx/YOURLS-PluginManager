@@ -167,7 +167,7 @@ function ypm_check_single_plugin_update($slug, $token = '') {
         ];
     }
 
-    $latest = ypm_get_latest_package_info($repo_data['owner'], $repo_data['repo'], $token);
+    $latest = ypm_resolve_package_info($repo_data['owner'], $repo_data['repo'], $token);
     if (!$latest['success']) {
         return [
             'status' => 'error',
@@ -175,6 +175,19 @@ function ypm_check_single_plugin_update($slug, $token = '') {
             'checked_at' => time(),
             'source' => '',
             'message' => (string) $latest['error'],
+        ];
+    }
+
+    // No release/tag available → we fell back to the default branch source code.
+    // Mark this plugin so the UI can offer an "Update from source" button while
+    // making it obvious that semantic version comparison isn't meaningful here.
+    if (($latest['source'] ?? '') === 'branch') {
+        return [
+            'status' => 'source_only',
+            'remote_version' => trim((string) $latest['version']),
+            'checked_at' => time(),
+            'source' => 'branch',
+            'message' => '',
         ];
     }
 

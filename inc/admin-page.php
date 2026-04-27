@@ -77,7 +77,67 @@ function ypm_render_plugin_page() {
 
     if (isset($_POST['ypm_github_url']) && yourls_verify_nonce('ypm_install_plugin')) {
         $repo_url = trim((string) $_POST['ypm_github_url']);
-        $result = ypm_process_github_url($repo_url);
+        $branch = trim((string) ($_POST['ypm_github_branch'] ?? ''));
+        $version = trim((string) ($_POST['ypm_github_version'] ?? ''));
+        $result = ypm_process_github_url($repo_url, $branch, $version);
+        $message = $result['message'];
+    }
+
+    $self_deactivated_redirect = '';
+    if (isset($_POST['ypm_toggle_plugin']) && yourls_verify_nonce('ypm_toggle_plugin')) {
+        $slug = basename((string) $_POST['ypm_toggle_plugin']);
+        $action = (string) ($_POST['ypm_toggle_action'] ?? '');
+        if (!preg_match('/^[a-zA-Z0-9._-]+$/', $slug)) {
+            $result = ['success' => false, 'message' => yourls__('Invalid plugin slug.', 'yourls-plugin-manager')];
+        } else {
+            $plugin_file = $slug . '/plugin.php';
+            if ($action === 'activate') {
+                $activate_result = yourls_activate_plugin($plugin_file);
+                if ($activate_result === true) {
+                    $result = ['success' => true, 'message' => yourls__('Plugin activated successfully.', 'yourls-plugin-manager')];
+                } else {
+                    $result = ['success' => false, 'message' => is_string($activate_result) ? $activate_result : yourls__('Failed to activate plugin.', 'yourls-plugin-manager')];
+                }
+            } elseif ($action === 'deactivate') {
+                $is_self = (basename(dirname(__DIR__)) === $slug);
+                $deactivate_result = yourls_deactivate_plugin($plugin_file);
+                if ($deactivate_result === true) {
+                    if ($is_self) {
+                        // Headers are already sent inside a registered plugin page, so
+                        // redirect with HTML/JS instead of yourls_redirect().
+                        $self_deactivated_redirect = yourls_admin_url('plugins.php?success=deactivated');
+                    }
+                    $result = ['success' => true, 'message' => yourls__('Plugin deactivated successfully.', 'yourls-plugin-manager')];
+                } else {
+                    $result = ['success' => false, 'message' => is_string($deactivate_result) ? $deactivate_result : yourls__('Failed to deactivate plugin.', 'yourls-plugin-manager')];
+                }
+            } else {
+                $result = ['success' => false, 'message' => yourls__('Unknown plugin action.', 'yourls-plugin-manager')];
+            }
+        }
+        $message = $result['message'];
+    }
+
+    if ($self_deactivated_redirect !== '') {
+        echo '<meta http-equiv="refresh" content="1;url=' . htmlentities($self_deactivated_redirect) . '" />';
+        echo '<script>window.location.replace(' . json_encode($self_deactivated_redirect) . ');</script>';
+    }
+
+    if (isset($_POST['ypm_check_single']) && yourls_verify_nonce('ypm_check_single')) {
+        $slug = basename((string) $_POST['ypm_check_single']);
+        if (!preg_match('/^[a-zA-Z0-9._-]+$/', $slug)) {
+            $result = ['success' => false, 'message' => yourls__('Invalid plugin slug.', 'yourls-plugin-manager')];
+        } else {
+            ypm_auto_associate_repo_bindings([$slug]);
+            $token = trim((string) yourls_get_option('ypm_github_token'));
+            $status = ypm_check_single_plugin_update($slug, $token);
+            ypm_set_update_status($slug, $status);
+            yourls_update_option('ypm_last_manual_check_at', time());
+            $result = [
+                'success' => true,
+                'message' => sprintf(yourls__('Update check completed for "%s".', 'yourls-plugin-manager'), htmlentities($slug)),
+            ];
+        }
         $message = $result['message'];
     }
 
@@ -334,9 +394,25 @@ function ypm_render_plugin_page() {
     echo '<form method="post" id="github-plugin-form">';
     echo '<label for="ypm_github_url"><strong>' . yourls__('GitHub Repository URL:', 'yourls-plugin-manager') . '</strong></label><br>';
     echo '<small class="ypm-help-text ypm-help-install">'
-        . yourls__('Insert a public GitHub repository URL (owner/repo). The plugin downloads the latest Release package, or falls back to the latest Tag when no Release is available.', 'yourls-plugin-manager')
+        . yourls__('Insert a public GitHub repository URL (owner/repo). When Branch and Release are empty, the plugin downloads the latest Release, falls back to the latest Tag, then falls back to the default branch.', 'yourls-plugin-manager')
         . '</small>';
-    echo '<input type="url" name="ypm_github_url" id="ypm_github_url" size="70" placeholder="https://github.com/username/plugin" required class="ypm-install-url" />';
+    echo '<div class="ypm-install-grid">';
+    echo '<div class="ypm-install-field ypm-install-field-url">';
+    echo '<label for="ypm_github_url" class="ypm-install-label">' . yourls__('Repository URL', 'yourls-plugin-manager') . '</label>';
+    echo '<input type="url" name="ypm_github_url" id="ypm_github_url" placeholder="https://github.com/username/plugin" required class="ypm-install-url" />';
+    echo '</div>';
+    echo '<div class="ypm-install-field ypm-install-field-branch">';
+    echo '<label for="ypm_github_branch" class="ypm-install-label">' . yourls__('Branch (optional)', 'yourls-plugin-manager') . '</label>';
+    echo '<input type="text" name="ypm_github_branch" id="ypm_github_branch" placeholder="' . yourls_esc_attr(yourls__('main / master', 'yourls-plugin-manager')) . '" class="ypm-install-branch" />';
+    echo '</div>';
+    echo '<div class="ypm-install-field ypm-install-field-version">';
+    echo '<label for="ypm_github_version" class="ypm-install-label">' . yourls__('Release version (optional)', 'yourls-plugin-manager') . '</label>';
+    echo '<input type="text" name="ypm_github_version" id="ypm_github_version" placeholder="' . yourls_esc_attr(yourls__('latest', 'yourls-plugin-manager')) . '" class="ypm-install-version" />';
+    echo '</div>';
+    echo '</div>';
+    echo '<small class="ypm-help-text ypm-help-install ypm-help-install-secondary">'
+        . yourls__('When a Release version is set it takes priority. When only a Branch is set the source code at that branch is downloaded.', 'yourls-plugin-manager')
+        . '</small>';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_install_plugin') . '" />';
     echo '<div class="ypm-submit-row"><input type="submit" value="📦 ' . yourls__('Download and Install Plugin', 'yourls-plugin-manager') . '" class="button button-primary" /></div>';
     echo '</form>';
@@ -357,7 +433,7 @@ function ypm_render_plugin_page() {
         . '</small>';
     echo '<div class="ypm-token-input-row">';
     echo '<input type="password" name="ypm_github_token" id="ypm_github_token" class="ypm-token-input" value="' . yourls_esc_attr($stored_token) . '" ' . ($has_token && !$force_edit_token ? 'readonly' : '') . ' />';
-    echo '<button type="button" class="button ypm-token-toggle ypm-token-visibility-toggle">👁</button>';
+    echo '<input type="button" class="button ypm-token-toggle ypm-token-visibility-toggle" value="👁" aria-label="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" />';
     echo '</div>';
     echo '</div>';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_save_token') . '" />';
@@ -404,11 +480,11 @@ function ypm_render_plugin_page() {
     echo '<h1 class="ypm-section-title">' . yourls__('Installed Plugins', 'yourls-plugin-manager') . '</h1>';
     echo '<div class="ypm-installed-actions">';
     echo '<form method="get" action="' . yourls_esc_attr(yourls_admin_url('plugins.php')) . '">';
-    echo '<button type="submit" class="button">🧩 ' . yourls__('Manage', 'yourls-plugin-manager') . '</button>';
+    echo '<input type="submit" class="button" value="🧩 ' . yourls_esc_attr(yourls__('Manage', 'yourls-plugin-manager')) . '" />';
     echo '</form>';
     echo '<form method="post">';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_updates') . '" />';
-    echo '<button type="submit" name="ypm_check_updates" class="button">🔎 ' . yourls__('Check updates now', 'yourls-plugin-manager') . '</button>';
+    echo '<input type="submit" name="ypm_check_updates" class="button" value="🔎 ' . yourls_esc_attr(yourls__('Check updates now', 'yourls-plugin-manager')) . '" />';
     echo '</form>';
     echo '<form method="post">';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_all') . '" />';
@@ -416,7 +492,7 @@ function ypm_render_plugin_page() {
         ? sprintf(yourls__('Update all available (%d)', 'yourls-plugin-manager'), $available_updates_count)
         : yourls__('Update all available', 'yourls-plugin-manager');
     $update_all_disabled_attr = $available_updates_count > 0 ? '' : ' disabled title="' . yourls_esc_attr(yourls__('No updates currently available. Run "Check updates now" first.', 'yourls-plugin-manager')) . '"';
-    echo '<button type="submit" name="ypm_update_all" class="button"' . $update_all_disabled_attr . '>⬆️ ' . $update_all_label . '</button>';
+    echo '<input type="submit" name="ypm_update_all" class="button" value="⬆️ ' . yourls_esc_attr($update_all_label) . '"' . $update_all_disabled_attr . ' />';
     echo '</form>';
     echo '</div>';
     echo '</div>';
@@ -467,6 +543,7 @@ function ypm_render_plugin_page() {
         $header_version = ypm_get_plugin_header_value_from_file($plugin_file, 'Version');
         $header_author = ypm_get_plugin_header_value_from_file($plugin_file, 'Author');
         $header_plugin_uri = ypm_get_plugin_header_value_from_file($plugin_file, 'Plugin URI');
+        $header_author_uri = ypm_get_plugin_header_value_from_file($plugin_file, 'Author URI');
 
         if ($header_name !== '') {
             $name = $header_name;
@@ -480,6 +557,7 @@ function ypm_render_plugin_page() {
         if ($header_plugin_uri !== '') {
             $plugin_uri = $header_plugin_uri;
         }
+        $author_uri = $header_author_uri !== '' ? $header_author_uri : '';
 
         if ($name === 'unknown') {
             $name = yourls__('Unknown Plugin', 'yourls-plugin-manager');
@@ -496,6 +574,7 @@ function ypm_render_plugin_page() {
             'name' => $name,
             'version' => $version,
             'author' => $author,
+            'author_uri' => $author_uri,
             'plugin_uri' => $plugin_uri,
         ];
     }
@@ -557,6 +636,8 @@ function ypm_render_plugin_page() {
                 $update_badge = '<br><span class="ypm-status-update-available">' . yourls__('Update available', 'yourls-plugin-manager') . ($remote_version !== '' ? ': ' . htmlentities($remote_version) : '') . '</span>';
             } elseif ($update_status['status'] === 'up_to_date') {
                 $update_badge = '<br><span class="ypm-status-up-to-date">' . yourls__('Up to date', 'yourls-plugin-manager') . '</span>';
+            } elseif ($update_status['status'] === 'source_only') {
+                $update_badge = '<br><span class="ypm-status-source-only">' . yourls__('Source code only (no GitHub release)', 'yourls-plugin-manager') . ($remote_version !== '' ? ': ' . htmlentities($remote_version) : '') . '</span>';
             } elseif ($update_status['status'] === 'no_repo' && !$is_default_plugin) {
                 $update_badge = '<br><span class="ypm-status-no-repo">' . yourls__('No repository metadata', 'yourls-plugin-manager') . '</span>';
             } elseif ($update_status['status'] === 'error') {
@@ -582,7 +663,13 @@ function ypm_render_plugin_page() {
             $plugin_name_html = '<a href="' . htmlentities($plugin_uri) . '" target="_blank" rel="noopener noreferrer" class="ypm-plugin-name-link">' . $plugin_name_html . '</a>';
         }
         echo '<td>' . $plugin_name_html . '</td>';
-        echo '<td>' . htmlentities($plugin['author']) . '</td>';
+
+        $author_html = htmlentities($plugin['author']);
+        $author_uri = isset($plugin['author_uri']) ? trim((string) $plugin['author_uri']) : '';
+        if ($author_uri !== '' && filter_var($author_uri, FILTER_VALIDATE_URL)) {
+            $author_html = '<a href="' . htmlentities($author_uri) . '" target="_blank" rel="noopener noreferrer" class="ypm-plugin-author-link">' . $author_html . '</a>';
+        }
+        echo '<td>' . $author_html . '</td>';
         echo '<td>' . htmlentities($plugin['version']) . '</td>';
         echo '<td>' . $plugin['last_updated'] . $update_badge . $update_details . '</td>';
         echo '<td>';
@@ -592,41 +679,63 @@ function ypm_render_plugin_page() {
         echo '</td>';
 
         echo '<td class="ypm-actions-cell">';
-        if ($update_status && isset($update_status['status']) && $update_status['status'] === 'update_available') {
+        $current_status = $update_status['status'] ?? '';
+        if ($current_status === 'update_available' || $current_status === 'source_only') {
+            $update_label = $current_status === 'source_only'
+                ? yourls__('Reinstall from source', 'yourls-plugin-manager')
+                : yourls__('Update', 'yourls-plugin-manager');
             echo '<form method="post" class="ypm-inline-form ypm-inline-form-spaced ypm-update-form">';
             echo '<input type="hidden" name="ypm_update_plugin" value="' . $plugin['slug'] . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_plugin') . '" />';
-            echo '<input type="submit" class="button ypm-update-button" value="⬆️ ' . yourls__('Update', 'yourls-plugin-manager') . '" />';
+            echo '<input type="submit" class="button ypm-update-button" value="⬆️ ' . htmlentities($update_label) . '" />';
             echo '</form>';
         }
 
         echo '<div class="ypm-actions-row">';
+
+        $toggle_action = $is_active ? 'deactivate' : 'activate';
+        $toggle_label = $is_active ? yourls__('Deactivate', 'yourls-plugin-manager') : yourls__('Activate', 'yourls-plugin-manager');
+        $toggle_icon = $is_active ? '⏻' : '▶';
+        $toggle_class = $is_active ? 'ypm-toggle-deactivate' : 'ypm-toggle-activate';
+        $is_self_toggle = (basename(dirname(__DIR__)) === $plugin['slug']) && $is_active;
+        $confirm_attr = '';
+        if ($is_self_toggle) {
+            $confirm_attr = ' data-confirm-message="' . yourls_esc_attr(yourls__('Deactivating Advanced Plugin Manager will remove this admin page. You will need to reactivate it from the standard YOURLS plugins page. Continue?', 'yourls-plugin-manager')) . '"';
+            $toggle_class .= ' ypm-confirm';
+        }
+        echo '<form method="post" class="ypm-inline-form">';
+        echo '<input type="hidden" name="ypm_toggle_plugin" value="' . htmlentities($plugin['slug']) . '" />';
+        echo '<input type="hidden" name="ypm_toggle_action" value="' . $toggle_action . '" />';
+        echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_toggle_plugin') . '" />';
+        echo '<input type="submit" class="button ypm-toggle-button ' . $toggle_class . '"' . $confirm_attr . ' title="' . yourls_esc_attr($toggle_label) . '" value="' . yourls_esc_attr($toggle_icon . ' ' . $toggle_label) . '" />';
+        echo '</form>';
+
+        if (!$is_default_plugin) {
+            echo '<form method="post" class="ypm-inline-form">';
+            echo '<input type="hidden" name="ypm_check_single" value="' . htmlentities($plugin['slug']) . '" />';
+            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_single') . '" />';
+            echo '<input type="submit" class="button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" value="🔎" />';
+            echo '</form>';
+        }
+
         if ($repo_data && !$is_default_plugin) {
-            echo '<button type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" data-repo-url="' . yourls_esc_attr((string) ($repo_data['url'] ?? '')) . '">';
-            echo '<img src="https://github.githubassets.com/favicons/favicon.png" alt="" class="ypm-github-btn-icon" />';
-            echo '<span>' . yourls__('Change repo', 'yourls-plugin-manager') . '</span>';
-            echo '</button>';
+            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" data-repo-url="' . yourls_esc_attr((string) ($repo_data['url'] ?? '')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Change repo', 'yourls-plugin-manager')) . '" />';
         } elseif (!$repo_data && !$is_default_plugin) {
-            echo '<button type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '">';
-            echo '<img src="https://github.githubassets.com/favicons/favicon.png" alt="" class="ypm-github-btn-icon" />';
-            echo '<span>' . yourls__('Associate repo', 'yourls-plugin-manager') . '</span>';
-            echo '</button>';
+            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" value="🔗 ' . yourls_esc_attr(yourls__('Associate repo', 'yourls-plugin-manager')) . '" />';
         } elseif (!$repo_data && $is_default_plugin) {
-            echo '<button type="button" class="button ypm-open-associate" disabled title="' . yourls_esc_attr(yourls__('Repository association not needed for default plugins.', 'yourls-plugin-manager')) . '">';
-            echo '<img src="https://github.githubassets.com/favicons/favicon.png" alt="" class="ypm-github-btn-icon" />';
-            echo '<span>' . yourls__('Associate repo', 'yourls-plugin-manager') . '</span>';
-            echo '</button>';
+            echo '<input type="button" class="button ypm-open-associate" disabled title="' . yourls_esc_attr(yourls__('Repository association not needed for default plugins.', 'yourls-plugin-manager')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Associate repo', 'yourls-plugin-manager')) . '" />';
         }
 
         echo '<form method="post" class="ypm-inline-form">';
         echo '<input type="hidden" name="ypm_delete_plugin" value="' . $plugin['slug'] . '" />';
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_delete_plugin') . '" />';
-        if ($plugin['slug'] === 'yourls-plugin-manager') {
-            echo '<button type="submit" class="button ypm-delete-icon-button" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" disabled><span class="ypm-delete-icon" aria-hidden="true">🗑</span></button>';
+        $is_self_plugin = (basename(dirname(__DIR__)) === $plugin['slug']);
+        if ($is_self_plugin) {
+            echo '<input type="submit" class="button ypm-delete-icon-button" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
         } elseif ($is_active) {
-            echo '<button type="submit" class="button ypm-delete-icon-button" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager') . '" disabled><span class="ypm-delete-icon" aria-hidden="true">🗑</span></button>';
+            echo '<input type="submit" class="button ypm-delete-icon-button" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
         } else {
-            echo '<button type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '"><span class="ypm-delete-icon" aria-hidden="true">🗑</span></button>';
+            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑" />';
         }
         echo '</form>';
         echo '</div>';
@@ -656,7 +765,7 @@ function ypm_render_plugin_page() {
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_associate_repo') . '" />';
     echo '<input type="url" name="ypm_associate_repo_url" id="ypm-associate-repo-url" class="ypm-associate-input ypm-associate-input-modal" placeholder="https://github.com/owner/repo" required />';
     echo '<div class="ypm-modal-actions">';
-    echo '<button type="button" class="button ypm-modal-close-action ypm-modal-secondary-button">' . yourls__('Cancel', 'yourls-plugin-manager') . '</button>';
+    echo '<input type="button" class="button ypm-modal-close-action ypm-modal-secondary-button" value="' . yourls_esc_attr(yourls__('Cancel', 'yourls-plugin-manager')) . '" />';
     echo '<input type="submit" name="ypm_associate_repo_submit" class="button button-primary" value="🔗 ' . yourls__('Associate repo', 'yourls-plugin-manager') . '" />';
     echo '</div>';
     echo '</form>';
