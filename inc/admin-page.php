@@ -10,63 +10,6 @@ function ypm_register_plugin_page() {
     );
 }
 
-// Hook: handle activate/deactivate actions before any page output, so we can
-// redirect on self-deactivation. Runs on plugins_loaded so headers are still
-// open. We only act when our plugin manager page is the target of a POST.
-yourls_add_action('plugins_loaded', 'ypm_handle_early_actions');
-function ypm_handle_early_actions() {
-    if (!isset($_GET['page']) || $_GET['page'] !== 'plugin_manager') {
-        return;
-    }
-    if (!isset($_POST['ypm_toggle_plugin']) || !yourls_verify_nonce('ypm_toggle_plugin', $_POST['nonce'] ?? '')) {
-        return;
-    }
-
-    $slug = basename((string) $_POST['ypm_toggle_plugin']);
-    $action = (string) ($_POST['ypm_toggle_action'] ?? '');
-    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $slug)) {
-        ypm_store_toggle_message(false, yourls__('Invalid plugin slug.', 'yourls-plugin-manager'));
-        return;
-    }
-
-    $plugin_file = $slug . '/plugin.php';
-    if ($action === 'activate') {
-        $activate_result = yourls_activate_plugin($plugin_file);
-        if ($activate_result === true) {
-            ypm_store_toggle_message(true, yourls__('Plugin activated successfully.', 'yourls-plugin-manager'));
-        } else {
-            ypm_store_toggle_message(false, is_string($activate_result) ? $activate_result : yourls__('Failed to activate plugin.', 'yourls-plugin-manager'));
-        }
-    } elseif ($action === 'deactivate') {
-        $is_self = (basename(dirname(__DIR__)) === $slug);
-        $deactivate_result = yourls_deactivate_plugin($plugin_file);
-        if ($deactivate_result === true) {
-            if ($is_self) {
-                yourls_redirect(yourls_admin_url('plugins.php?success=deactivated'), 302);
-                exit;
-            }
-            ypm_store_toggle_message(true, yourls__('Plugin deactivated successfully.', 'yourls-plugin-manager'));
-        } else {
-            ypm_store_toggle_message(false, is_string($deactivate_result) ? $deactivate_result : yourls__('Failed to deactivate plugin.', 'yourls-plugin-manager'));
-        }
-    } else {
-        ypm_store_toggle_message(false, yourls__('Unknown plugin action.', 'yourls-plugin-manager'));
-    }
-}
-
-function ypm_store_toggle_message($success, $message) {
-    $GLOBALS['ypm_toggle_message'] = ['success' => (bool) $success, 'message' => (string) $message];
-}
-
-function ypm_consume_toggle_message() {
-    if (!isset($GLOBALS['ypm_toggle_message'])) {
-        return null;
-    }
-    $msg = $GLOBALS['ypm_toggle_message'];
-    unset($GLOBALS['ypm_toggle_message']);
-    return $msg;
-}
-
 // Admin page content
 yourls_add_action('plugins_loaded', 'ypm_load_textdomain');
 function ypm_load_textdomain() {
@@ -140,10 +83,44 @@ function ypm_render_plugin_page() {
         $message = $result['message'];
     }
 
-    $toggle_message = ypm_consume_toggle_message();
-    if ($toggle_message !== null) {
-        $result = $toggle_message;
+    $self_deactivated_redirect = '';
+    if (isset($_POST['ypm_toggle_plugin']) && yourls_verify_nonce('ypm_toggle_plugin')) {
+        $slug = basename((string) $_POST['ypm_toggle_plugin']);
+        $action = (string) ($_POST['ypm_toggle_action'] ?? '');
+        if (!preg_match('/^[a-zA-Z0-9._-]+$/', $slug)) {
+            $result = ['success' => false, 'message' => yourls__('Invalid plugin slug.', 'yourls-plugin-manager')];
+        } else {
+            $plugin_file = $slug . '/plugin.php';
+            if ($action === 'activate') {
+                $activate_result = yourls_activate_plugin($plugin_file);
+                if ($activate_result === true) {
+                    $result = ['success' => true, 'message' => yourls__('Plugin activated successfully.', 'yourls-plugin-manager')];
+                } else {
+                    $result = ['success' => false, 'message' => is_string($activate_result) ? $activate_result : yourls__('Failed to activate plugin.', 'yourls-plugin-manager')];
+                }
+            } elseif ($action === 'deactivate') {
+                $is_self = (basename(dirname(__DIR__)) === $slug);
+                $deactivate_result = yourls_deactivate_plugin($plugin_file);
+                if ($deactivate_result === true) {
+                    if ($is_self) {
+                        // Headers are already sent inside a registered plugin page, so
+                        // redirect with HTML/JS instead of yourls_redirect().
+                        $self_deactivated_redirect = yourls_admin_url('plugins.php?success=deactivated');
+                    }
+                    $result = ['success' => true, 'message' => yourls__('Plugin deactivated successfully.', 'yourls-plugin-manager')];
+                } else {
+                    $result = ['success' => false, 'message' => is_string($deactivate_result) ? $deactivate_result : yourls__('Failed to deactivate plugin.', 'yourls-plugin-manager')];
+                }
+            } else {
+                $result = ['success' => false, 'message' => yourls__('Unknown plugin action.', 'yourls-plugin-manager')];
+            }
+        }
         $message = $result['message'];
+    }
+
+    if ($self_deactivated_redirect !== '') {
+        echo '<meta http-equiv="refresh" content="1;url=' . htmlentities($self_deactivated_redirect) . '" />';
+        echo '<script>window.location.replace(' . json_encode($self_deactivated_redirect) . ');</script>';
     }
 
     if (isset($_POST['ypm_check_single']) && yourls_verify_nonce('ypm_check_single')) {
@@ -659,6 +636,8 @@ function ypm_render_plugin_page() {
                 $update_badge = '<br><span class="ypm-status-update-available">' . yourls__('Update available', 'yourls-plugin-manager') . ($remote_version !== '' ? ': ' . htmlentities($remote_version) : '') . '</span>';
             } elseif ($update_status['status'] === 'up_to_date') {
                 $update_badge = '<br><span class="ypm-status-up-to-date">' . yourls__('Up to date', 'yourls-plugin-manager') . '</span>';
+            } elseif ($update_status['status'] === 'source_only') {
+                $update_badge = '<br><span class="ypm-status-source-only">' . yourls__('Source code only (no GitHub release)', 'yourls-plugin-manager') . ($remote_version !== '' ? ': ' . htmlentities($remote_version) : '') . '</span>';
             } elseif ($update_status['status'] === 'no_repo' && !$is_default_plugin) {
                 $update_badge = '<br><span class="ypm-status-no-repo">' . yourls__('No repository metadata', 'yourls-plugin-manager') . '</span>';
             } elseif ($update_status['status'] === 'error') {
@@ -700,11 +679,15 @@ function ypm_render_plugin_page() {
         echo '</td>';
 
         echo '<td class="ypm-actions-cell">';
-        if ($update_status && isset($update_status['status']) && $update_status['status'] === 'update_available') {
+        $current_status = $update_status['status'] ?? '';
+        if ($current_status === 'update_available' || $current_status === 'source_only') {
+            $update_label = $current_status === 'source_only'
+                ? yourls__('Reinstall from source', 'yourls-plugin-manager')
+                : yourls__('Update', 'yourls-plugin-manager');
             echo '<form method="post" class="ypm-inline-form ypm-inline-form-spaced ypm-update-form">';
             echo '<input type="hidden" name="ypm_update_plugin" value="' . $plugin['slug'] . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_plugin') . '" />';
-            echo '<input type="submit" class="button ypm-update-button" value="⬆️ ' . yourls__('Update', 'yourls-plugin-manager') . '" />';
+            echo '<input type="submit" class="button ypm-update-button" value="⬆️ ' . htmlentities($update_label) . '" />';
             echo '</form>';
         }
 

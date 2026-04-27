@@ -1,19 +1,23 @@
 /*
  * YOURLS Advanced Plugin Manager admin styles.
  *
- * Strategy:
- * - Use CSS variables with light defaults so the page looks good on stock YOURLS.
- * - Re-define those variables under @media (prefers-color-scheme: dark) AND
- *   under body.ypm-sleeky-dark so the page remains readable on themes like
- *   Sleeky (which forces input/text colors with !important).
- * - Avoid !important on .button rules so themes such as Sleeky can re-skin
- *   buttons consistently with the rest of the admin UI.
+ * Theme strategy:
+ * - Default values target vanilla YOURLS (light page on white background).
+ * - We do NOT auto-switch to dark via prefers-color-scheme. YOURLS itself is
+ *   light by default and ignores OS dark mode, so honoring prefers-color-scheme
+ *   here would leave us with a dark plugin panel inside a light YOURLS shell.
+ * - Dark variants kick in only when we explicitly detect a dark admin theme
+ *   (currently Sleeky in dark mode), via the body.ypm-sleeky-dark class added
+ *   by admin.js after reading <meta name="sleeky_theme">.
+ * - !important is used on input borders because Sleeky strips them with
+ *   border:none !important; without !important on our side the inputs become
+ *   invisible borderless boxes.
  */
 
 :root {
     --ypm-fg: #1f2328;
     --ypm-fg-muted: #555;
-    --ypm-fg-faint: #666;
+    --ypm-fg-faint: #6b6b6b;
     --ypm-link: #0a4b78;
     --ypm-link-strong: #003b63;
     --ypm-bg: #ffffff;
@@ -24,7 +28,8 @@
     --ypm-border: #dcdcde;
     --ypm-border-strong: #c3dff3;
     --ypm-border-accent: #72aee6;
-    --ypm-border-accent-soft: #c3dff3;
+    --ypm-input-border: #c0c4c8;
+    --ypm-input-border-focus: #72aee6;
     --ypm-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
     --ypm-modal-overlay: rgba(18, 32, 45, 0.48);
     --ypm-success-bg: #e6ffed;
@@ -36,33 +41,7 @@
     --ypm-warn-text: #5c3b00;
     --ypm-info-bg: #eef6ff;
     --ypm-update-badge-bg: #e6f4ff;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --ypm-fg: #ececec;
-        --ypm-fg-muted: #b9b9b9;
-        --ypm-fg-faint: #9a9a9a;
-        --ypm-link: #6cb6f0;
-        --ypm-link-strong: #b3d8f5;
-        --ypm-bg: #242424;
-        --ypm-bg-soft: #2a2a2a;
-        --ypm-bg-section: #1f2a36;
-        --ypm-bg-row-odd: #2a2a2a;
-        --ypm-bg-row-even: #242424;
-        --ypm-border: #3a3a3a;
-        --ypm-border-strong: #3d556e;
-        --ypm-border-accent: #4f7ea8;
-        --ypm-border-accent-soft: #3d556e;
-        --ypm-shadow: 0 14px 36px rgba(0, 0, 0, 0.6);
-        --ypm-modal-overlay: rgba(0, 0, 0, 0.6);
-        --ypm-success-bg: #1d3a2a;
-        --ypm-error-bg: #3a1d1d;
-        --ypm-warn-bg: #3a2e1d;
-        --ypm-warn-text: #f5c87a;
-        --ypm-info-bg: #1f2a36;
-        --ypm-update-badge-bg: #1f2a36;
-    }
+    --ypm-source-only-fg: #7c5dbd;
 }
 
 body.ypm-sleeky-dark {
@@ -79,7 +58,8 @@ body.ypm-sleeky-dark {
     --ypm-border: #3a3a3a;
     --ypm-border-strong: #3d556e;
     --ypm-border-accent: #4f7ea8;
-    --ypm-border-accent-soft: #3d556e;
+    --ypm-input-border: rgba(255, 255, 255, 0.35);
+    --ypm-input-border-focus: #6cb6f0;
     --ypm-shadow: 0 14px 36px rgba(0, 0, 0, 0.6);
     --ypm-modal-overlay: rgba(0, 0, 0, 0.6);
     --ypm-success-bg: #1d3a2a;
@@ -88,6 +68,7 @@ body.ypm-sleeky-dark {
     --ypm-warn-text: #f5c87a;
     --ypm-info-bg: #1f2a36;
     --ypm-update-badge-bg: #1f2a36;
+    --ypm-source-only-fg: #b39ad6;
 }
 
 /* Header */
@@ -160,7 +141,6 @@ body.ypm-sleeky-dark {
     border-radius:4px;
 }
 .ypm-meta-time { color:var(--ypm-link); }
-.ypm-next-check-row { margin-top:4px; }
 .ypm-installed-meta-note { margin:8px 0 10px; font-size:12px; color:inherit; opacity:0.85; }
 .ypm-installed-meta-summary { margin:0 0 8px; font-size:12px; color:inherit; }
 
@@ -215,8 +195,34 @@ body.ypm-sleeky-dark {
 }
 .ypm-settings-alert-icon { margin-right:4px; }
 
-.ypm-install-url { margin-top:5px; padding:5px; }
-.ypm-submit-row { margin-top:8px; }
+/* Inputs — force a visible outline regardless of theme.
+   !important is required because Sleeky uses `input { border: none !important; }`. */
+.ypm-install-grid input[type="url"],
+.ypm-install-grid input[type="text"],
+.ypm-token-input,
+.ypm-associate-input,
+.ypm-modal-form input[type="url"],
+.ypm-modal-form input[type="text"],
+#ypm_links_per_page {
+    border:1px solid var(--ypm-input-border) !important;
+    border-radius:6px !important;
+    padding:8px 10px !important;
+    box-sizing:border-box;
+    transition:border-color .15s ease;
+}
+.ypm-install-grid input[type="url"]:focus,
+.ypm-install-grid input[type="text"]:focus,
+.ypm-token-input:focus,
+.ypm-associate-input:focus,
+.ypm-modal-form input[type="url"]:focus,
+.ypm-modal-form input[type="text"]:focus,
+#ypm_links_per_page:focus {
+    border-color:var(--ypm-input-border-focus) !important;
+    outline:none;
+}
+
+.ypm-install-url { margin-top:5px; }
+.ypm-submit-row { margin-top:10px; }
 
 /* Plugin install grid: URL + Branch + Version side by side */
 .ypm-install-grid {
@@ -229,21 +235,17 @@ body.ypm-sleeky-dark {
 .ypm-install-label {
     font-weight:600;
     font-size:12px;
-    margin-bottom:3px;
+    margin-bottom:4px;
     color:inherit;
     opacity:0.85;
 }
 .ypm-install-grid input[type="url"],
-.ypm-install-grid input[type="text"] {
-    width:100%;
-    padding:6px 8px;
-    box-sizing:border-box;
-}
+.ypm-install-grid input[type="text"] { width:100%; }
 @media (max-width: 720px) {
     .ypm-install-grid { grid-template-columns:1fr; }
 }
 
-/* Token input */
+/* Token input row */
 .ypm-token-input { width:100%; max-width:600px; margin-top:6px; }
 .ypm-token-input-row {
     display:flex;
@@ -253,17 +255,11 @@ body.ypm-sleeky-dark {
     width:100%;
     max-width:600px;
 }
-.ypm-token-input-row .ypm-token-input {
-    margin-top:0;
-    max-width:none;
-    flex:1 1 auto;
-    min-width:0;
-}
-.ypm-token-toggle { margin-left:0; }
+.ypm-token-input-row .ypm-token-input { margin-top:0; max-width:none; flex:1 1 auto; min-width:0; }
 .ypm-token-input-row .ypm-token-toggle {
     flex:0 0 auto;
     min-width:34px;
-    height:30px;
+    height:36px;
     padding:0 10px;
     display:inline-flex;
     align-items:center;
@@ -362,12 +358,12 @@ table.widefat tbody tr:nth-child(odd) { background-color:var(--ypm-bg-row-odd); 
 table.widefat tbody tr:nth-child(even) { background-color:var(--ypm-bg-row-even); }
 .ypm-filters { margin:0 0 10px; }
 .ypm-plugins-table { margin-top:10px; }
-.ypm-col-name { width:24%; text-align:left; }
-.ypm-col-author { width:16%; text-align:left; }
-.ypm-col-version { width:12%; text-align:left; }
+.ypm-col-name { width:22%; text-align:left; }
+.ypm-col-author { width:14%; text-align:left; }
+.ypm-col-version { width:10%; text-align:left; }
 .ypm-col-updated { width:22%; text-align:left; }
-.ypm-col-status { width:8%; text-align:left; }
-.ypm-col-actions { width:18%; text-align:left; }
+.ypm-col-status { width:10%; text-align:left; }
+.ypm-col-actions { width:22%; text-align:left; }
 .ypm-plugin-name-link,
 .ypm-plugin-author-link {
     color:var(--ypm-link);
@@ -381,69 +377,63 @@ table.widefat tbody tr:nth-child(even) { background-color:var(--ypm-bg-row-even)
 .ypm-status-up-to-date { color:inherit; opacity:0.75; }
 .ypm-status-no-repo { color:inherit; opacity:0.6; }
 .ypm-status-error { color:var(--ypm-error-fg); }
+.ypm-status-source-only { color:var(--ypm-source-only-fg); }
 .ypm-check-detail { color:inherit; opacity:0.7; font-size:11px; }
 .ypm-check-error { color:var(--ypm-error-fg); font-size:11px; }
 .ypm-status-active { color:#2e8540; font-weight:600; }
 .ypm-status-inactive { color:inherit; opacity:0.6; }
-@media (prefers-color-scheme: dark) {
-    .ypm-status-active { color:#5fcc7c; }
-}
 body.ypm-sleeky-dark .ypm-status-active { color:#5fcc7c; }
 
 .ypm-inline-form { margin:0; }
 .ypm-inline-form-spaced { margin:0 0 6px; }
-.ypm-associate-input {
-    width:100%;
-    max-width:260px;
-    margin:0 0 6px;
-    padding:4px;
-    box-sizing:border-box;
-}
+.ypm-associate-input { width:100%; max-width:none; margin:0; }
 
-/* Action cell buttons — let the active YOURLS theme style buttons */
-.ypm-actions-cell .button { margin:0; }
+/* Action buttons row — consistent height, neat layout, no awkward wrapping */
+.ypm-actions-cell { vertical-align:top; }
+.ypm-actions-cell .button {
+    margin:0;
+    height:32px;
+    line-height:1;
+    box-sizing:border-box;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    padding:0 10px;
+    font-size:12px;
+}
 .ypm-update-form { width:100%; }
-.ypm-update-button { width:100%; display:block; }
+.ypm-update-button {
+    width:100%;
+    display:block;
+    height:32px !important;
+}
 .ypm-actions-row {
     display:flex;
     align-items:center;
     gap:6px;
     flex-wrap:wrap;
 }
-.ypm-toggle-button,
-.ypm-open-associate {
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
-    white-space:nowrap;
+.ypm-toggle-button { white-space:nowrap; }
+.ypm-toggle-icon,
+.ypm-check-icon,
+.ypm-delete-icon { font-size:13px; line-height:1; display:inline-block; }
+.ypm-toggle-deactivate .ypm-toggle-icon { color:#c43d2c; }
+.ypm-toggle-activate .ypm-toggle-icon { color:#2e8540; }
+.ypm-check-single-button,
+.ypm-delete-icon-button {
+    width:32px;
+    min-width:32px;
+    padding:0 !important;
 }
-.ypm-check-single-button {
-    min-width:42px;
-    padding-left:0;
-    padding-right:0;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-}
-.ypm-toggle-icon { font-size:14px; line-height:1; }
-.ypm-check-icon { font-size:14px; line-height:1; }
+.ypm-open-associate { white-space:nowrap; }
 .ypm-github-btn-icon {
     width:14px;
     height:14px;
     display:inline-block;
     vertical-align:middle;
 }
-.ypm-open-associate:disabled .ypm-github-btn-icon {
-    filter:grayscale(100%);
-    opacity:0.7;
-}
-.ypm-delete-icon-button {
-    min-width:42px;
-    padding-left:0;
-    padding-right:0;
-}
-.ypm-delete-icon { display:inline-block; font-size:16px; line-height:1; }
+.ypm-open-associate:disabled .ypm-github-btn-icon { filter:grayscale(100%); opacity:0.7; }
 
 /* Info box under the table */
 .ypm-table-infobox {
@@ -476,11 +466,7 @@ body.ypm-modal-open { overflow:hidden; }
     justify-content:center;
 }
 .ypm-modal.is-open { display:flex; }
-.ypm-modal-backdrop {
-    position:absolute;
-    inset:0;
-    background:var(--ypm-modal-overlay);
-}
+.ypm-modal-backdrop { position:absolute; inset:0; background:var(--ypm-modal-overlay); }
 .ypm-modal-dialog {
     position:relative;
     z-index:1;
@@ -512,13 +498,7 @@ body.ypm-modal-open { overflow:hidden; }
 }
 .ypm-modal-close:hover { opacity:1; }
 .ypm-modal-form label { display:block; margin-bottom:6px; }
-.ypm-modal-help {
-    margin:0 0 10px;
-    color:inherit;
-    opacity:0.75;
-    font-size:12px;
-    line-height:1.35;
-}
+.ypm-modal-help { margin:0 0 10px; color:inherit; opacity:0.75; font-size:12px; line-height:1.35; }
 .ypm-modal-plugin-line {
     margin:0 0 12px;
     padding:8px 10px;
@@ -529,13 +509,7 @@ body.ypm-modal-open { overflow:hidden; }
 }
 .ypm-modal-form .ypm-input,
 .ypm-modal-form input[type="url"],
-.ypm-modal-form input[type="text"] {
-    width:100%;
-    padding:8px 10px;
-    box-sizing:border-box;
-    border-radius:6px;
-}
-.ypm-associate-input-modal { max-width:none; margin:0; padding:8px 10px; box-sizing:border-box; }
+.ypm-modal-form input[type="text"] { width:100%; }
 .ypm-modal-actions {
     margin-top:14px;
     display:flex;
