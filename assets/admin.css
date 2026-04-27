@@ -388,52 +388,27 @@ body.ypm-sleeky-dark .ypm-status-active { color:#5fcc7c; }
 .ypm-inline-form-spaced { margin:0 0 6px; }
 .ypm-associate-input { width:100%; max-width:none; margin:0; }
 
-/* Action buttons row — consistent height, neat layout, no awkward wrapping */
+/* Action buttons row — consistent height, neat layout, no awkward wrapping.
+   We use <input> elements for the action-cell buttons because some YOURLS
+   themes (notably Sleeky) only target input.button / input[type=submit] in
+   their CSS, leaving plain <button> elements unstyled. */
 .ypm-actions-cell { vertical-align:top; }
-.ypm-actions-cell .button {
-    margin:0;
-    height:32px;
-    line-height:1;
-    box-sizing:border-box;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:5px;
-    padding:0 10px;
-    font-size:12px;
-}
 .ypm-update-form { width:100%; }
-.ypm-update-button {
-    width:100%;
-    display:block;
-    height:32px !important;
-}
+.ypm-update-button { width:100%; display:block; }
 .ypm-actions-row {
     display:flex;
     align-items:center;
     gap:6px;
     flex-wrap:wrap;
 }
-.ypm-toggle-button { white-space:nowrap; }
-.ypm-toggle-icon,
-.ypm-check-icon,
-.ypm-delete-icon { font-size:13px; line-height:1; display:inline-block; }
-.ypm-toggle-deactivate .ypm-toggle-icon { color:#c43d2c; }
-.ypm-toggle-activate .ypm-toggle-icon { color:#2e8540; }
+.ypm-toggle-button,
+.ypm-open-associate { white-space:nowrap; }
 .ypm-check-single-button,
 .ypm-delete-icon-button {
-    width:32px;
-    min-width:32px;
-    padding:0 !important;
+    min-width:34px;
+    padding-left:6px !important;
+    padding-right:6px !important;
 }
-.ypm-open-associate { white-space:nowrap; }
-.ypm-github-btn-icon {
-    width:14px;
-    height:14px;
-    display:inline-block;
-    vertical-align:middle;
-}
-.ypm-open-associate:disabled .ypm-github-btn-icon { filter:grayscale(100%); opacity:0.7; }
 
 /* Info box under the table */
 .ypm-table-infobox {
