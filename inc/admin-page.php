@@ -83,6 +83,12 @@ function ypm_render_plugin_page() {
         $message = $result['message'];
     }
 
+    if (isset($_POST['ypm_upload_zip_submit']) && yourls_verify_nonce('ypm_upload_zip')) {
+        $uploaded_file = $_FILES['ypm_plugin_zip'] ?? null;
+        $result = ypm_process_uploaded_zip($uploaded_file);
+        $message = $result['message'];
+    }
+
     $self_deactivated_redirect = '';
     if (isset($_POST['ypm_toggle_plugin']) && yourls_verify_nonce('ypm_toggle_plugin')) {
         $slug = basename((string) $_POST['ypm_toggle_plugin']);
@@ -450,6 +456,23 @@ function ypm_render_plugin_page() {
     echo '<div class="ypm-submit-row"><input type="submit" value="📦 ' . yourls__('Download and Install Plugin', 'yourls-plugin-manager') . '" class="button button-primary" /></div>';
     echo '</form>';
     echo '</div>';
+
+    // Upload-from-ZIP form. Lives in the same install panel so the user gets
+    // both options (GitHub URL + local upload) without flipping drawer tabs.
+    echo '<div class="form-section ypm-upload-section">';
+    echo '<form method="post" id="ypm-upload-zip-form" enctype="multipart/form-data">';
+    echo '<label for="ypm_plugin_zip"><strong>' . yourls__('Or upload a plugin .zip file:', 'yourls-plugin-manager') . '</strong></label><br>';
+    echo '<small class="ypm-help-text ypm-help-install">'
+        . yourls__('The ZIP must contain a valid plugin.php either at the root or inside a single top-level directory. The plugin will be installed but not activated.', 'yourls-plugin-manager')
+        . '</small>';
+    echo '<div class="ypm-upload-row">';
+    echo '<input type="file" name="ypm_plugin_zip" id="ypm_plugin_zip" accept=".zip,application/zip,application/x-zip-compressed" required class="ypm-upload-input" />';
+    echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_upload_zip') . '" />';
+    echo '<input type="submit" name="ypm_upload_zip_submit" value="⬆ ' . yourls_esc_attr(yourls__('Upload and Install', 'yourls-plugin-manager')) . '" class="button button-primary" />';
+    echo '</div>';
+    echo '</form>';
+    echo '</div>';
+
     echo '</div>';
 
     echo '<div class="ypm-panel-token">';

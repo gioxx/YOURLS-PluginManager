@@ -245,6 +245,29 @@ body.ypm-sleeky-dark {
     .ypm-install-grid { grid-template-columns:1fr; }
 }
 
+/* Upload form: file picker + submit on a single row, wraps on narrow widths. */
+.ypm-upload-row {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
+    flex-wrap:wrap;
+}
+.ypm-upload-input {
+    flex:1 1 320px;
+    min-width:0;
+    color:inherit;
+}
+.ypm-upload-input::file-selector-button {
+    border:1px solid var(--ypm-input-border);
+    background:transparent;
+    color:inherit;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:10px;
+}
+
 /* Token input row */
 .ypm-token-input { width:100%; max-width:600px; margin-top:6px; }
 .ypm-token-input-row {
