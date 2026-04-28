@@ -123,6 +123,39 @@ function ypm_render_plugin_page() {
         echo '<script>window.location.replace(' . json_encode($self_deactivated_redirect) . ');</script>';
     }
 
+    if (isset($_POST['ypm_reinstall_source']) && yourls_verify_nonce('ypm_reinstall_source')) {
+        $slug = basename((string) $_POST['ypm_reinstall_source']);
+        if (!preg_match('/^[a-zA-Z0-9._-]+$/', $slug)) {
+            $result = ['success' => false, 'message' => yourls__('Invalid plugin slug.', 'yourls-plugin-manager')];
+        } else {
+            $repo_data = ypm_get_repo_binding($slug);
+            if (!$repo_data) {
+                $result = ['success' => false, 'message' => yourls__('No GitHub repository metadata available for this plugin.', 'yourls-plugin-manager')];
+            } else {
+                $token = trim((string) yourls_get_option('ypm_github_token'));
+                $branch_info = ypm_get_default_branch_package_info($repo_data['owner'], $repo_data['repo'], $token);
+                if (!$branch_info['success']) {
+                    $result = [
+                        'success' => false,
+                        'message' => sprintf(
+                            yourls__('GitHub API request failed (HTTP %d): %s', 'yourls-plugin-manager'),
+                            (int) $branch_info['http_code'],
+                            htmlentities((string) $branch_info['error'])
+                        ),
+                    ];
+                } else {
+                    // version returned by ypm_get_default_branch_package_info is "branch@sha"
+                    $branch_name = explode('@', (string) $branch_info['version'])[0];
+                    $result = ypm_process_github_url(
+                        'https://github.com/' . $repo_data['owner'] . '/' . $repo_data['repo'],
+                        $branch_name
+                    );
+                }
+            }
+        }
+        $message = $result['message'];
+    }
+
     if (isset($_POST['ypm_check_single']) && yourls_verify_nonce('ypm_check_single')) {
         $slug = basename((string) $_POST['ypm_check_single']);
         if (!preg_match('/^[a-zA-Z0-9._-]+$/', $slug)) {
@@ -583,13 +616,16 @@ function ypm_render_plugin_page() {
         return strcasecmp($a['name'], $b['name']);
     });
 
-    $filter_counts = ypm_count_plugins_by_filter($plugins, $update_statuses);
-    $plugins = ypm_filter_plugins_for_view($plugins, $selected_filter, $update_statuses);
+    $filter_counts = ypm_count_plugins_by_filter($plugins, $update_statuses, $active_plugins);
+    $plugins = ypm_filter_plugins_for_view($plugins, $selected_filter, $update_statuses, $active_plugins);
 
     echo '<div class="ypm-filters">';
     echo ypm_render_filter_link('all', yourls__('All', 'yourls-plugin-manager'), $selected_filter, count($installed_slugs));
+    echo ' | ' . ypm_render_filter_link('active', yourls__('Active', 'yourls-plugin-manager'), $selected_filter, $filter_counts['active']);
+    echo ' | ' . ypm_render_filter_link('inactive', yourls__('Inactive', 'yourls-plugin-manager'), $selected_filter, $filter_counts['inactive']);
     echo ' | ' . ypm_render_filter_link('updatable', yourls__('Updatable', 'yourls-plugin-manager'), $selected_filter, $filter_counts['updatable']);
     echo ' | ' . ypm_render_filter_link('no_repo', yourls__('No metadata', 'yourls-plugin-manager'), $selected_filter, $filter_counts['no_repo']);
+    echo ' | ' . ypm_render_filter_link('abandoned', yourls__('Abandoned', 'yourls-plugin-manager'), $selected_filter, $filter_counts['abandoned']);
     echo ' | ' . ypm_render_filter_link('errors', yourls__('Errors', 'yourls-plugin-manager'), $selected_filter, $filter_counts['errors']);
     echo '</div>';
 
@@ -638,6 +674,8 @@ function ypm_render_plugin_page() {
                 $update_badge = '<br><span class="ypm-status-up-to-date">' . yourls__('Up to date', 'yourls-plugin-manager') . '</span>';
             } elseif ($update_status['status'] === 'source_only') {
                 $update_badge = '<br><span class="ypm-status-source-only">' . yourls__('Source code only (no GitHub release)', 'yourls-plugin-manager') . ($remote_version !== '' ? ': ' . htmlentities($remote_version) : '') . '</span>';
+            } elseif ($update_status['status'] === 'abandoned') {
+                $update_badge = '<br><span class="ypm-status-abandoned">' . yourls__('Plugin abandoned (repository archived or moved)', 'yourls-plugin-manager') . '</span>';
             } elseif ($update_status['status'] === 'no_repo' && !$is_default_plugin) {
                 $update_badge = '<br><span class="ypm-status-no-repo">' . yourls__('No repository metadata', 'yourls-plugin-manager') . '</span>';
             } elseif ($update_status['status'] === 'error') {
@@ -680,14 +718,14 @@ function ypm_render_plugin_page() {
 
         echo '<td class="ypm-actions-cell">';
         $current_status = $update_status['status'] ?? '';
-        if ($current_status === 'update_available' || $current_status === 'source_only') {
-            $update_label = $current_status === 'source_only'
-                ? yourls__('Reinstall from source', 'yourls-plugin-manager')
-                : yourls__('Update', 'yourls-plugin-manager');
+        // Big top "Update" button only when there's a real release-based update.
+        // source_only plugins use the small "Reinstall from source" button at
+        // the end of the actions row instead.
+        if ($current_status === 'update_available') {
             echo '<form method="post" class="ypm-inline-form ypm-inline-form-spaced ypm-update-form">';
             echo '<input type="hidden" name="ypm_update_plugin" value="' . $plugin['slug'] . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_plugin') . '" />';
-            echo '<input type="submit" class="button ypm-update-button" value="⬆️ ' . htmlentities($update_label) . '" />';
+            echo '<input type="submit" class="button ypm-update-button" value="⬆️ ' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" />';
             echo '</form>';
         }
 
@@ -738,6 +776,17 @@ function ypm_render_plugin_page() {
             echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑" />';
         }
         echo '</form>';
+
+        // Reinstall from source — last action, available whenever a repo is bound.
+        // Useful escape hatch even on plugins with releases, e.g. when a release
+        // ZIP is broken and you need the bare repository contents.
+        if ($repo_data && !$is_default_plugin) {
+            echo '<form method="post" class="ypm-inline-form">';
+            echo '<input type="hidden" name="ypm_reinstall_source" value="' . htmlentities($plugin['slug']) . '" />';
+            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_reinstall_source') . '" />';
+            echo '<input type="submit" class="button ypm-reinstall-source-button" title="' . yourls_esc_attr(yourls__('Reinstall from source', 'yourls-plugin-manager')) . '" value="⤓ ' . yourls_esc_attr(yourls__('Source', 'yourls-plugin-manager')) . '" />';
+            echo '</form>';
+        }
         echo '</div>';
 
         echo '</td>';

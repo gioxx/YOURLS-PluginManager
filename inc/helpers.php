@@ -158,7 +158,7 @@ function ypm_is_plugin_slug_active($slug, $active_plugins = null) {
 }
 
 function ypm_sanitize_filter($filter) {
-    $allowed = ['all', 'updatable', 'no_repo', 'errors'];
+    $allowed = ['all', 'active', 'inactive', 'updatable', 'no_repo', 'errors', 'abandoned'];
     return in_array($filter, $allowed, true) ? $filter : 'all';
 }
 
@@ -180,6 +180,9 @@ function ypm_plugin_filter_bucket($slug, $update_statuses) {
         }
         return 'no_repo';
     }
+    if ($status === 'abandoned') {
+        return 'abandoned';
+    }
     if ($status === 'error') {
         return 'errors';
     }
@@ -189,12 +192,15 @@ function ypm_plugin_filter_bucket($slug, $update_statuses) {
     return 'all';
 }
 
-function ypm_count_plugins_by_filter($plugins, $update_statuses) {
+function ypm_count_plugins_by_filter($plugins, $update_statuses, $active_plugins = null) {
     $counts = [
         'all' => 0,
+        'active' => 0,
+        'inactive' => 0,
         'updatable' => 0,
         'no_repo' => 0,
         'errors' => 0,
+        'abandoned' => 0,
     ];
 
     foreach ((array) $plugins as $plugin) {
@@ -203,8 +209,13 @@ function ypm_count_plugins_by_filter($plugins, $update_statuses) {
         }
         $slug = (string) $plugin['slug'];
         $counts['all']++;
+        if (ypm_is_plugin_slug_active($slug, $active_plugins)) {
+            $counts['active']++;
+        } else {
+            $counts['inactive']++;
+        }
         $bucket = ypm_plugin_filter_bucket($slug, $update_statuses);
-        if (isset($counts[$bucket])) {
+        if ($bucket !== 'all' && isset($counts[$bucket])) {
             $counts[$bucket]++;
         }
     }
@@ -212,7 +223,7 @@ function ypm_count_plugins_by_filter($plugins, $update_statuses) {
     return $counts;
 }
 
-function ypm_filter_plugins_for_view($plugins, $selected_filter, $update_statuses) {
+function ypm_filter_plugins_for_view($plugins, $selected_filter, $update_statuses, $active_plugins = null) {
     if ($selected_filter === 'all') {
         return $plugins;
     }
@@ -223,6 +234,18 @@ function ypm_filter_plugins_for_view($plugins, $selected_filter, $update_statuse
             continue;
         }
         $slug = (string) $plugin['slug'];
+        if ($selected_filter === 'active') {
+            if (ypm_is_plugin_slug_active($slug, $active_plugins)) {
+                $filtered[] = $plugin;
+            }
+            continue;
+        }
+        if ($selected_filter === 'inactive') {
+            if (!ypm_is_plugin_slug_active($slug, $active_plugins)) {
+                $filtered[] = $plugin;
+            }
+            continue;
+        }
         $bucket = ypm_plugin_filter_bucket($slug, $update_statuses);
         if ($bucket === $selected_filter) {
             $filtered[] = $plugin;

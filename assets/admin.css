@@ -378,6 +378,7 @@ table.widefat tbody tr:nth-child(even) { background-color:var(--ypm-bg-row-even)
 .ypm-status-no-repo { color:inherit; opacity:0.6; }
 .ypm-status-error { color:var(--ypm-error-fg); }
 .ypm-status-source-only { color:var(--ypm-source-only-fg); }
+.ypm-status-abandoned { color:var(--ypm-error-fg); font-style:italic; }
 .ypm-check-detail { color:inherit; opacity:0.7; font-size:11px; }
 .ypm-check-error { color:var(--ypm-error-fg); font-size:11px; }
 .ypm-status-active { color:#2e8540; font-weight:600; }

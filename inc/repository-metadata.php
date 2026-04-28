@@ -168,13 +168,45 @@ function ypm_check_single_plugin_update($slug, $token = '') {
     }
 
     $latest = ypm_resolve_package_info($repo_data['owner'], $repo_data['repo'], $token);
+
     if (!$latest['success']) {
+        $err = (string) $latest['error'];
+        $http_code = (int) $latest['http_code'];
+        // Renamed/transferred repos return 301 with body { "message": "Moved Permanently" }.
+        // Treat as abandoned rather than as a transient update-check error.
+        if ($http_code === 301 || stripos($err, 'Moved Permanently') !== false) {
+            return [
+                'status' => 'abandoned',
+                'remote_version' => '',
+                'checked_at' => time(),
+                'source' => '',
+                'message' => yourls__('Repository has been moved or renamed; the plugin appears abandoned.', 'yourls-plugin-manager'),
+            ];
+        }
         return [
             'status' => 'error',
             'remote_version' => '',
             'checked_at' => time(),
             'source' => '',
-            'message' => (string) $latest['error'],
+            'message' => $err,
+        ];
+    }
+
+    // Resolve succeeded — but the repo may still be archived on GitHub even if
+    // releases/tags are reachable. One extra GET on /repos/{owner}/{repo} flags
+    // the archived bit so we can show "abandoned" instead of advertising updates
+    // for a frozen project.
+    $repo_info = ypm_remote_get(
+        "https://api.github.com/repos/{$repo_data['owner']}/{$repo_data['repo']}",
+        $token
+    );
+    if ($repo_info['success'] && !empty($repo_info['data']['archived'])) {
+        return [
+            'status' => 'abandoned',
+            'remote_version' => trim((string) $latest['version']),
+            'checked_at' => time(),
+            'source' => (string) $latest['source'],
+            'message' => yourls__('Repository is archived; the plugin appears abandoned.', 'yourls-plugin-manager'),
         ];
     }
 
