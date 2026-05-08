@@ -1,0 +1,324 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: YOURLS Advanced Plugin Manager\n"
+"POT-Creation-Date: 2025-05-26 16:15+0200\n"
+"PO-Revision-Date: 2026-04-28 00:00+0200\n"
+"Last-Translator: Toine Rademacher (toineenzo) <hi@toine.zip>\n"
+"Language-Team: \n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: polib 1.2.0\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: yourls__\n"
+"X-Poedit-SearchPath-0: plugin.php\n"
+
+msgid "%d plugin(s) were installed before repository metadata tracking and may show \"No repository metadata\" until reinstalled/updated once via Advanced Plugin Manager."
+msgstr "%d plugin(s) zijn geïnstalleerd vóór het bijhouden van repository-metadata en tonen mogelijk \"Geen repository-metadata\" totdat ze één keer via Advanced Plugin Manager zijn herinstalleerd of bijgewerkt."
+
+msgid "%d plugin(s) do not require repository association because they are installed by default."
+msgstr "%d plugin(s) hebben geen repository-koppeling nodig omdat ze standaard zijn geïnstalleerd."
+
+msgid "%d plugin(s) installed, %d active."
+msgstr "%d plugin(s) geïnstalleerd, %d actief."
+
+msgid "Actions"
+msgstr "Acties"
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Advanced Plugin Manager"
+msgstr "Geavanceerde Pluginbeheerder"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Are you sure you want to delete this plugin?"
+msgstr "Weet je zeker dat je deze plugin wilt verwijderen?"
+
+msgid "Associate repo"
+msgstr "Repo koppelen"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "Automatic deletion is not possible because YOURLS cannot remove this plugin directory. Delete it manually on the server:"
+msgstr "Automatisch verwijderen is niet mogelijk omdat YOURLS deze plugin-map niet kan verwijderen. Verwijder de map handmatig op de server:"
+
+msgid "Automatic installation is not possible because YOURLS cannot write to %s. Download the ZIP package below and extract it manually into that directory."
+msgstr "Automatische installatie is niet mogelijk omdat YOURLS niet kan schrijven naar %s. Download het ZIP-pakket hieronder en pak het handmatig uit in die map."
+
+msgid "Based on the snippet shared by ozh in YOURLS issue #2339."
+msgstr "Gebaseerd op de snippet die door ozh is gedeeld in YOURLS issue #2339."
+
+msgid "Bulk update completed: %d updated, %d failed."
+msgstr "Bulkupdate voltooid: %d bijgewerkt, %d mislukt."
+
+msgid "By default, GitHub allows 60 unauthenticated API requests per hour per IP; with a personal access token, this limit increases to 5,000 requests per hour."
+msgstr "Standaard staat GitHub 60 niet-geauthenticeerde API-verzoeken per uur per IP-adres toe; met een persoonlijk toegangstoken wordt deze limiet verhoogd naar 5.000 verzoeken per uur."
+
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgid "Cannot verify repository (HTTP %d): %s"
+msgstr "Kan repository niet verifiëren (HTTP %d): %s"
+
+msgid "Change repo"
+msgstr "Repo wijzigen"
+
+msgid "Check updates now"
+msgstr "Updates nu controleren"
+
+msgid "Checked:"
+msgstr "Gecontroleerd:"
+
+msgid "Close"
+msgstr "Sluiten"
+
+msgid "Create a new GitHub token"
+msgstr "Nieuw GitHub-token aanmaken"
+
+msgid "Custom links-per-page value removed. YOURLS default is now active."
+msgstr "Aangepaste waarde voor links-per-pagina verwijderd. De YOURLS-standaard is nu actief."
+
+msgid "Custom links-per-page value saved."
+msgstr "Aangepaste waarde voor links-per-pagina opgeslagen."
+
+msgid "Default plugins do not require repository association."
+msgstr "Standaard plugins hebben geen repository-koppeling nodig."
+
+msgid "Delete"
+msgstr "Verwijderen"
+
+msgid "Delete Token"
+msgstr "Token verwijderen"
+
+msgid "Download and Install Plugin"
+msgstr "Plugin downloaden en installeren"
+
+msgid "Download failed."
+msgstr "Download mislukt."
+
+msgid "Download ZIP package"
+msgstr "ZIP-pakket downloaden"
+
+msgid "Edit Token"
+msgstr "Token bewerken"
+
+msgid "Errors"
+msgstr "Fouten"
+
+msgid "Extraction failed: unable to extract ZIP archive."
+msgstr "Uitpakken mislukt: kan het ZIP-archief niet uitpakken."
+
+msgid "Extraction failed: unable to open ZIP archive."
+msgstr "Uitpakken mislukt: kan het ZIP-archief niet openen."
+
+msgid "Failed to delete plugin."
+msgstr "Verwijderen van plugin mislukt."
+
+msgid "Failed to move extracted plugin directory."
+msgstr "Verplaatsen van uitgepakte plugin-map mislukt."
+
+msgid "Failed to replace existing plugin directory."
+msgstr "Vervangen van bestaande plugin-map mislukt."
+
+msgid "GitHub API request failed (HTTP %d): %s"
+msgstr "GitHub-API-verzoek mislukt (HTTP %d): %s"
+
+msgid "GitHub Personal Access Token (optional):"
+msgstr "GitHub Personal Access Token (optioneel):"
+
+msgid "GitHub Repository URL:"
+msgstr "GitHub-repository-URL:"
+
+msgid "GitHub token deleted. You are now using unauthenticated API requests."
+msgstr "GitHub-token verwijderd. Je gebruikt nu niet-geauthenticeerde API-verzoeken."
+
+msgid "GitHub token saved successfully."
+msgstr "GitHub-token succesvol opgeslagen."
+
+msgid "GitHub update checks run only on demand when you use \"Check updates now\" or start a bulk update."
+msgstr "GitHub-updatecontroles worden alleen op verzoek uitgevoerd wanneer je \"Updates nu controleren\" gebruikt of een bulkupdate start."
+
+msgid "Inactive"
+msgstr "Inactief"
+
+msgid "Insert a public GitHub repository URL (owner/repo). The plugin downloads the latest Release package, or falls back to the latest Tag when no Release is available."
+msgstr "Voer een publieke GitHub-repository-URL in (eigenaar/repo). De plugin downloadt het nieuwste Release-pakket, of valt terug op de nieuwste Tag wanneer er geen Release beschikbaar is."
+
+msgid "Installed by default"
+msgstr "Standaard geïnstalleerd"
+
+msgid "Installed Plugins"
+msgstr "Geïnstalleerde plugins"
+
+msgid "Invalid GitHub URL."
+msgstr "Ongeldige GitHub-URL."
+
+msgid "Invalid plugin slug."
+msgstr "Ongeldige plugin-slug."
+
+msgid "Last Updated"
+msgstr "Laatst bijgewerkt"
+
+msgid "Last manual check:"
+msgstr "Laatste handmatige controle:"
+
+msgid "Latest package:"
+msgstr "Nieuwste pakket:"
+
+msgid "Leave this field empty to use the YOURLS default value."
+msgstr "Laat dit veld leeg om de YOURLS-standaardwaarde te gebruiken."
+
+msgid "Links displayed per page in YOURLS admin:"
+msgstr "Aantal links weergegeven per pagina in YOURLS-beheer:"
+
+msgid "Links-per-page must be an integer between 1 and 999."
+msgstr "Links-per-pagina moet een geheel getal tussen 1 en 999 zijn."
+
+msgid "Manage"
+msgstr "Beheren"
+
+msgid "Never"
+msgstr "Nooit"
+
+msgid "New version available:"
+msgstr "Nieuwe versie beschikbaar:"
+
+msgid "No GitHub repository metadata available for this plugin."
+msgstr "Geen GitHub-repository-metadata beschikbaar voor deze plugin."
+
+msgid "No metadata"
+msgstr "Geen metadata"
+
+msgid "No plugins match the selected filter."
+msgstr "Geen plugins komen overeen met het geselecteerde filter."
+
+msgid "No repository metadata"
+msgstr "Geen repository-metadata"
+
+msgid "No scopes are required – you can leave all permissions unchecked."
+msgstr "Er zijn geen scopes vereist – je kunt alle permissies uitgevinkt laten."
+
+msgid "No updates available right now."
+msgstr "Op dit moment zijn er geen updates beschikbaar."
+
+msgid "No updates currently available. Run \"Check updates now\" first."
+msgstr "Op dit moment zijn er geen updates beschikbaar. Voer eerst \"Updates nu controleren\" uit."
+
+msgid "Not run yet"
+msgstr "Nog niet uitgevoerd"
+
+msgid "Notes"
+msgstr "Opmerkingen"
+
+msgid "Plugin deleted successfully."
+msgstr "Plugin succesvol verwijderd."
+
+msgid "Plugin install"
+msgstr "Plugin installeren"
+
+msgid "Plugin installed or updated successfully."
+msgstr "Plugin succesvol geïnstalleerd of bijgewerkt."
+
+msgid "Plugin Name"
+msgstr "Pluginnaam"
+
+msgid "plugin.php does not contain a valid YOURLS plugin header."
+msgstr "plugin.php bevat geen geldige YOURLS-plugin-header."
+
+msgid "plugin.php not found in final plugin directory."
+msgstr "plugin.php niet gevonden in de uiteindelijke plugin-map."
+
+msgid "Repository"
+msgstr "Repository"
+
+msgid "Repository associated successfully."
+msgstr "Repository succesvol gekoppeld."
+
+msgid "Repository associated successfully. No release/tag is available yet; update checks may fail until one is published."
+msgstr "Repository succesvol gekoppeld. Er is nog geen release of tag beschikbaar; updatecontroles kunnen mislukken totdat er een gepubliceerd is."
+
+msgid "Repository association not needed for default plugins."
+msgstr "Repository-koppeling is niet nodig voor standaard plugins."
+
+msgid "Save links-per-page"
+msgstr "Links-per-pagina opslaan"
+
+msgid "Save Token"
+msgstr "Token opslaan"
+
+msgid "Settings"
+msgstr "Instellingen"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "The plugin \"Custom number of displayed links\" appears to be installed. You can deactivate and delete it, because this feature is now built into Advanced Plugin Manager."
+msgstr "De plugin \"Custom number of displayed links\" lijkt geïnstalleerd te zijn. Je kunt deze deactiveren en verwijderen, want deze functie is nu ingebouwd in Advanced Plugin Manager."
+
+msgid "This plugin is active and cannot be deleted."
+msgstr "Deze plugin is actief en kan niet worden verwijderd."
+
+msgid "Times shown in this page follow your YOURLS timezone configuration, or server time if that configuration is unavailable."
+msgstr "Tijden die op deze pagina worden weergegeven volgen je YOURLS-tijdzone-configuratie, of de servertijd als die configuratie niet beschikbaar is."
+
+msgid "To generate a token, visit your GitHub account settings:"
+msgstr "Om een token aan te maken, ga naar je GitHub-accountinstellingen:"
+
+msgid "Unknown Author"
+msgstr "Onbekende auteur"
+
+msgid "Unknown Plugin"
+msgstr "Onbekende plugin"
+
+msgid "Unknown Version"
+msgstr "Onbekende versie"
+
+msgid "Up to date"
+msgstr "Up-to-date"
+
+msgid "Updatable"
+msgstr "Bijwerkbaar"
+
+msgid "Update"
+msgstr "Bijwerken"
+
+msgid "Update all available"
+msgstr "Alle beschikbare bijwerken"
+
+msgid "Update all available (%d)"
+msgstr "Alle beschikbare bijwerken (%d)"
+
+msgid "Update available"
+msgstr "Update beschikbaar"
+
+msgid "Update check completed for %d plugin(s)."
+msgstr "Updatecontrole voltooid voor %d plugin(s)."
+
+msgid "Update check failed"
+msgstr "Updatecontrole mislukt"
+
+msgid "Update checks"
+msgstr "Updatecontroles"
+
+msgid "Updated recently"
+msgstr "Recent bijgewerkt"
+
+msgid "Version"
+msgstr "Versie"
+
+msgid "View details on GitHub"
+msgstr "Details bekijken op GitHub"
+
+msgid "YOURLS Advanced Plugin Manager"
+msgstr "YOURLS Geavanceerde Pluginbeheerder"
+
+msgid "YOURLS default"
+msgstr "YOURLS-standaard"
+
+msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
+msgstr "Voor het uitpakken van ZIP is de PHP ZipArchive-extensie vereist, die niet beschikbaar is op deze server."
