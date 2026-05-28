@@ -613,7 +613,7 @@ function ypm_render_plugin_page() {
         if ($header_plugin_uri !== '') {
             $plugin_uri = $header_plugin_uri;
         }
-        $author_uri = $header_author_uri !== '' ? $header_author_uri : '';
+        $author_uri = $header_author_uri;
 
         if ($name === 'unknown') {
             $name = yourls__('Unknown Plugin', 'yourls-plugin-manager');

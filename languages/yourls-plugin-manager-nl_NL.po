@@ -322,3 +322,141 @@ msgstr "YOURLS-standaard"
 
 msgid "ZIP extraction requires the PHP ZipArchive extension, which is not available on this server."
 msgstr "Voor het uitpakken van ZIP is de PHP ZipArchive-extensie vereist, die niet beschikbaar is op deze server."
+
+msgid "Abandoned"
+msgstr "Verlaten"
+
+msgid "Activate"
+msgstr "Activeren"
+
+msgid "Plugin activated successfully."
+msgstr "Plugin succesvol geactiveerd."
+
+msgid "Failed to activate plugin."
+msgstr "Activeren van plugin mislukt."
+
+msgid "Deactivate"
+msgstr "Deactiveren"
+
+msgid "Plugin deactivated successfully."
+msgstr "Plugin succesvol gedeactiveerd."
+
+msgid "Failed to deactivate plugin."
+msgstr "Deactiveren van plugin mislukt."
+
+msgid "Unknown plugin action."
+msgstr "Onbekende plugin-actie."
+
+msgid "Deactivating Advanced Plugin Manager will remove this admin page. You will need to reactivate it from the standard YOURLS plugins page. Continue?"
+msgstr "Het deactiveren van Advanced Plugin Manager verwijdert deze beheerpagina. Je moet het opnieuw activeren via de standaard YOURLS-pluginpagina. Doorgaan?"
+
+msgid "Check for updates"
+msgstr "Controleer op updates"
+
+msgid "Update check completed for \"%s\"."
+msgstr "Updatecontrole voltooid voor \"%s\"."
+
+msgid "Source code only (no GitHub release)"
+msgstr "Alleen broncode (geen GitHub-release)"
+
+msgid "Plugin abandoned (repository archived or moved)"
+msgstr "Plugin verlaten (repository gearchiveerd of verplaatst)"
+
+msgid "Repository has been moved or renamed; the plugin appears abandoned."
+msgstr "De repository is verplaatst of hernoemd; de plugin lijkt verlaten."
+
+msgid "Repository is archived; the plugin appears abandoned."
+msgstr "De repository is gearchiveerd; de plugin lijkt verlaten."
+
+msgid "Reinstall from source"
+msgstr "Herinstalleren vanuit bron"
+
+msgid "Source"
+msgstr "Bron"
+
+msgid "You cannot delete the Plugin Manager itself from its own UI."
+msgstr "Je kunt de Plugin Manager niet vanuit zijn eigen interface verwijderen."
+
+msgid "Insert a public GitHub repository URL (owner/repo). When Branch and Release are empty, the plugin downloads the latest Release, falls back to the latest Tag, then falls back to the default branch."
+msgstr "Voer een publieke GitHub-repository-URL in (eigenaar/repo). Als Branch en Release leeg zijn, downloadt de plugin de nieuwste Release, valt terug op de nieuwste Tag en daarna op de standaard branch."
+
+msgid "Repository URL"
+msgstr "Repository-URL"
+
+msgid "Branch (optional)"
+msgstr "Branch (optioneel)"
+
+msgid "main / master"
+msgstr "main / master"
+
+msgid "Release version (optional)"
+msgstr "Releaseversie (optioneel)"
+
+msgid "latest"
+msgstr "latest"
+
+msgid "When a Release version is set it takes priority. When only a Branch is set the source code at that branch is downloaded."
+msgstr "Als een releaseversie is ingesteld, heeft deze prioriteit. Als alleen een branch is opgegeven, wordt de broncode van die branch gedownload."
+
+msgid "Or upload a plugin .zip file:"
+msgstr "Of upload een plugin .zip-bestand:"
+
+msgid "The ZIP must contain a valid plugin.php either at the root or inside a single top-level directory. The plugin will be installed but not activated."
+msgstr "Het ZIP-bestand moet een geldig plugin.php bevatten in de root of in een enkele map op het hoogste niveau. De plugin wordt geïnstalleerd maar niet geactiveerd."
+
+msgid "Upload and Install"
+msgstr "Uploaden en installeren"
+
+msgid "Show / hide token"
+msgstr "Token tonen / verbergen"
+
+msgid "No file was uploaded."
+msgstr "Er is geen bestand geüpload."
+
+msgid "Upload was rejected (not a valid HTTP upload)."
+msgstr "Upload geweigerd (geen geldig HTTP-upload)."
+
+msgid "Only .zip files are accepted."
+msgstr "Alleen .zip-bestanden worden geaccepteerd."
+
+msgid "YOURLS cannot write to %s. Adjust the directory permissions and try again."
+msgstr "YOURLS kan niet schrijven naar %s. Pas de mapmachtigingen aan en probeer opnieuw."
+
+msgid "Failed to move the uploaded file into a temporary location."
+msgstr "Verplaatsen van het geüploade bestand naar een tijdelijke locatie mislukt."
+
+msgid "Failed to create a staging directory for extraction."
+msgstr "Aanmaken van tijdelijke map voor uitpakken mislukt."
+
+msgid "Extraction failed: ZIP archive contains unsafe paths."
+msgstr "Uitpakken mislukt: het ZIP-archief bevat onveilige paden."
+
+msgid "No valid YOURLS plugin.php was found at the ZIP root or inside a single top-level directory."
+msgstr "Geen geldig YOURLS plugin.php gevonden in de root van het ZIP-bestand of in een enkele map op het hoogste niveau."
+
+msgid "Computed plugin slug \"%s\" contains invalid characters. Rename the ZIP or its top-level folder to use only letters, digits, dots, underscores or hyphens."
+msgstr "De berekende plugin-slug \"%s\" bevat ongeldige tekens. Hernoem het ZIP-bestand of de map op het hoogste niveau zodat alleen letters, cijfers, punten, underscores of koppeltekens worden gebruikt."
+
+msgid "Plugin \"%s\" uploaded successfully. Activate it from the plugins list when you are ready."
+msgstr "Plugin \"%s\" succesvol geüpload. Activeer hem via de pluginlijst wanneer je er klaar voor bent."
+
+msgid "Uploaded file exceeds the upload_max_filesize value in php.ini."
+msgstr "Het geüploade bestand overschrijdt de waarde upload_max_filesize in php.ini."
+
+msgid "Uploaded file exceeds the form MAX_FILE_SIZE."
+msgstr "Het geüploade bestand overschrijdt de MAX_FILE_SIZE van het formulier."
+
+msgid "The uploaded file was only partially received."
+msgstr "Het geüploade bestand is slechts gedeeltelijk ontvangen."
+
+msgid "PHP has no temporary directory available for uploads."
+msgstr "PHP heeft geen tijdelijke map beschikbaar voor uploads."
+
+msgid "Failed to write the uploaded file to disk."
+msgstr "Schrijven van het geüploade bestand naar schijf mislukt."
+
+msgid "A PHP extension stopped the upload."
+msgstr "Een PHP-extensie heeft de upload gestopt."
+
+msgid "Unknown upload error."
+msgstr "Onbekende uploadfout."

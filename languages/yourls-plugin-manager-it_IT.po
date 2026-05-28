@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YOURLS Advanced Plugin Manager\n"
 "POT-Creation-Date: 2025-05-26 16:15+0200\n"
-"PO-Revision-Date: 2025-05-29 10:02+0200\n"
+"PO-Revision-Date: 2026-05-28 00:00+0200\n"
 "Last-Translator: Giovanni Solone <giovanni@solone.it>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -323,3 +323,141 @@ msgstr "Aggiorna tutti i disponibili (%d)"
 
 msgid "YOURLS default"
 msgstr "Predefinito YOURLS"
+
+msgid "Abandoned"
+msgstr "Abbandonati"
+
+msgid "Activate"
+msgstr "Attiva"
+
+msgid "Plugin activated successfully."
+msgstr "Plugin attivato correttamente."
+
+msgid "Failed to activate plugin."
+msgstr "Impossibile attivare il plugin."
+
+msgid "Deactivate"
+msgstr "Disattiva"
+
+msgid "Plugin deactivated successfully."
+msgstr "Plugin disattivato correttamente."
+
+msgid "Failed to deactivate plugin."
+msgstr "Impossibile disattivare il plugin."
+
+msgid "Unknown plugin action."
+msgstr "Azione plugin sconosciuta."
+
+msgid "Deactivating Advanced Plugin Manager will remove this admin page. You will need to reactivate it from the standard YOURLS plugins page. Continue?"
+msgstr "Disattivare Advanced Plugin Manager rimuoverà questa pagina amministrativa. Dovrai riattivarlo dalla pagina plugin standard di YOURLS. Continuare?"
+
+msgid "Check for updates"
+msgstr "Controlla aggiornamenti"
+
+msgid "Update check completed for \"%s\"."
+msgstr "Controllo aggiornamenti completato per \"%s\"."
+
+msgid "Source code only (no GitHub release)"
+msgstr "Solo codice sorgente (nessuna release GitHub)"
+
+msgid "Plugin abandoned (repository archived or moved)"
+msgstr "Plugin abbandonato (repository archiviato o spostato)"
+
+msgid "Repository has been moved or renamed; the plugin appears abandoned."
+msgstr "Il repository è stato spostato o rinominato; il plugin sembra abbandonato."
+
+msgid "Repository is archived; the plugin appears abandoned."
+msgstr "Il repository è archiviato; il plugin sembra abbandonato."
+
+msgid "Reinstall from source"
+msgstr "Reinstalla da sorgente"
+
+msgid "Source"
+msgstr "Sorgente"
+
+msgid "You cannot delete the Plugin Manager itself from its own UI."
+msgstr "Non puoi eliminare il Plugin Manager dalla propria interfaccia."
+
+msgid "Insert a public GitHub repository URL (owner/repo). When Branch and Release are empty, the plugin downloads the latest Release, falls back to the latest Tag, then falls back to the default branch."
+msgstr "Inserisci un URL pubblico di repository GitHub (owner/repo). Se Branch e Versione release sono vuoti, il plugin scarica l'ultima Release, poi l'ultimo Tag, poi il branch predefinito."
+
+msgid "Repository URL"
+msgstr "URL Repository"
+
+msgid "Branch (optional)"
+msgstr "Branch (opzionale)"
+
+msgid "main / master"
+msgstr "main / master"
+
+msgid "Release version (optional)"
+msgstr "Versione release (opzionale)"
+
+msgid "latest"
+msgstr "latest"
+
+msgid "When a Release version is set it takes priority. When only a Branch is set the source code at that branch is downloaded."
+msgstr "Se viene impostata una versione release, ha la priorità. Se viene specificato solo un Branch, viene scaricato il codice sorgente di quel branch."
+
+msgid "Or upload a plugin .zip file:"
+msgstr "Oppure carica un file .zip del plugin:"
+
+msgid "The ZIP must contain a valid plugin.php either at the root or inside a single top-level directory. The plugin will be installed but not activated."
+msgstr "Il file ZIP deve contenere un plugin.php valido nella root o in una singola directory di primo livello. Il plugin verrà installato ma non attivato."
+
+msgid "Upload and Install"
+msgstr "Carica e installa"
+
+msgid "Show / hide token"
+msgstr "Mostra / nascondi token"
+
+msgid "No file was uploaded."
+msgstr "Nessun file è stato caricato."
+
+msgid "Upload was rejected (not a valid HTTP upload)."
+msgstr "Caricamento rifiutato (non è un upload HTTP valido)."
+
+msgid "Only .zip files are accepted."
+msgstr "Sono accettati solo file .zip."
+
+msgid "YOURLS cannot write to %s. Adjust the directory permissions and try again."
+msgstr "YOURLS non può scrivere in %s. Modifica i permessi della directory e riprova."
+
+msgid "Failed to move the uploaded file into a temporary location."
+msgstr "Impossibile spostare il file caricato in una posizione temporanea."
+
+msgid "Failed to create a staging directory for extraction."
+msgstr "Impossibile creare una directory temporanea per l'estrazione."
+
+msgid "Extraction failed: ZIP archive contains unsafe paths."
+msgstr "Estrazione fallita: l'archivio ZIP contiene percorsi non sicuri."
+
+msgid "No valid YOURLS plugin.php was found at the ZIP root or inside a single top-level directory."
+msgstr "Nessun plugin.php YOURLS valido trovato nella root dello ZIP o in una singola directory di primo livello."
+
+msgid "Computed plugin slug \"%s\" contains invalid characters. Rename the ZIP or its top-level folder to use only letters, digits, dots, underscores or hyphens."
+msgstr "Lo slug del plugin calcolato \"%s\" contiene caratteri non validi. Rinomina il file ZIP o la sua cartella di primo livello usando solo lettere, cifre, punti, underscore o trattini."
+
+msgid "Plugin \"%s\" uploaded successfully. Activate it from the plugins list when you are ready."
+msgstr "Plugin \"%s\" caricato correttamente. Attivalo dall'elenco dei plugin quando sei pronto."
+
+msgid "Uploaded file exceeds the upload_max_filesize value in php.ini."
+msgstr "Il file caricato supera il valore upload_max_filesize in php.ini."
+
+msgid "Uploaded file exceeds the form MAX_FILE_SIZE."
+msgstr "Il file caricato supera il valore MAX_FILE_SIZE del form."
+
+msgid "The uploaded file was only partially received."
+msgstr "Il file caricato è stato ricevuto solo parzialmente."
+
+msgid "PHP has no temporary directory available for uploads."
+msgstr "PHP non ha una directory temporanea disponibile per i caricamenti."
+
+msgid "Failed to write the uploaded file to disk."
+msgstr "Impossibile scrivere il file caricato su disco."
+
+msgid "A PHP extension stopped the upload."
+msgstr "Un'estensione PHP ha interrotto il caricamento."
+
+msgid "Unknown upload error."
+msgstr "Errore di caricamento sconosciuto."

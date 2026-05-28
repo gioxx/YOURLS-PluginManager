@@ -192,15 +192,21 @@ function ypm_check_single_plugin_update($slug, $token = '') {
         ];
     }
 
-    // Resolve succeeded — but the repo may still be archived on GitHub even if
-    // releases/tags are reachable. One extra GET on /repos/{owner}/{repo} flags
-    // the archived bit so we can show "abandoned" instead of advertising updates
-    // for a frozen project.
-    $repo_info = ypm_remote_get(
-        "https://api.github.com/repos/{$repo_data['owner']}/{$repo_data['repo']}",
-        $token
-    );
-    if ($repo_info['success'] && !empty($repo_info['data']['archived'])) {
+    // Check if the repo is archived. For branch-resolved plugins the archived
+    // flag comes free from ypm_get_default_branch_package_info (it already
+    // called /repos/{owner}/{repo}). For release/tag-resolved plugins we make
+    // one extra call — acceptable because those are fewer and the archived state
+    // is genuinely useful to surface.
+    if (isset($latest['archived'])) {
+        $is_archived = (bool) $latest['archived'];
+    } else {
+        $repo_info = ypm_remote_get(
+            "https://api.github.com/repos/{$repo_data['owner']}/{$repo_data['repo']}",
+            $token
+        );
+        $is_archived = $repo_info['success'] && !empty($repo_info['data']['archived']);
+    }
+    if ($is_archived) {
         return [
             'status' => 'abandoned',
             'remote_version' => trim((string) $latest['version']),

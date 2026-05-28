@@ -45,6 +45,7 @@ function ypm_get_latest_package_info($owner, $repo, $token = '') {
             'zip_url' => '',
             'version' => '',
             'source' => 'tag',
+            'no_release' => true,
             'error' => $tags_response['error'] ?: 'Could not fetch any release or tag from GitHub.',
         ];
     }
@@ -156,13 +157,20 @@ function ypm_get_branch_package_info($owner, $repo, $branch, $token = '') {
 function ypm_get_default_branch_package_info($owner, $repo, $token = '') {
     $api_url = "https://api.github.com/repos/$owner/$repo";
     $response = ypm_remote_get($api_url, $token);
+    // Capture the archived flag while we have the repo metadata — callers that
+    // use this function can reuse it without a second API call.
+    $archived = $response['success'] && !empty($response['data']['archived']);
+
     if ($response['success'] && !empty($response['data']['default_branch'])) {
-        return ypm_get_branch_package_info($owner, $repo, (string) $response['data']['default_branch'], $token);
+        $result = ypm_get_branch_package_info($owner, $repo, (string) $response['data']['default_branch'], $token);
+        $result['archived'] = $archived;
+        return $result;
     }
 
     foreach (['main', 'master'] as $candidate) {
         $branch_info = ypm_get_branch_package_info($owner, $repo, $candidate, $token);
         if ($branch_info['success']) {
+            $branch_info['archived'] = $archived;
             return $branch_info;
         }
     }
@@ -173,6 +181,7 @@ function ypm_get_default_branch_package_info($owner, $repo, $token = '') {
         'zip_url' => '',
         'version' => '',
         'source' => 'branch',
+        'archived' => $archived,
         'error' => $response['error'] ?: 'No default branch could be determined.',
     ];
 }
@@ -194,11 +203,7 @@ function ypm_resolve_package_info($owner, $repo, $token = '', $branch = '', $ver
         return $latest;
     }
 
-    $error_text = trim((string) ($latest['error'] ?? ''));
-    $no_release_or_tag = (int) $latest['http_code'] === 200
-        || stripos($error_text, 'Could not fetch any release or tag from GitHub.') !== false;
-
-    if ($no_release_or_tag) {
+    if (!empty($latest['no_release'])) {
         $fallback = ypm_get_default_branch_package_info($owner, $repo, $token);
         if ($fallback['success']) {
             return $fallback;
