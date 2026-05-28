@@ -447,13 +447,6 @@ msgstr ""
 msgid "Show / hide token"
 msgstr ""
 
-#: inc/admin-page.php:810
-msgid "Reinstall from source"
-msgstr ""
-
-#: inc/admin-page.php:810
-msgid "Source"
-msgstr ""
 
 #: inc/admin-page.php:795
 msgid "You cannot delete the Plugin Manager itself from its own UI."

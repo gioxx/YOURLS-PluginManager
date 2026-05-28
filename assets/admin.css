@@ -564,14 +564,9 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
     cursor:not-allowed;
 }
 .ypm-toggle-button,
-.ypm-open-associate { white-space:nowrap; }
-.ypm-check-single-button { white-space:nowrap; }
-.ypm-delete-icon-button {
-    width:42px;
-    min-width:42px;
-    padding-left:0 !important;
-    padding-right:0 !important;
-}
+.ypm-open-associate,
+.ypm-check-single-button,
+.ypm-delete-icon-button { white-space:nowrap; }
 
 /* Notes / info box — matches LogoSuite info-box style */
 .ypm-table-infobox {

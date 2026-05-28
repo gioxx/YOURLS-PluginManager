@@ -783,24 +783,13 @@ function ypm_render_plugin_page() {
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_delete_plugin') . '" />';
         $is_self_plugin = (basename(dirname(__DIR__)) === $plugin['slug']);
         if ($is_self_plugin) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         } elseif ($is_active) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         } else {
-            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑" />';
+            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         }
         echo '</form>';
-
-        // Reinstall from source — last action, available whenever a repo is bound.
-        // Useful escape hatch even on plugins with releases, e.g. when a release
-        // ZIP is broken and you need the bare repository contents.
-        if ($repo_data && !$is_default_plugin) {
-            echo '<form method="post" class="ypm-inline-form">';
-            echo '<input type="hidden" name="ypm_reinstall_source" value="' . htmlentities($plugin['slug']) . '" />';
-            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_reinstall_source') . '" />';
-            echo '<input type="submit" class="button ypm-reinstall-source-button" title="' . yourls_esc_attr(yourls__('Reinstall from source', 'yourls-plugin-manager')) . '" value="⤓ ' . yourls_esc_attr(yourls__('Source', 'yourls-plugin-manager')) . '" />';
-            echo '</form>';
-        }
         echo '</div>';
 
         echo '</td>';

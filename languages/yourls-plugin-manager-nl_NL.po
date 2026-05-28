@@ -368,12 +368,6 @@ msgstr "De repository is verplaatst of hernoemd; de plugin lijkt verlaten."
 msgid "Repository is archived; the plugin appears abandoned."
 msgstr "De repository is gearchiveerd; de plugin lijkt verlaten."
 
-msgid "Reinstall from source"
-msgstr "Herinstalleren vanuit bron"
-
-msgid "Source"
-msgstr "Bron"
-
 msgid "You cannot delete the Plugin Manager itself from its own UI."
 msgstr "Je kunt de Plugin Manager niet vanuit zijn eigen interface verwijderen."
 

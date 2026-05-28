@@ -369,12 +369,6 @@ msgstr "Il repository è stato spostato o rinominato; il plugin sembra abbandona
 msgid "Repository is archived; the plugin appears abandoned."
 msgstr "Il repository è archiviato; il plugin sembra abbandonato."
 
-msgid "Reinstall from source"
-msgstr "Reinstalla da sorgente"
-
-msgid "Source"
-msgstr "Sorgente"
-
 msgid "You cannot delete the Plugin Manager itself from its own UI."
 msgstr "Non puoi eliminare il Plugin Manager dalla propria interfaccia."
 
