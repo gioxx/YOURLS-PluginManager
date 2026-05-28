@@ -774,7 +774,7 @@ function ypm_render_plugin_page() {
             echo '<form method="post" class="ypm-inline-form">';
             echo '<input type="hidden" name="ypm_check_single" value="' . htmlentities($plugin['slug']) . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_single') . '" />';
-            echo '<input type="submit" class="button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" value="🔎 ' . yourls_esc_attr(yourls__('Check', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" value="🔎" />';
             echo '</form>';
         }
 
@@ -791,11 +791,11 @@ function ypm_render_plugin_page() {
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_delete_plugin') . '" />';
         $is_self_plugin = (basename(dirname(__DIR__)) === $plugin['slug']);
         if ($is_self_plugin) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
         } elseif ($is_active) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
         } else {
-            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑" />';
         }
         echo '</form>';
 

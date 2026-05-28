@@ -16,30 +16,31 @@
 
 :root {
     --ypm-fg: #1f2328;
-    --ypm-fg-muted: #555;
+    --ypm-fg-muted: #667885;
     --ypm-fg-faint: #6b6b6b;
     --ypm-link: #0a4b78;
     --ypm-link-strong: #003b63;
     --ypm-bg: #ffffff;
-    --ypm-bg-soft: #f9f9f9;
-    --ypm-bg-section: #f4f9ff;
+    --ypm-bg-soft: #f5fbfe;
+    --ypm-bg-section: #f5fbfe;
     --ypm-bg-row-odd: #f4f8fc;
     --ypm-bg-row-even: #ffffff;
-    --ypm-border: #dcdcde;
+    --ypm-border: #d9e6ef;
     --ypm-border-strong: #c3dff3;
-    --ypm-border-accent: #72aee6;
-    --ypm-input-border: #c0c4c8;
-    --ypm-input-border-focus: #72aee6;
-    --ypm-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+    --ypm-border-accent: #8ec5f7;
+    --ypm-border-hover: #72aee6;
+    --ypm-input-border: #c7d8e4;
+    --ypm-input-border-focus: #0073aa;
+    --ypm-shadow: 0 1px 0 rgba(2,27,45,.04);
     --ypm-modal-overlay: rgba(18, 32, 45, 0.48);
-    --ypm-success-bg: #e6ffed;
-    --ypm-success-fg: #46b450;
+    --ypm-success-bg: #eafaf0;
+    --ypm-success-fg: #3da56a;
     --ypm-error-bg: #fbeaea;
     --ypm-error-fg: #dc3232;
-    --ypm-warn-bg: #fff7e6;
-    --ypm-warn-fg: #d9822b;
+    --ypm-warn-bg: #fff8e9;
+    --ypm-warn-fg: #d79a2b;
     --ypm-warn-text: #5c3b00;
-    --ypm-info-bg: #eef6ff;
+    --ypm-info-bg: #f5fbfe;
     --ypm-update-badge-bg: #e6f4ff;
     --ypm-source-only-fg: #7c5dbd;
 }
@@ -58,6 +59,7 @@ body.ypm-sleeky-dark {
     --ypm-border: #3a3a3a;
     --ypm-border-strong: #3d556e;
     --ypm-border-accent: #4f7ea8;
+    --ypm-border-hover: #6cb6f0;
     --ypm-input-border: rgba(255, 255, 255, 0.35);
     --ypm-input-border-focus: #6cb6f0;
     --ypm-shadow: 0 14px 36px rgba(0, 0, 0, 0.6);
@@ -85,7 +87,7 @@ body.ypm-sleeky-dark {
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
-.plugin-version { font-size:0.85em; color:inherit; opacity:0.7; margin-top:4px; }
+.plugin-version { font-size:0.85em; color:#666; margin-top:4px; }
 
 /* Section title */
 .ypm-section-title {
@@ -106,10 +108,10 @@ body.ypm-sleeky-dark {
     gap:10px;
     margin:4px 0 12px;
     padding:10px 12px;
-    border:1px solid var(--ypm-border-strong);
-    border-left:4px solid var(--ypm-border-accent);
+    border:1px solid #c3dff3;
+    border-left:4px solid #8ec5f7;
     border-radius:8px;
-    background:var(--ypm-bg-section);
+    background:#f5fbfe;
     color:var(--ypm-fg);
 }
 .ypm-installed-header-top {
@@ -134,20 +136,51 @@ body.ypm-sleeky-dark {
     align-items:center;
 }
 .ypm-installed-actions form { margin:0; }
-.ypm-installed-meta { width:100%; font-size:13px; color:inherit; }
+.ypm-installed-actions .button {
+    margin:0;
+    padding:8px 18px;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    font-weight:400 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    text-decoration:none !important;
+    cursor:pointer;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-installed-actions .button:hover:not(:disabled),
+.ypm-installed-actions .button:focus:not(:disabled),
+.ypm-installed-actions .button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+    text-shadow:none !important;
+}
+.ypm-installed-actions .button[disabled],
+.ypm-installed-actions .button:disabled {
+    opacity:.55;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    box-shadow:none !important;
+    cursor:not-allowed;
+}
+.ypm-installed-meta { width:100%; font-size:13px; color:var(--ypm-fg); }
 .ypm-installed-meta-times {
     margin-top:8px;
     padding:8px 10px;
-    background:var(--ypm-bg);
-    border:1px solid var(--ypm-border);
+    background:#fff;
+    border:1px solid #d9e6ef;
     border-radius:4px;
 }
 .ypm-meta-time { color:var(--ypm-link); }
-.ypm-installed-meta-note { margin:8px 0 10px; font-size:12px; color:inherit; opacity:0.85; }
-.ypm-installed-meta-summary { margin:0 0 8px; font-size:12px; color:inherit; }
+.ypm-installed-meta-note { margin:8px 0 10px; font-size:12px; color:var(--ypm-fg); }
+.ypm-installed-meta-summary { margin:0 0 8px; font-size:12px; color:var(--ypm-fg); }
 
 /* Notices */
-.ypm-notice { margin:10px 0; padding:10px; border-left:4px solid; color:inherit; }
+.ypm-notice { margin:10px 0; padding:10px; border-left:4px solid; color:var(--ypm-fg); }
 .ypm-notice-success { border-left-color:var(--ypm-success-fg); background:var(--ypm-success-bg); }
 .ypm-notice-error { border-left-color:var(--ypm-error-fg); background:var(--ypm-error-bg); }
 
@@ -156,22 +189,23 @@ body.ypm-sleeky-dark {
     margin-left:6px;
     padding:2px 8px;
     border-radius:999px;
-    background:var(--ypm-update-badge-bg);
-    border:1px solid var(--ypm-border-accent);
-    color:var(--ypm-link);
+    background:#e6f4ff;
+    border:1px solid #8ec5f7;
+    color:#0a4b78;
     font-size:12px;
     font-weight:600;
     vertical-align:middle;
 }
 
-/* Form sections (drawer panels) */
+/* Form panels */
 .form-section {
     margin:20px 0;
-    padding:20px;
-    border:1px solid var(--ypm-border);
-    background:var(--ypm-bg-soft);
+    padding:16px;
+    border:1px solid #d9e6ef;
+    background:#fff;
     color:inherit;
-    border-radius:5px;
+    border-radius:10px;
+    box-shadow:0 1px 0 rgba(2,27,45,.04);
 }
 .form-row { margin-bottom:15px; }
 .form-row label { display:block; font-weight:bold; margin-bottom:5px; }
@@ -180,8 +214,8 @@ body.ypm-sleeky-dark {
 .ypm-help-text {
     display:block;
     line-height:1.4em;
-    color:inherit;
-    opacity:0.7;
+    color:#667885;
+    font-size:.73rem;
 }
 .ypm-help-install { margin:4px 0 6px; line-height:1.35em; }
 .ypm-help-install-secondary { margin:8px 0 4px; }
@@ -197,16 +231,15 @@ body.ypm-sleeky-dark {
 }
 .ypm-settings-alert-icon { margin-right:4px; }
 
-/* Update-available banner — overrides YOURLS default .notice styles so the
-   banner always renders full-width, flush, and visually tied to this plugin. */
+/* Update-available banner */
 .ypm-update-notice {
     display:block;
     width:100%;
     box-sizing:border-box;
     padding:14px 18px !important;
     margin:0 0 20px !important;
-    border-left:4px solid var(--ypm-border-accent) !important;
-    border-bottom:2px solid var(--ypm-border-accent) !important;
+    border-left:4px solid #8ec5f7 !important;
+    border-bottom:2px solid #8ec5f7 !important;
     border-radius:0 !important;
 }
 
@@ -262,7 +295,7 @@ body.ypm-sleeky-dark {
     .ypm-install-field-url { grid-column:1; }
 }
 
-/* Upload form: file picker + submit on a single row, wraps on narrow widths. */
+/* Upload form */
 .ypm-upload-row {
     display:flex;
     align-items:center;
@@ -276,13 +309,19 @@ body.ypm-sleeky-dark {
     color:inherit;
 }
 .ypm-upload-input::file-selector-button {
-    border:1px solid var(--ypm-input-border);
-    background:transparent;
-    color:inherit;
+    border:1px solid #8ec5f7;
+    background:#fff;
+    color:#1f2328;
     padding:6px 12px;
     border-radius:6px;
     cursor:pointer;
     margin-right:10px;
+    transition:background-color .15s ease, border-color .15s ease;
+}
+.ypm-upload-input::file-selector-button:hover {
+    background:#f4f9ff;
+    border-color:#72aee6;
+    color:#0a4b78;
 }
 
 /* Token input row */
@@ -299,7 +338,7 @@ body.ypm-sleeky-dark {
 .ypm-token-input-row .ypm-token-toggle {
     flex:0 0 auto;
     min-width:34px;
-    height:36px;
+    height:30px;
     padding:0 10px;
     display:inline-flex;
     align-items:center;
@@ -330,9 +369,9 @@ body.ypm-sleeky-dark {
     align-items:stretch;
 }
 .ypm-drawer-toggle {
-    border:1px solid var(--ypm-border);
-    background:var(--ypm-bg-section);
-    color:var(--ypm-link);
+    border:1px solid #d9e6ef;
+    background:#f5fbfe;
+    color:#0a4b78;
     border-radius:5px;
     padding:6px 3px;
     cursor:pointer;
@@ -345,28 +384,64 @@ body.ypm-sleeky-dark {
     transform:rotate(180deg);
 }
 .ypm-drawer-toggle.is-active {
-    background:var(--ypm-update-badge-bg);
-    color:var(--ypm-link-strong);
-    border-color:var(--ypm-border-accent);
+    background:#e6f4ff;
+    color:#003b63;
+    border-color:#8ec5f7;
 }
 .ypm-drawer-toggle-install { border-radius:5px 0 0 5px; }
 .ypm-drawer-toggle-token { border-radius:0 5px 5px 0; }
 .ypm-drawer .form-section { margin:0; width:100%; box-sizing:border-box; }
 .ypm-panel-main .form-section + .form-section { margin-top:10px; }
 .ypm-panel-token .form-section + .form-section { margin-top:0; }
-.ypm-panel-main .form-section,
-.ypm-panel-token .form-section {
-    min-height:140px;
-    padding:14px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
 .ypm-panel-main .form-row,
 .ypm-panel-token .form-row { margin-bottom:10px; }
 .ypm-panel-main .form-row label,
 .ypm-panel-token .form-row label { margin-bottom:4px; }
 .ypm-panel-token .form-row input[type="url"] { max-width:none; }
+
+/* Panel buttons — standard LogoSuite/ALIGNMENT style */
+.ypm-panel-main .button,
+#github-token-form .button,
+#ypm-links-per-page-form .button {
+    padding:8px 18px;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    font-weight:400 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    text-decoration:none !important;
+    cursor:pointer;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-panel-main .button:hover:not(:disabled),
+.ypm-panel-main .button:focus:not(:disabled),
+.ypm-panel-main .button:active:not(:disabled),
+#github-token-form .button:hover:not(:disabled),
+#github-token-form .button:focus:not(:disabled),
+#github-token-form .button:active:not(:disabled),
+#ypm-links-per-page-form .button:hover:not(:disabled),
+#ypm-links-per-page-form .button:focus:not(:disabled),
+#ypm-links-per-page-form .button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+    text-shadow:none !important;
+}
+.ypm-panel-main .button[disabled],
+.ypm-panel-main .button:disabled,
+#github-token-form .button[disabled],
+#github-token-form .button:disabled,
+#ypm-links-per-page-form .button[disabled],
+#ypm-links-per-page-form .button:disabled {
+    opacity:.55;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    box-shadow:none !important;
+    cursor:not-allowed;
+}
 
 @media (max-width: 900px) {
     .ypm-installed-header-top { flex-direction:column; align-items:flex-start; }
@@ -430,41 +505,79 @@ body.ypm-sleeky-dark .ypm-status-active { color:#5fcc7c; }
 .ypm-inline-form-spaced { margin:0 0 6px; }
 .ypm-associate-input { width:100%; max-width:none; margin:0; }
 
-/* Action buttons row — consistent height, neat layout, no awkward wrapping.
-   We use <input> elements for the action-cell buttons because some YOURLS
-   themes (notably Sleeky) only target input.button / input[type=submit] in
-   their CSS, leaving plain <button> elements unstyled. */
+/* Action buttons in the table — standard style matching all other plugin buttons */
 .ypm-actions-cell { vertical-align:top; }
 .ypm-update-form { margin-bottom:4px; }
 .ypm-actions-row {
     display:flex;
     align-items:center;
-    gap:4px;
+    gap:6px;
     flex-wrap:wrap;
 }
+.ypm-actions-row .button { height:38px; }
+.ypm-actions-cell .button {
+    text-align:center;
+    box-sizing:border-box;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    font-weight:400 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    text-decoration:none !important;
+    cursor:pointer;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-actions-cell .button:hover:not(:disabled),
+.ypm-actions-cell .button:focus:not(:disabled),
+.ypm-actions-cell .button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+    text-shadow:none !important;
+}
+.ypm-actions-cell .button[disabled],
+.ypm-actions-cell .button:disabled {
+    opacity:.55;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    box-shadow:none !important;
+    cursor:not-allowed;
+}
 .ypm-toggle-button,
-.ypm-open-associate,
-.ypm-check-single-button,
-.ypm-delete-icon-button { white-space:nowrap; }
+.ypm-open-associate { white-space:nowrap; }
+.ypm-check-single-button { white-space:nowrap; }
+.ypm-delete-icon-button {
+    width:42px;
+    min-width:42px;
+    padding-left:0 !important;
+    padding-right:0 !important;
+}
 
-/* Info box under the table */
+/* Notes / info box — matches LogoSuite info-box style */
 .ypm-table-infobox {
-    margin:8px 0 0;
-    padding:8px 10px;
-    border-left:4px solid var(--ypm-border-accent);
-    background:var(--ypm-info-bg);
-    color:inherit;
+    margin:18px 0 10px;
+    padding:8px 12px;
+    border-left:4px solid #4ea1cf;
+    background:#f5fbfe;
+    color:#2b2b2b;
     font-size:12px;
+    border-radius:0 8px 8px 0;
 }
 .ypm-table-infobox-title {
     display:flex;
     align-items:center;
     gap:6px;
-    margin:0 0 4px;
-    color:var(--ypm-link);
+    margin:0 0 6px;
+    color:#0a5e87;
+    font-weight:700;
+    font-size:.88rem;
 }
 .ypm-table-infobox-icon { font-size:13px; line-height:1; }
 .ypm-table-infobox-list { margin:0; padding-left:18px; }
+.ypm-table-infobox-note { margin:2px 0; font-size:.76rem; }
 .ypm-table-infobox-note + .ypm-table-infobox-note { margin-top:3px; }
 
 /* Modal */
@@ -483,16 +596,16 @@ body.ypm-modal-open { overflow:hidden; }
     position:relative;
     z-index:1;
     width:min(560px, calc(100vw - 32px));
-    background:var(--ypm-bg);
+    background:#fff;
     color:var(--ypm-fg);
-    border:1px solid var(--ypm-border-strong);
+    border:1px solid #c3dff3;
     border-radius:10px;
-    box-shadow:var(--ypm-shadow);
+    box-shadow:0 14px 36px rgba(0, 0, 0, 0.18);
     padding:18px 20px;
 }
 .ypm-modal-dialog h3 {
     margin:0 22px 12px 0;
-    color:var(--ypm-link);
+    color:#0a4b78;
     font-size:1.2em;
 }
 .ypm-modal-close {
@@ -501,21 +614,20 @@ body.ypm-modal-open { overflow:hidden; }
     right:8px;
     border:0;
     background:transparent;
-    color:inherit;
-    opacity:0.6;
+    color:#5c6670;
     font-size:22px;
     line-height:1;
     cursor:pointer;
     padding:2px 6px;
 }
-.ypm-modal-close:hover { opacity:1; }
+.ypm-modal-close:hover { color:#0a4b78; }
 .ypm-modal-form label { display:block; margin-bottom:6px; }
-.ypm-modal-help { margin:0 0 10px; color:inherit; opacity:0.75; font-size:12px; line-height:1.35; }
+.ypm-modal-help { margin:0 0 10px; color:#667885; font-size:12px; line-height:1.35; }
 .ypm-modal-plugin-line {
     margin:0 0 12px;
     padding:8px 10px;
-    background:var(--ypm-bg-section);
-    border:1px solid var(--ypm-border-strong);
+    background:#f5fbfe;
+    border:1px solid #d9e6ef;
     border-radius:6px;
     color:inherit;
 }
@@ -529,19 +641,49 @@ body.ypm-modal-open { overflow:hidden; }
     gap:8px;
     flex-wrap:wrap;
 }
+.ypm-modal-actions .button {
+    padding:8px 18px;
+    border-radius:10px !important;
+    background:#fff !important;
+    border:1px solid #8ec5f7 !important;
+    color:#1f2328 !important;
+    font-weight:400 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    text-decoration:none !important;
+    cursor:pointer;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.ypm-modal-actions .button:hover:not(:disabled),
+.ypm-modal-actions .button:focus:not(:disabled),
+.ypm-modal-actions .button:active:not(:disabled) {
+    background:#f4f9ff !important;
+    border-color:#72aee6 !important;
+    color:#0a4b78 !important;
+    text-shadow:none !important;
+}
+.ypm-modal-actions .button[disabled],
+.ypm-modal-actions .button:disabled {
+    opacity:.55;
+    background:#fff !important;
+    border-color:#d4e7f8 !important;
+    color:#aab7c4 !important;
+    box-shadow:none !important;
+    cursor:not-allowed;
+}
 
 /* Footer */
 .plugin-footer {
     margin-top:40px;
     padding-top:20px;
-    border-top:1px solid var(--ypm-border);
+    border-top:1px solid #ddd;
     font-size:0.9em;
-    color:inherit;
+    color:#666;
     opacity:0.85;
     text-align:center;
 }
-.plugin-footer a { color:inherit; text-decoration:underline; }
-.plugin-footer a:hover { opacity:1; }
+.plugin-footer a { color:#0073aa; text-decoration:none; }
+.plugin-footer a:hover { text-decoration:underline; }
 .plugin-footer .github-icon {
     vertical-align:middle;
     width:16px;

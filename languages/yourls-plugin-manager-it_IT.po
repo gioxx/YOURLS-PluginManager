@@ -351,9 +351,6 @@ msgstr "Azione plugin sconosciuta."
 msgid "Deactivating Advanced Plugin Manager will remove this admin page. You will need to reactivate it from the standard YOURLS plugins page. Continue?"
 msgstr "Disattivare Advanced Plugin Manager rimuoverà questa pagina amministrativa. Dovrai riattivarlo dalla pagina plugin standard di YOURLS. Continuare?"
 
-msgid "Check"
-msgstr "Controlla"
-
 msgid "Check for updates"
 msgstr "Controlla aggiornamenti"
 

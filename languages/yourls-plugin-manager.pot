@@ -82,10 +82,6 @@ msgid "Check updates now"
 msgstr ""
 
 #: inc/admin-page.php:777
-msgid "Check"
-msgstr ""
-
-#: inc/admin-page.php:778
 msgid "Check for updates"
 msgstr ""
 
