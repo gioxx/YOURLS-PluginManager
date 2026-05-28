@@ -766,16 +766,16 @@ function ypm_render_plugin_page() {
             echo '<form method="post" class="ypm-inline-form">';
             echo '<input type="hidden" name="ypm_check_single" value="' . htmlentities($plugin['slug']) . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_single') . '" />';
-            echo '<input type="submit" class="button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" value="🔎" />';
+            echo '<input type="submit" class="button ypm-check-single-button" value="🔎 ' . yourls_esc_attr(yourls__('Check', 'yourls-plugin-manager')) . '" />';
             echo '</form>';
         }
 
         if ($repo_data && !$is_default_plugin) {
-            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" data-repo-url="' . yourls_esc_attr((string) ($repo_data['url'] ?? '')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Change repo', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" data-repo-url="' . yourls_esc_attr((string) ($repo_data['url'] ?? '')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '" />';
         } elseif (!$repo_data && !$is_default_plugin) {
-            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" value="🔗 ' . yourls_esc_attr(yourls__('Associate repo', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '" value="🔗 ' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '" />';
         } elseif (!$repo_data && $is_default_plugin) {
-            echo '<input type="button" class="button ypm-open-associate" disabled title="' . yourls_esc_attr(yourls__('Repository association not needed for default plugins.', 'yourls-plugin-manager')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Associate repo', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="button" class="button ypm-open-associate" disabled title="' . yourls_esc_attr(yourls__('Repository association not needed for default plugins.', 'yourls-plugin-manager')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '" />';
         }
 
         echo '<form method="post" class="ypm-inline-form">';

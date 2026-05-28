@@ -85,6 +85,14 @@ msgstr ""
 msgid "Check for updates"
 msgstr ""
 
+#: inc/admin-page.php:769
+msgid "Check"
+msgstr ""
+
+#: inc/admin-page.php:655
+msgid "Plugin"
+msgstr ""
+
 #: inc/admin-page.php:783
 msgid "Change repo"
 msgstr ""

@@ -527,14 +527,18 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
 .ypm-update-form { margin-bottom:4px; }
 .ypm-actions-row {
     display:flex;
-    align-items:center;
+    align-items:stretch;
     gap:6px;
     flex-wrap:wrap;
 }
-.ypm-actions-row .button { height:38px; }
+.ypm-actions-row > form,
+.ypm-actions-row > input[type="button"] { flex:1 1 0; min-width:0; }
+.ypm-actions-row > form .button { width:100%; }
 .ypm-actions-cell .button {
     text-align:center;
     box-sizing:border-box;
+    padding:6px 10px !important;
+    font-size:12px !important;
     border-radius:10px !important;
     background:#fff !important;
     border:1px solid #8ec5f7 !important;

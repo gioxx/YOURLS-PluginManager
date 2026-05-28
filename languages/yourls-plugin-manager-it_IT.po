@@ -354,6 +354,12 @@ msgstr "Disattivare Advanced Plugin Manager rimuoverà questa pagina amministrat
 msgid "Check for updates"
 msgstr "Controlla aggiornamenti"
 
+msgid "Check"
+msgstr "Verifica"
+
+msgid "Plugin"
+msgstr "Plugin"
+
 msgid "Update check completed for \"%s\"."
 msgstr "Controllo aggiornamenti completato per \"%s\"."
 
