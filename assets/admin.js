@@ -1,6 +1,26 @@
 (function () {
     'use strict';
 
+    function detectSleekyTheme() {
+        var meta = document.querySelector('meta[name="sleeky_theme"]');
+        if (!meta) {
+            return;
+        }
+        var value = (meta.getAttribute('content') || '').toLowerCase();
+        document.body.classList.add('ypm-sleeky-active');
+        if (value === 'dark') {
+            document.body.classList.add('ypm-sleeky-dark');
+        } else if (value === 'light') {
+            document.body.classList.add('ypm-sleeky-light');
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', detectSleekyTheme);
+    } else {
+        detectSleekyTheme();
+    }
+
     window.toggleTokenVisibility = function toggleTokenVisibility() {
         const field = document.getElementById('ypm_github_token');
         if (!field) {
@@ -95,9 +115,9 @@
                 return;
             }
 
-            const deleteConfirm = event.target.closest('.ypm-delete-confirm');
-            if (deleteConfirm) {
-                const message = deleteConfirm.getAttribute('data-confirm-message') || '';
+            const confirmTrigger = event.target.closest('.ypm-delete-confirm, .ypm-confirm');
+            if (confirmTrigger) {
+                const message = confirmTrigger.getAttribute('data-confirm-message') || '';
                 if (message !== '' && !window.confirm(message)) {
                     event.preventDefault();
                 }
