@@ -654,12 +654,11 @@ function ypm_render_plugin_page() {
     echo '<thead><tr>';
     echo '<th class="ypm-col-name">' . yourls__('Plugin', 'yourls-plugin-manager') . '</th>';
     echo '<th class="ypm-col-updated">' . yourls__('Last Updated', 'yourls-plugin-manager') . '</th>';
-    echo '<th class="ypm-col-status">' . yourls__('Status', 'yourls-plugin-manager') . '</th>';
     echo '<th class="ypm-col-actions">' . yourls__('Actions', 'yourls-plugin-manager') . '</th>';
     echo '</tr></thead><tbody>';
 
     if (empty($plugins)) {
-        echo '<tr><td colspan="4" class="ypm-empty-state">' . yourls__('No plugins match the selected filter.', 'yourls-plugin-manager') . '</td></tr>';
+        echo '<tr><td colspan="3" class="ypm-empty-state">' . yourls__('No plugins match the selected filter.', 'yourls-plugin-manager') . '</td></tr>';
     }
 
     foreach ($plugins as $plugin) {
@@ -726,13 +725,10 @@ function ypm_render_plugin_page() {
             $author_html = '<a href="' . htmlentities($author_uri) . '" target="_blank" rel="noopener noreferrer" class="ypm-plugin-author-link">' . $author_html . '</a>';
         }
         $meta_html = '<span class="ypm-plugin-meta"> ' . $version_html . ' (' . $author_html . ')</span>';
-        echo '<td>' . $plugin_name_html . $meta_html . '</td>';
+        $dot_class = $is_active ? 'ypm-status-dot ypm-status-dot-active' : 'ypm-status-dot ypm-status-dot-inactive';
+        $dot_title = $is_active ? yourls_esc_attr(yourls__('Active', 'yourls-plugin-manager')) : yourls_esc_attr(yourls__('Inactive', 'yourls-plugin-manager'));
+        echo '<td><span class="' . $dot_class . '" title="' . $dot_title . '" aria-label="' . $dot_title . '"></span>' . $plugin_name_html . $meta_html . '</td>';
         echo '<td>' . $plugin['last_updated'] . $update_badge . $update_details . '</td>';
-        echo '<td>';
-        echo $is_active
-            ? '<span class="ypm-status-active">' . yourls__('Active', 'yourls-plugin-manager') . '</span>'
-            : '<span class="ypm-status-inactive">' . yourls__('Inactive', 'yourls-plugin-manager') . '</span>';
-        echo '</td>';
 
         echo '<td class="ypm-actions-cell">';
         $current_status = $update_status['status'] ?? '';
