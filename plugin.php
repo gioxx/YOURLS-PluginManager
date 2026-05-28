@@ -25,7 +25,6 @@ require_once $ypm_inc . 'repository-metadata.php';
 require_once $ypm_inc . 'installer.php';
 require_once $ypm_inc . 'admin-page.php';
 
-yourls_add_action('admin_notices', 'ypm_show_self_update_notice');
 yourls_add_filter('plugin_page_title_plugin_manager', 'ypm_self_update_page_title_with_badge');
 
 yourls_add_filter('admin_view_per_page', 'ypm_filter_admin_view_per_page');

@@ -70,6 +70,7 @@ function ypm_render_plugin_page() {
         }
         echo '<script src="' . htmlentities($admin_js) . '?v=' . rawurlencode($admin_js_version) . '"></script>';
     }
+    ypm_show_self_update_notice();
 
     $message = '';
     $result = ['success' => true, 'message' => ''];
@@ -355,7 +356,7 @@ function ypm_render_plugin_page() {
     }
 
     echo '<div class="plugin-header">';
-    echo '<h2 class="plugin-title">🔌 ' . yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</h2>';
+    echo '<h2 class="plugin-title">🔌 <span class="plugin-title-text">' . yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</span></h2>';
     echo '<p class="plugin-version">' . yourls__('Version: ' . YPM_VERSION, 'yourls-plugin-manager') . '</p>';
     echo '</div>';
 

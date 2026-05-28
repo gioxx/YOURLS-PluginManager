@@ -79,6 +79,8 @@ body.ypm-sleeky-dark {
     font-family:Arial, sans-serif;
     font-size:2em;
     font-weight:bold;
+}
+.plugin-title-text {
     background:-webkit-linear-gradient(#0073aa, #00a8e6);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
@@ -194,6 +196,19 @@ body.ypm-sleeky-dark {
     opacity:1;
 }
 .ypm-settings-alert-icon { margin-right:4px; }
+
+/* Update-available banner — overrides YOURLS default .notice styles so the
+   banner always renders full-width, flush, and visually tied to this plugin. */
+.ypm-update-notice {
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    padding:14px 18px !important;
+    margin:0 0 20px !important;
+    border-left:4px solid var(--ypm-border-accent) !important;
+    border-bottom:2px solid var(--ypm-border-accent) !important;
+    border-radius:0 !important;
+}
 
 /* Inputs — force a visible outline regardless of theme.
    !important is required because Sleeky uses `input { border: none !important; }`. */
