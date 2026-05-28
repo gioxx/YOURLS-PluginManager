@@ -430,6 +430,7 @@ function ypm_render_plugin_page() {
 
     echo '<div class="ypm-panel-main">';
     echo '<div class="form-section">';
+
     echo '<form method="post" id="github-plugin-form">';
     echo '<small class="ypm-help-text ypm-help-install">'
         . yourls__('Insert a public GitHub repository URL (owner/repo). When Branch and Release are empty, the plugin downloads the latest Release, falls back to the latest Tag, then falls back to the default branch.', 'yourls-plugin-manager')
@@ -452,24 +453,22 @@ function ypm_render_plugin_page() {
         . yourls__('When a Release version is set it takes priority. When only a Branch is set the source code at that branch is downloaded.', 'yourls-plugin-manager')
         . '</small>';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_install_plugin') . '" />';
-    echo '<div class="ypm-submit-row"><input type="submit" value="📦 ' . yourls__('Download and Install Plugin', 'yourls-plugin-manager') . '" class="button button-primary" /></div>';
+    echo '<div class="ypm-submit-row"><input type="submit" value="📦 ' . yourls__('Download and Install Plugin', 'yourls-plugin-manager') . '" class="button" /></div>';
     echo '</form>';
-    echo '</div>';
 
-    // Upload-from-ZIP form. Lives in the same install panel so the user gets
-    // both options (GitHub URL + local upload) without flipping drawer tabs.
-    echo '<div class="form-section ypm-upload-section">';
+    echo '<hr class="ypm-panel-divider">';
+
     echo '<form method="post" id="ypm-upload-zip-form" enctype="multipart/form-data">';
-    echo '<label for="ypm_plugin_zip"><strong>' . yourls__('Or upload a plugin .zip file:', 'yourls-plugin-manager') . '</strong></label><br>';
-    echo '<small class="ypm-help-text ypm-help-install">'
-        . yourls__('The ZIP must contain a valid plugin.php either at the root or inside a single top-level directory. The plugin will be installed but not activated.', 'yourls-plugin-manager')
-        . '</small>';
+    echo '<small class="ypm-help-text ypm-help-install"><strong>' . yourls__('Or upload a plugin .zip file:', 'yourls-plugin-manager') . '</strong> ';
+    echo yourls__('The ZIP must contain a valid plugin.php either at the root or inside a single top-level directory. The plugin will be installed but not activated.', 'yourls-plugin-manager');
+    echo '</small>';
     echo '<div class="ypm-upload-row">';
     echo '<input type="file" name="ypm_plugin_zip" id="ypm_plugin_zip" accept=".zip,application/zip,application/x-zip-compressed" required class="ypm-upload-input" />';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_upload_zip') . '" />';
-    echo '<input type="submit" name="ypm_upload_zip_submit" value="⬆ ' . yourls_esc_attr(yourls__('Upload and Install', 'yourls-plugin-manager')) . '" class="button button-primary" />';
+    echo '<input type="submit" name="ypm_upload_zip_submit" value="⬆ ' . yourls_esc_attr(yourls__('Upload and Install', 'yourls-plugin-manager')) . '" class="button" />';
     echo '</div>';
     echo '</form>';
+
     echo '</div>';
 
     echo '</div>';

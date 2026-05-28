@@ -269,6 +269,13 @@ body.ypm-sleeky-dark {
     outline:none;
 }
 
+/* Base button sizing — YOURLS default is too small; enforce 13px / correct padding */
+input[type="submit"].button,
+input[type="button"].button,
+button.button { padding:8px 14px; font-size:13px; cursor:pointer; }
+
+.ypm-panel-divider { margin:16px 0; border:0; border-top:1px solid #d9e6ef; }
+
 .ypm-install-url { margin-top:5px; }
 .ypm-submit-row { margin-top:10px; }
 
@@ -360,7 +367,7 @@ body.ypm-sleeky-dark {
 .ypm-drawer.is-token-open .ypm-drawer-track { transform:translateX(-50%); }
 .ypm-panel-main,
 .ypm-panel-token { width:50%; box-sizing:border-box; display:flex; }
-.ypm-panel-main { padding-right:5px; }
+.ypm-panel-main { padding-right:5px; flex-direction:column; }
 .ypm-panel-token {
     padding-left:5px;
     display:grid;
