@@ -652,16 +652,14 @@ function ypm_render_plugin_page() {
 
     echo '<table class="widefat ypm-plugins-table">';
     echo '<thead><tr>';
-    echo '<th class="ypm-col-name">' . yourls__('Plugin Name', 'yourls-plugin-manager') . '</th>';
-    echo '<th class="ypm-col-author">' . yourls__('Author', 'yourls-plugin-manager') . '</th>';
-    echo '<th class="ypm-col-version">' . yourls__('Version', 'yourls-plugin-manager') . '</th>';
+    echo '<th class="ypm-col-name">' . yourls__('Plugin', 'yourls-plugin-manager') . '</th>';
     echo '<th class="ypm-col-updated">' . yourls__('Last Updated', 'yourls-plugin-manager') . '</th>';
     echo '<th class="ypm-col-status">' . yourls__('Status', 'yourls-plugin-manager') . '</th>';
     echo '<th class="ypm-col-actions">' . yourls__('Actions', 'yourls-plugin-manager') . '</th>';
     echo '</tr></thead><tbody>';
 
     if (empty($plugins)) {
-        echo '<tr><td colspan="6" class="ypm-empty-state">' . yourls__('No plugins match the selected filter.', 'yourls-plugin-manager') . '</td></tr>';
+        echo '<tr><td colspan="4" class="ypm-empty-state">' . yourls__('No plugins match the selected filter.', 'yourls-plugin-manager') . '</td></tr>';
     }
 
     foreach ($plugins as $plugin) {
@@ -721,15 +719,14 @@ function ypm_render_plugin_page() {
         if ($plugin_uri !== '' && filter_var($plugin_uri, FILTER_VALIDATE_URL)) {
             $plugin_name_html = '<a href="' . htmlentities($plugin_uri) . '" target="_blank" rel="noopener noreferrer" class="ypm-plugin-name-link">' . $plugin_name_html . '</a>';
         }
-        echo '<td>' . $plugin_name_html . '</td>';
-
+        $version_html = htmlentities($plugin['version']);
         $author_html = htmlentities($plugin['author']);
         $author_uri = isset($plugin['author_uri']) ? trim((string) $plugin['author_uri']) : '';
         if ($author_uri !== '' && filter_var($author_uri, FILTER_VALIDATE_URL)) {
             $author_html = '<a href="' . htmlentities($author_uri) . '" target="_blank" rel="noopener noreferrer" class="ypm-plugin-author-link">' . $author_html . '</a>';
         }
-        echo '<td>' . $author_html . '</td>';
-        echo '<td>' . htmlentities($plugin['version']) . '</td>';
+        $meta_html = '<span class="ypm-plugin-meta"> ' . $version_html . ' (' . $author_html . ')</span>';
+        echo '<td>' . $plugin_name_html . $meta_html . '</td>';
         echo '<td>' . $plugin['last_updated'] . $update_badge . $update_details . '</td>';
         echo '<td>';
         echo $is_active

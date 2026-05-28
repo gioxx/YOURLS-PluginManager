@@ -481,12 +481,10 @@ table.widefat tbody tr:nth-child(odd) { background-color:var(--ypm-bg-row-odd); 
 table.widefat tbody tr:nth-child(even) { background-color:var(--ypm-bg-row-even); }
 .ypm-filters { margin:0 0 10px; }
 .ypm-plugins-table { margin-top:10px; }
-.ypm-col-name { width:22%; text-align:left; }
-.ypm-col-author { width:14%; text-align:left; }
-.ypm-col-version { width:10%; text-align:left; }
-.ypm-col-updated { width:22%; text-align:left; }
+.ypm-col-name { width:28%; text-align:left; }
+.ypm-col-updated { width:20%; text-align:left; }
 .ypm-col-status { width:10%; text-align:left; }
-.ypm-col-actions { width:22%; text-align:left; }
+.ypm-col-actions { width:42%; text-align:left; }
 .ypm-plugin-name-link,
 .ypm-plugin-author-link {
     color:var(--ypm-link);
@@ -494,6 +492,7 @@ table.widefat tbody tr:nth-child(even) { background-color:var(--ypm-bg-row-even)
 }
 .ypm-plugin-name-link:hover,
 .ypm-plugin-author-link:hover { text-decoration:underline; }
+.ypm-plugin-meta { color:var(--ypm-fg-muted); font-size:.82em; white-space:nowrap; }
 .ypm-empty-state { color:inherit; opacity:0.7; }
 .ypm-text-muted { color:inherit; opacity:0.55; }
 .ypm-status-update-available { color:var(--ypm-warn-fg); }
