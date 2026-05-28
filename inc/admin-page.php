@@ -431,7 +431,6 @@ function ypm_render_plugin_page() {
     echo '<div class="ypm-panel-main">';
     echo '<div class="form-section">';
     echo '<form method="post" id="github-plugin-form">';
-    echo '<label for="ypm_github_url"><strong>' . yourls__('GitHub Repository URL:', 'yourls-plugin-manager') . '</strong></label><br>';
     echo '<small class="ypm-help-text ypm-help-install">'
         . yourls__('Insert a public GitHub repository URL (owner/repo). When Branch and Release are empty, the plugin downloads the latest Release, falls back to the latest Tag, then falls back to the default branch.', 'yourls-plugin-manager')
         . '</small>';
@@ -775,7 +774,7 @@ function ypm_render_plugin_page() {
             echo '<form method="post" class="ypm-inline-form">';
             echo '<input type="hidden" name="ypm_check_single" value="' . htmlentities($plugin['slug']) . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_single') . '" />';
-            echo '<input type="submit" class="button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" value="🔎" />';
+            echo '<input type="submit" class="button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" value="🔎 ' . yourls_esc_attr(yourls__('Check', 'yourls-plugin-manager')) . '" />';
             echo '</form>';
         }
 
@@ -792,11 +791,11 @@ function ypm_render_plugin_page() {
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_delete_plugin') . '" />';
         $is_self_plugin = (basename(dirname(__DIR__)) === $plugin['slug']);
         if ($is_self_plugin) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         } elseif ($is_active) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         } else {
-            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑" />';
+            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         }
         echo '</form>';
 

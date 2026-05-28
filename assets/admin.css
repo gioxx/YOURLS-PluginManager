@@ -239,14 +239,15 @@ body.ypm-sleeky-dark {
 .ypm-install-url { margin-top:5px; }
 .ypm-submit-row { margin-top:10px; }
 
-/* Plugin install grid: URL + Branch + Version side by side */
+/* Plugin install grid: URL full-width on top, Branch + Version side by side below */
 .ypm-install-grid {
     display:grid;
-    grid-template-columns:minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns:1fr 1fr;
     gap:10px;
     margin-top:6px;
 }
 .ypm-install-field { display:flex; flex-direction:column; min-width:0; }
+.ypm-install-field-url { grid-column:1 / -1; }
 .ypm-install-label {
     font-weight:600;
     font-size:12px;
@@ -258,6 +259,7 @@ body.ypm-sleeky-dark {
 .ypm-install-grid input[type="text"] { width:100%; }
 @media (max-width: 720px) {
     .ypm-install-grid { grid-template-columns:1fr; }
+    .ypm-install-field-url { grid-column:1; }
 }
 
 /* Upload form: file picker + submit on a single row, wraps on narrow widths. */
@@ -350,6 +352,7 @@ body.ypm-sleeky-dark {
 .ypm-drawer-toggle-install { border-radius:5px 0 0 5px; }
 .ypm-drawer-toggle-token { border-radius:0 5px 5px 0; }
 .ypm-drawer .form-section { margin:0; width:100%; box-sizing:border-box; }
+.ypm-panel-main .form-section + .form-section { margin-top:10px; }
 .ypm-panel-token .form-section + .form-section { margin-top:0; }
 .ypm-panel-main .form-section,
 .ypm-panel-token .form-section {
@@ -432,22 +435,17 @@ body.ypm-sleeky-dark .ypm-status-active { color:#5fcc7c; }
    themes (notably Sleeky) only target input.button / input[type=submit] in
    their CSS, leaving plain <button> elements unstyled. */
 .ypm-actions-cell { vertical-align:top; }
-.ypm-update-form { width:100%; }
-.ypm-update-button { width:100%; display:block; }
+.ypm-update-form { margin-bottom:4px; }
 .ypm-actions-row {
     display:flex;
     align-items:center;
-    gap:6px;
+    gap:4px;
     flex-wrap:wrap;
 }
 .ypm-toggle-button,
-.ypm-open-associate { white-space:nowrap; }
+.ypm-open-associate,
 .ypm-check-single-button,
-.ypm-delete-icon-button {
-    min-width:34px;
-    padding-left:6px !important;
-    padding-right:6px !important;
-}
+.ypm-delete-icon-button { white-space:nowrap; }
 
 /* Info box under the table */
 .ypm-table-infobox {
