@@ -157,20 +157,19 @@ function ypm_get_branch_package_info($owner, $repo, $branch, $token = '') {
 function ypm_get_default_branch_package_info($owner, $repo, $token = '') {
     $api_url = "https://api.github.com/repos/$owner/$repo";
     $response = ypm_remote_get($api_url, $token);
-    // Capture the archived flag while we have the repo metadata — callers that
-    // use this function can reuse it without a second API call.
-    $archived = $response['success'] && !empty($response['data']['archived']);
 
     if ($response['success'] && !empty($response['data']['default_branch'])) {
         $result = ypm_get_branch_package_info($owner, $repo, (string) $response['data']['default_branch'], $token);
-        $result['archived'] = $archived;
+        // archived is reliable only when the repo metadata fetch succeeded
+        $result['archived'] = !empty($response['data']['archived']);
         return $result;
     }
 
+    // Repo call failed or returned no default_branch — archived status unknown.
+    // Omit the key so callers fall through to their own safety-net check.
     foreach (['main', 'master'] as $candidate) {
         $branch_info = ypm_get_branch_package_info($owner, $repo, $candidate, $token);
         if ($branch_info['success']) {
-            $branch_info['archived'] = $archived;
             return $branch_info;
         }
     }
@@ -181,7 +180,6 @@ function ypm_get_default_branch_package_info($owner, $repo, $token = '') {
         'zip_url' => '',
         'version' => '',
         'source' => 'branch',
-        'archived' => $archived,
         'error' => $response['error'] ?: 'No default branch could be determined.',
     ];
 }
@@ -203,11 +201,12 @@ function ypm_resolve_package_info($owner, $repo, $token = '', $branch = '', $ver
         return $latest;
     }
 
-    if (!empty($latest['no_release'])) {
-        $fallback = ypm_get_default_branch_package_info($owner, $repo, $token);
-        if ($fallback['success']) {
-            return $fallback;
-        }
+    // Always attempt the default branch when release/tag resolution fails:
+    // for repos with no releases this is the primary install path; for
+    // transient API errors (5xx, 403 rate-limit) it provides a graceful fallback.
+    $fallback = ypm_get_default_branch_package_info($owner, $repo, $token);
+    if ($fallback['success']) {
+        return $fallback;
     }
 
     return $latest;

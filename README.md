@@ -12,17 +12,23 @@ Just feed it a GitHub URL and it handles the rest 🧙‍♂️
 
 ## 🚀 Features
 
-- 🧲 Install plugins from any public GitHub repo (release or tag)
+- 🧲 Install plugins from any public GitHub repo (latest release, specific tag/version, or branch)
+- ⬆ Upload and install plugins directly from a local `.zip` file
 - 🔁 Auto-overwrite existing plugin folder (works like "update")
-- ⏱️ Automatic update checks every 24 hours (plus manual on-demand checks)
+- ⏱️ Automatic update checks every 24 hours (plus manual on-demand checks per plugin or in bulk)
 - 🤖 Auto-associates repository metadata from `Plugin URI` (when valid GitHub URLs are available)
 - ✅ Verifies `plugin.php` structure before installing
 - 🔐 Supports GitHub Personal Access Token (to avoid API limits)
 - 📦 Extracts ZIP via `ZipArchive` (no dependencies)
-- 📊 Shows version, author, status, and last update time
+- 📊 Shows version, author, status, and last update time — with clickable author links
 - 🔗 Associate/Change repo via dedicated modal UI (with pre-filled URL on change)
+- ▶ Activate / Deactivate each plugin directly from the manager (including self-deactivation)
+- 🏷️ Detects plugins with source-code-only repos (no releases) and offers "Reinstall from source"
+- ⚠️ Flags archived/abandoned repositories
+- 🎨 Theme-aware UI — adapts to dark admin themes (Sleeky dark mode supported)
+- 🔍 Filter plugins by All / Active / Inactive / Updatable / No metadata / Abandoned / Errors
 - 🧼 Can delete inactive plugins safely
-- 💬 Fully translatable (`.po/.mo` ready — Italian included 🇮🇹)
+- 💬 Fully translatable (`.po/.mo` ready — Italian 🇮🇹 and Dutch 🇳🇱 included)
 
 ---
 
@@ -52,6 +58,19 @@ To enable update checks and one-click updates for those plugins, reinstall or up
 Default YOURLS plugins do not require repository association, and the UI now reflects this explicitly.
 
 ---
+
+## 🆕 What’s New in 1.2.0
+
+- **Theme-aware UI**: the admin panel now adapts to the active admin theme; dark variants are applied only when a dark theme (e.g. Sleeky dark) is explicitly detected — vanilla YOURLS stays light regardless of OS dark mode
+- **Branch and release version inputs**: install a specific branch or a specific release tag instead of always pulling latest; when both are empty, falls back automatically: latest release → latest tag → default branch
+- **Upload from ZIP**: install a plugin directly from a local `.zip` file without needing a GitHub URL
+- **Activate / Deactivate toggle**: each plugin row now has a toggle button; self-deactivation is supported with a confirmation prompt
+- **Per-plugin update check**: click the 🔎 button to run an update check for a single plugin without running a full bulk check
+- **Source-code-only plugins**: repos with no release and no tag are now surfaced with a "Source code only" badge and a "Reinstall from source" action instead of an error
+- **Abandoned repository detection**: repos that are archived on GitHub or have been moved/renamed are flagged as abandoned
+- **Active / Inactive / Abandoned filter tabs**: new filter links in the installed plugins header
+- **Clickable author links**: `Author URI` plugin header field is now rendered as a link, matching native YOURLS behaviour
+- Dutch translation 🇳🇱 contributed by [@toineenzo](https://github.com/toineenzo)
 
 ## 🆕 What’s New in 1.1.5
 
@@ -105,7 +124,9 @@ To increase the limit to **5000 req/hour**, use a **[GitHub Personal Access Toke
 ## 🌐 Localization
 
 - English (`en_US`) — default
-- Italian (`it_IT`) — included  
+- Italian (`it_IT`) — included
+- Dutch (`nl_NL`) — included, contributed by [@toineenzo](https://github.com/toineenzo)
+
 You can contribute other translations by forking and submitting `.po`/`.mo` files to the `languages/` folder.
 
 ---
@@ -117,7 +138,7 @@ You can paste any of these into the GitHub URL field:
 - `https://github.com/gioxx/YOURLS-LogoSuite`
 - `https://github.com/YOURLS/antispam`
 
-The plugin will automatically fetch the latest release or fallback to the latest tag.
+The plugin will automatically fetch the latest release, fall back to the latest tag, then fall back to the default branch.
 
 ---
 
@@ -135,8 +156,6 @@ To make your YOURLS plugin compatible with **Advanced Plugin Manager**, follow t
 
 ### ❌ What to avoid
 
-- Do not leave your repository in a flat layout without a release:  
-  in this case, Advanced Plugin Manager will **not find any installable content**.
 - Avoid deeply nested folders like `your-plugin/another-folder/plugin.php`.
 
 ### 📦 Example structure

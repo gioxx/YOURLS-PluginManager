@@ -12,17 +12,23 @@ Ti basta incollare un URL GitHub e fa tutto da solo 🧙‍♂️
 
 ## 🚀 Funzionalità
 
-- 🧲 Installa plugin da qualsiasi repository GitHub pubblico (release o tag)
+- 🧲 Installa plugin da qualsiasi repository GitHub pubblico (ultima release, tag/versione specifica o branch)
+- ⬆ Carica e installa plugin direttamente da un file `.zip` locale
 - 🔁 Sovrascrive automaticamente i plugin esistenti (come un aggiornamento)
-- ⏱️ Controllo aggiornamenti automatico ogni 24 ore (oltre al controllo manuale)
-- 🤖 Auto-associa i metadati repository leggendo `Plugin URI` (quando l'URL GitHub è valido)
+- ⏱️ Controllo aggiornamenti automatico ogni 24 ore (oltre al controllo manuale per singolo plugin o in blocco)
+- 🤖 Auto-associa i metadati repository leggendo `Plugin URI` (quando l’URL GitHub è valido)
 - ✅ Verifica la struttura di `plugin.php` prima di installare
 - 🔐 Supporta GitHub Personal Access Token (per evitare i limiti API)
 - 📦 Estrae i file ZIP tramite `ZipArchive` (senza dipendenze esterne)
-- 📊 Mostra versione, autore, stato e data dell’ultimo aggiornamento
+- 📊 Mostra versione, autore, stato e data dell’ultimo aggiornamento — con link autore cliccabili
 - 🔗 Associazione/Cambio repository tramite modale dedicato (con URL precompilato in modifica)
+- ▶ Attiva / Disattiva ogni plugin direttamente dal gestore (inclusa la self-disattivazione)
+- 🏷️ Rileva i plugin con repository solo da sorgente (senza release) e offre "Reinstalla da sorgente"
+- ⚠️ Segnala repository archiviati/abbandonati
+- 🎨 Interfaccia adattiva al tema — si adatta ai temi admin scuri (supporto Sleeky dark mode)
+- 🔍 Filtra i plugin per Tutti / Attivi / Inattivi / Aggiornabili / Senza metadati / Abbandonati / Errori
 - 🧼 Permette di eliminare i plugin non attivi
-- 💬 Completamente localizzabile (file `.po/.mo` pronti — incluso italiano 🇮🇹)
+- 💬 Completamente localizzabile (file `.po/.mo` pronti — inclusi italiano 🇮🇹 e olandese 🇳🇱)
 
 ---
 
@@ -52,6 +58,19 @@ Per abilitare controllo aggiornamenti e update con un click anche su questi plug
 I plugin predefiniti di YOURLS non richiedono associazione repository, e l'interfaccia ora lo esplicita chiaramente.
 
 ---
+
+## 🆕 Novità nella 1.2.0
+
+- **Interfaccia adattiva al tema**: il pannello ora si adatta al tema admin attivo; le varianti scure vengono applicate solo quando viene rilevato un tema scuro (es. Sleeky dark) — YOURLS vanilla rimane chiaro indipendentemente dalla dark mode del sistema operativo
+- **Input branch e versione release**: installa un branch specifico o un tag di release specifico invece di prendere sempre l'ultima versione; se entrambi sono vuoti, il fallback è automatico: ultima release → ultimo tag → branch predefinito
+- **Caricamento da ZIP**: installa un plugin direttamente da un file `.zip` locale senza bisogno di un URL GitHub
+- **Toggle Attiva / Disattiva**: ogni riga plugin ha ora un pulsante di toggle; la self-disattivazione è supportata con una richiesta di conferma
+- **Controllo aggiornamenti per singolo plugin**: clicca il pulsante 🔎 per eseguire il controllo aggiornamenti su un singolo plugin senza lanciare un controllo in blocco
+- **Plugin solo sorgente**: i repository senza release né tag vengono ora visualizzati con un badge "Solo sorgente" e un'azione "Reinstalla da sorgente" invece di un errore
+- **Rilevamento repository abbandonati**: i repository archiviati su GitHub o spostati/rinominati vengono segnalati come abbandonati
+- **Tab di filtro Attivi / Inattivi / Abbandonati**: nuovi link di filtro nell'intestazione dei plugin installati
+- **Link autore cliccabili**: il campo `Author URI` dell'intestazione plugin è ora visualizzato come link, in linea con il comportamento nativo di YOURLS
+- Traduzione olandese 🇳🇱 contribuita da [@toineenzo](https://github.com/toineenzo)
 
 ## 🆕 Novità nella 1.1.5
 

@@ -287,7 +287,7 @@ function ypm_get_self_update_status($force_refresh = false) {
     }
 
     $token = trim((string) yourls_get_option('ypm_github_token'));
-    $latest = ypm_get_latest_package_info(YPM_GITHUB_OWNER, YPM_GITHUB_REPO, $token);
+    $latest = ypm_resolve_package_info(YPM_GITHUB_OWNER, YPM_GITHUB_REPO, $token);
     $checked_at = time();
 
     $status = [

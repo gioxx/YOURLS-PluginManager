@@ -70,7 +70,6 @@ function ypm_render_plugin_page() {
         }
         echo '<script src="' . htmlentities($admin_js) . '?v=' . rawurlencode($admin_js_version) . '"></script>';
     }
-    ypm_show_self_update_notice();
 
     $message = '';
     $result = ['success' => true, 'message' => ''];
@@ -313,9 +312,7 @@ function ypm_render_plugin_page() {
                 $token = trim((string) yourls_get_option('ypm_github_token'));
                 $latest = ypm_get_latest_package_info($parsed['owner'], $parsed['repo'], $token);
                 if (!$latest['success']) {
-                    $error_text = trim((string) ($latest['error'] ?? ''));
-                    $is_no_package_case = (int) $latest['http_code'] === 200
-                        && stripos($error_text, 'Could not fetch any release or tag from GitHub.') !== false;
+                    $is_no_package_case = !empty($latest['no_release']);
                     if ($is_no_package_case) {
                         $exists_check = ypm_github_repository_exists($parsed['owner'], $parsed['repo'], $token);
                         if (!empty($exists_check['exists'])) {
@@ -354,6 +351,8 @@ function ypm_render_plugin_page() {
         }
         $message = $result['message'];
     }
+
+    ypm_show_self_update_notice();
 
     echo '<div class="plugin-header">';
     echo '<h2 class="plugin-title">🔌 <span class="plugin-title-text">' . yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</span></h2>';
