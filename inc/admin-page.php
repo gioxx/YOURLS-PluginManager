@@ -465,7 +465,7 @@ function ypm_render_plugin_page() {
     echo '<div class="ypm-upload-row">';
     echo '<input type="file" name="ypm_plugin_zip" id="ypm_plugin_zip" accept=".zip,application/zip,application/x-zip-compressed" required class="ypm-upload-input" />';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_upload_zip') . '" />';
-    echo '<input type="submit" name="ypm_upload_zip_submit" value="⬆ ' . yourls_esc_attr(yourls__('Upload and Install', 'yourls-plugin-manager')) . '" class="button" />';
+    echo '<input type="submit" name="ypm_upload_zip_submit" value="📤 ' . yourls_esc_attr(yourls__('Upload and Install', 'yourls-plugin-manager')) . '" class="button" />';
     echo '</div>';
     echo '</form>';
 
