@@ -29,6 +29,7 @@ Ti basta incollare un URL GitHub e fa tutto da solo 🧙‍♂️
 - 🔍 Filtra i plugin per Tutti / Attivi / Inattivi / Aggiornabili / Senza metadati / Abbandonati / Errori
 - 🧼 Permette di eliminare i plugin non attivi
 - 💬 Completamente localizzabile (file `.po/.mo` pronti — inclusi italiano 🇮🇹 e olandese 🇳🇱)
+- ✨ Installazione rapida di plugin complementari consigliati direttamente dalla pagina di amministrazione
 
 ---
 
@@ -58,6 +59,13 @@ Per abilitare controllo aggiornamenti e update con un click anche su questi plug
 I plugin predefiniti di YOURLS non richiedono associazione repository, e l'interfaccia ora lo esplicita chiaramente.
 
 ---
+
+## 🆕 Novità nella 1.2.2
+
+- **Plugin consigliati**: un nuovo box in fondo alla pagina di amministrazione elenca i plugin complementari di Gioxx (Logo Suite, URL Fallback, Change Notifier, Alternative Index) — installane uno, più d'uno o tutti con un solo click
+  - Le voci già installate sono ingrigite e non selezionabili
+  - Seleziona tutti / Deseleziona tutti agisce solo sui plugin non ancora installati
+  - Il pulsante *Install selected* è disabilitato (con cursore `not-allowed`) quando non c'è nulla di selezionato
 
 ## 🆕 Novità nella 1.2.0
 

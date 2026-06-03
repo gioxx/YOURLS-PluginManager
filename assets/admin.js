@@ -81,6 +81,26 @@
         return false;
     };
 
+    function syncMyPluginsSubmit() {
+        const form = document.getElementById('ypm-my-plugins-form');
+        if (!form) {
+            return;
+        }
+        const selectableBoxes = form.querySelectorAll('input[type="checkbox"]:not([disabled])');
+        const anyChecked = form.querySelector('input[type="checkbox"]:not([disabled]):checked') !== null;
+        const hasSelectable = selectableBoxes.length > 0;
+
+        const btn = form.querySelector('input[type="submit"][name="ypm_install_my_plugins"]');
+        if (btn) {
+            btn.disabled = !anyChecked;
+        }
+
+        const selectors = form.querySelector('.ypm-my-plugins-selectors');
+        if (selectors) {
+            selectors.classList.toggle('ypm-my-plugins-selectors-inactive', !hasSelectable);
+        }
+    }
+
     function bindAdminEvents() {
         document.addEventListener('click', function (event) {
             const tokenToggle = event.target.closest('.ypm-token-visibility-toggle');
@@ -115,6 +135,28 @@
                 return;
             }
 
+            const selectAll = event.target.closest('.ypm-select-all');
+            if (selectAll) {
+                event.preventDefault();
+                const form = document.getElementById(selectAll.dataset.form || '');
+                if (form) {
+                    form.querySelectorAll('input[type="checkbox"]:not([disabled])').forEach(function (cb) { cb.checked = true; });
+                    syncMyPluginsSubmit();
+                }
+                return;
+            }
+
+            const deselectAll = event.target.closest('.ypm-deselect-all');
+            if (deselectAll) {
+                event.preventDefault();
+                const form = document.getElementById(deselectAll.dataset.form || '');
+                if (form) {
+                    form.querySelectorAll('input[type="checkbox"]:not([disabled])').forEach(function (cb) { cb.checked = false; });
+                    syncMyPluginsSubmit();
+                }
+                return;
+            }
+
             const confirmTrigger = event.target.closest('.ypm-delete-confirm, .ypm-confirm');
             if (confirmTrigger) {
                 const message = confirmTrigger.getAttribute('data-confirm-message') || '';
@@ -131,9 +173,19 @@
         }
     });
 
+    document.addEventListener('change', function (event) {
+        if (event.target.closest('#ypm-my-plugins-form')) {
+            syncMyPluginsSubmit();
+        }
+    });
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bindAdminEvents);
+        document.addEventListener('DOMContentLoaded', function () {
+            bindAdminEvents();
+            syncMyPluginsSubmit();
+        });
     } else {
         bindAdminEvents();
+        syncMyPluginsSubmit();
     }
 })();

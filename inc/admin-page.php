@@ -51,6 +51,35 @@ function ypm_build_manual_delete_message($path) {
     );
 }
 
+function ypm_get_my_plugins_catalog() {
+    return [
+        [
+            'name'        => 'YOURLS Logo Suite',
+            'description' => 'Customize the YOURLS admin panel with your own logo and title.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-LogoSuite',
+            'slug'        => 'YOURLS-LogoSuite',
+        ],
+        [
+            'name'        => 'YOURLS URL Fallback',
+            'description' => 'Redirect visitors to a fallback URL when a short URL does not exist.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-URLFallback',
+            'slug'        => 'YOURLS-URLFallback',
+        ],
+        [
+            'name'        => 'YOURLS Change Notifier',
+            'description' => 'Instant email notifications for every change to your short URLs.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-ChangeNotifier',
+            'slug'        => 'YOURLS-ChangeNotifier',
+        ],
+        [
+            'name'        => 'YOURLS Alternative Index',
+            'description' => 'Turn the YOURLS root into a Linktree-style profile page.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-AlternativeIndex',
+            'slug'        => 'YOURLS-AlternativeIndex',
+        ],
+    ];
+}
+
 function ypm_render_plugin_page() {
     $admin_css = ypm_asset_url('assets/admin.css');
     if ($admin_css !== '') {
@@ -87,6 +116,54 @@ function ypm_render_plugin_page() {
         $uploaded_file = $_FILES['ypm_plugin_zip'] ?? null;
         $result = ypm_process_uploaded_zip($uploaded_file);
         $message = $result['message'];
+    }
+
+    if (isset($_POST['ypm_install_my_plugins']) && yourls_verify_nonce('ypm_install_my_plugins')) {
+        $catalog    = ypm_get_my_plugins_catalog();
+        $valid_urls = array_column($catalog, 'repo_url');
+        $selected   = array_filter((array) ($_POST['ypm_my_plugins_selected'] ?? []), function ($url) use ($valid_urls) {
+            return in_array((string) $url, $valid_urls, true);
+        });
+
+        if (empty($selected)) {
+            $result  = ['success' => false, 'message' => yourls__('No plugins selected.', 'yourls-plugin-manager')];
+            $message = $result['message'];
+        } else {
+            $installed    = 0;
+            $failed_names = [];
+            foreach ($selected as $repo_url) {
+                $item = null;
+                foreach ($catalog as $c) {
+                    if ($c['repo_url'] === (string) $repo_url) {
+                        $item = $c;
+                        break;
+                    }
+                }
+                $r = ypm_process_github_url((string) $repo_url);
+                if (!empty($r['success'])) {
+                    $installed++;
+                } elseif ($item) {
+                    $failed_names[] = htmlentities($item['name']) . ': ' . htmlentities((string) ($r['message'] ?? ''));
+                }
+            }
+            $failed = count($failed_names);
+            if ($failed === 0) {
+                $result = [
+                    'success' => true,
+                    'message' => sprintf(yourls__('%d plugin(s) installed successfully.', 'yourls-plugin-manager'), $installed),
+                ];
+            } else {
+                $result = [
+                    'success' => $installed > 0,
+                    'message' => sprintf(
+                        yourls__('%d installed, %d failed:', 'yourls-plugin-manager'),
+                        $installed,
+                        $failed
+                    ) . ' ' . implode('; ', $failed_names),
+                ];
+            }
+            $message = $result['message'];
+        }
     }
 
     $self_deactivated_redirect = '';
@@ -823,6 +900,48 @@ function ypm_render_plugin_page() {
     echo '</div>';
     echo '</form>';
     echo '</div>';
+    echo '</div>';
+
+    $my_catalog = ypm_get_my_plugins_catalog();
+    echo '<div class="ypm-recommended-box">';
+    echo '<div class="ypm-recommended-header">';
+    echo '<span class="ypm-recommended-icon" aria-hidden="true">✨</span>';
+    echo '<div>';
+    echo '<strong>' . yourls__('Recommended plugins', 'yourls-plugin-manager') . '</strong>';
+    echo '<span class="ypm-recommended-subtitle">' . yourls__('These plugins are designed to complement YOURLS Advanced Plugin Manager.', 'yourls-plugin-manager') . '</span>';
+    echo '</div>';
+    echo '</div>';
+    echo '<form method="post" id="ypm-my-plugins-form">';
+    echo '<div class="ypm-my-plugins-list">';
+    foreach ($my_catalog as $item) {
+        $is_installed = in_array($item['slug'], $installed_slugs, true);
+        $cb_id        = 'ypm-myplugin-' . htmlentities($item['slug']);
+        $row_class = $is_installed ? 'ypm-my-plugin-row ypm-my-plugin-row-installed' : 'ypm-my-plugin-row';
+        echo '<div class="' . $row_class . '">';
+        echo '<label class="ypm-my-plugin-label">';
+        if ($is_installed) {
+            echo '<input type="checkbox" disabled />';
+        } else {
+            echo '<input type="checkbox" name="ypm_my_plugins_selected[]" value="' . htmlentities($item['repo_url']) . '" id="' . $cb_id . '" checked />';
+        }
+        echo ' <strong>' . htmlentities($item['name']) . '</strong>';
+        if ($is_installed) {
+            echo ' <span class="ypm-status-up-to-date">' . yourls__('Installed', 'yourls-plugin-manager') . '</span>';
+        }
+        echo '</label>';
+        echo '<small class="ypm-my-plugin-desc ypm-help-text">' . htmlentities($item['description']) . '</small>';
+        echo '</div>';
+    }
+    echo '</div>';
+    echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_install_my_plugins') . '" />';
+    echo '<div class="ypm-my-plugins-actions">';
+    echo '<span class="ypm-my-plugins-selectors">';
+    echo '<a href="#" class="ypm-select-all" data-form="ypm-my-plugins-form">' . yourls__('Select all', 'yourls-plugin-manager') . '</a>';
+    echo ' / <a href="#" class="ypm-deselect-all" data-form="ypm-my-plugins-form">' . yourls__('Deselect all', 'yourls-plugin-manager') . '</a>';
+    echo '</span>';
+    echo '<input type="submit" name="ypm_install_my_plugins" value="📦 ' . yourls_esc_attr(yourls__('Install selected', 'yourls-plugin-manager')) . '" class="button" />';
+    echo '</div>';
+    echo '</form>';
     echo '</div>';
 
     echo '<div class="plugin-footer">';

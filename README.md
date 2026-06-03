@@ -29,6 +29,7 @@ Just feed it a GitHub URL and it handles the rest 🧙‍♂️
 - 🔍 Filter plugins by All / Active / Inactive / Updatable / No metadata / Abandoned / Errors
 - 🧼 Can delete inactive plugins safely
 - 💬 Fully translatable (`.po/.mo` ready — Italian 🇮🇹 and Dutch 🇳🇱 included)
+- ✨ Quick-install recommended companion plugins directly from the admin page
 
 ---
 
@@ -58,6 +59,13 @@ To enable update checks and one-click updates for those plugins, reinstall or up
 Default YOURLS plugins do not require repository association, and the UI now reflects this explicitly.
 
 ---
+
+## 🆕 What’s New in 1.2.2
+
+- **Recommended plugins**: a new box at the bottom of the admin page lists Gioxx’s companion plugins (Logo Suite, URL Fallback, Change Notifier, Alternative Index) — install one, several, or all of them in a single click
+  - Already-installed entries are greyed out and non-selectable
+  - Select all / Deselect all only affects plugins not yet installed
+  - The *Install selected* button is disabled (with a `not-allowed` cursor) when nothing is selected
 
 ## 🆕 What’s New in 1.2.0
 

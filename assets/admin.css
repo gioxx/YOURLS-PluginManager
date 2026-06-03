@@ -715,3 +715,75 @@ body.ypm-modal-open { overflow:hidden; }
     gap:8px;
     margin-bottom:4px;
 }
+
+/* Recommended plugins box */
+.ypm-recommended-box {
+    margin:18px 0 10px;
+    padding:14px 16px;
+    border:1px solid var(--ypm-border);
+    border-left:4px solid var(--ypm-border-accent);
+    border-radius:8px;
+    background:var(--ypm-bg-soft);
+    color:var(--ypm-fg);
+}
+.ypm-recommended-header {
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:10px;
+}
+.ypm-recommended-icon { font-size:1.3em; line-height:1.2; flex-shrink:0; }
+.ypm-recommended-header > div { display:flex; flex-direction:column; gap:2px; }
+.ypm-recommended-header strong { font-size:.95em; }
+.ypm-recommended-subtitle {
+    font-size:.75em;
+    color:var(--ypm-fg-muted);
+    line-height:1.3;
+}
+.ypm-my-plugins-list {
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    margin:0 0 10px;
+}
+.ypm-my-plugin-row {
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    padding:6px 8px;
+    border-radius:6px;
+    background:var(--ypm-bg);
+    border:1px solid var(--ypm-border);
+}
+.ypm-my-plugin-label {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    font-size:.9em;
+}
+.ypm-my-plugin-label input[type="checkbox"] { margin:0; flex-shrink:0; }
+.ypm-my-plugin-desc { margin:0; padding-left:20px; }
+.ypm-my-plugin-row-installed {
+    opacity:.5;
+    pointer-events:none;
+}
+.ypm-my-plugins-actions {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+}
+.ypm-my-plugins-selectors { font-size:.8em; color:var(--ypm-fg-muted); }
+.ypm-my-plugins-selectors a { color:var(--ypm-link); text-decoration:none; }
+.ypm-my-plugins-selectors a:hover { text-decoration:underline; }
+.ypm-my-plugins-selectors-inactive {
+    opacity:.35;
+    pointer-events:none;
+}
+#ypm-my-plugins-form input[type="submit"]:disabled {
+    opacity:.4 !important;
+    cursor:not-allowed !important;
+    pointer-events:auto !important;
+}
