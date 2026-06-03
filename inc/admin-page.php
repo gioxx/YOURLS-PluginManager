@@ -826,9 +826,15 @@ function ypm_render_plugin_page() {
     echo '</div>';
 
     echo '<div class="plugin-footer">';
+    echo '<div class="plugin-footer-top">';
+    echo '<span>';
+    echo '<a href="https://yourls.gioxx.org/plugins/plugin-manager" target="_blank" rel="noopener noreferrer">🔌 ' . yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</a>';
+    echo ' &nbsp;·&nbsp; ';
     echo '<a href="https://github.com/gioxx/YOURLS-PluginManager" target="_blank" rel="noopener noreferrer">';
-    echo '<img src="https://github.githubassets.com/favicons/favicon.png" class="github-icon" alt="GitHub Icon" />';
-    echo yourls__('YOURLS Advanced Plugin Manager', 'yourls-plugin-manager') . '</a><br>';
+    echo '<img src="https://github.githubassets.com/favicons/favicon.png" class="github-icon" alt="GitHub" /> GitHub</a>';
+    echo '</span>';
+    echo '<a href="#" onclick="window.scrollTo({top:0,behavior:\'smooth\'});return false;">↑ ' . yourls__('Back to top', 'yourls-plugin-manager') . '</a>';
+    echo '</div>';
     echo '❤️ Lovingly developed by the usually-on-vacation brain cell of ';
     echo '<a href="https://github.com/gioxx" target="_blank" rel="noopener noreferrer">Gioxx</a> – ';
     echo '<a href="https://gioxx.org" target="_blank" rel="noopener noreferrer">Gioxx\'s Wall</a>';

@@ -696,7 +696,7 @@ body.ypm-modal-open { overflow:hidden; }
     font-size:0.9em;
     color:#666;
     opacity:0.85;
-    text-align:center;
+    text-align:left;
 }
 .plugin-footer a { color:#0073aa; text-decoration:none; }
 .plugin-footer a:hover { text-decoration:underline; }
@@ -706,4 +706,12 @@ body.ypm-modal-open { overflow:hidden; }
     height:16px;
     margin-right:4px;
     display:inline-block;
+}
+.plugin-footer-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:4px;
 }
