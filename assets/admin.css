@@ -344,12 +344,15 @@ button.button { padding:8px 14px; font-size:13px; cursor:pointer; }
 .ypm-token-input-row .ypm-token-input { margin-top:0; max-width:none; flex:1 1 auto; min-width:0; }
 .ypm-token-input-row .ypm-token-toggle {
     flex:0 0 auto;
-    min-width:34px;
-    height:30px;
-    padding:0 10px;
+    width:34px;
+    height:34px;
+    padding:0;
     display:inline-flex;
     align-items:center;
     justify-content:center;
+    font-size:16px;
+    line-height:1;
+    box-sizing:border-box;
 }
 .ypm-button-gap-right { margin-right:10px; }
 
@@ -481,9 +484,9 @@ table.widefat tbody tr:nth-child(odd) { background-color:var(--ypm-bg-row-odd); 
 table.widefat tbody tr:nth-child(even) { background-color:var(--ypm-bg-row-even); }
 .ypm-filters { margin:0 0 10px; }
 .ypm-plugins-table { margin-top:10px; }
-.ypm-col-name { width:28%; text-align:left; }
-.ypm-col-updated { width:20%; text-align:left; }
-.ypm-col-actions { width:52%; text-align:left; }
+.ypm-col-name { width:40%; text-align:left; }
+.ypm-col-updated { width:35%; text-align:left; }
+.ypm-col-actions { width:25%; text-align:left; }
 .ypm-plugin-name-link,
 .ypm-plugin-author-link {
     color:var(--ypm-link);
@@ -521,17 +524,18 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
 .ypm-inline-form { margin:0; }
 .ypm-associate-input { width:100%; max-width:none; margin:0; }
 
-/* Legend above the table */
+/* Legend row inside thead */
+.ypm-legend-row th { padding-top:0 !important; padding-bottom:6px !important; border-top:none !important; }
 .ypm-actions-legend {
     display:flex;
     flex-wrap:wrap;
-    gap:6px 16px;
+    gap:4px 12px;
     font-size:11px;
     color:#667885;
-    margin-bottom:8px;
+    font-weight:400;
 }
-.ypm-actions-legend span { display:inline-flex; align-items:center; gap:4px; }
-.ypm-legend-icon { font-size:13px; line-height:1; }
+.ypm-actions-legend span { display:inline-flex; align-items:center; gap:3px; }
+.ypm-legend-icon { font-size:12px; line-height:1; }
 
 /* Action icon buttons in the table */
 .ypm-actions-cell { vertical-align:middle; }

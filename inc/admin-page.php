@@ -564,7 +564,7 @@ function ypm_render_plugin_page() {
         . '</small>';
     echo '<div class="ypm-token-input-row">';
     echo '<input type="password" name="ypm_github_token" id="ypm_github_token" class="ypm-token-input" value="' . yourls_esc_attr($stored_token) . '" ' . ($has_token && !$force_edit_token ? 'readonly' : '') . ' />';
-    echo '<input type="button" class="button ypm-token-toggle ypm-token-visibility-toggle" value="👀" aria-label="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" />';
+    echo '<button type="button" class="button ypm-token-toggle ypm-token-visibility-toggle" aria-label="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '">👀</button>';
     echo '</div>';
     echo '</div>';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_save_token') . '" />';
@@ -727,20 +727,24 @@ function ypm_render_plugin_page() {
     echo ' | ' . ypm_render_filter_link('errors', yourls__('Errors', 'yourls-plugin-manager'), $selected_filter, $filter_counts['errors']);
     echo '</div>';
 
-    echo '<div class="ypm-actions-legend">';
+    echo '<table class="widefat ypm-plugins-table">';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th class="ypm-col-name">' . yourls__('Plugin', 'yourls-plugin-manager') . '</th>';
+    echo '<th class="ypm-col-updated">' . yourls__('Last Updated', 'yourls-plugin-manager') . '</th>';
+    echo '<th class="ypm-col-actions">' . yourls__('Actions', 'yourls-plugin-manager') . '</th>';
+    echo '</tr>';
+    echo '<tr class="ypm-legend-row">';
+    echo '<th colspan="2"></th>';
+    echo '<th class="ypm-col-actions"><div class="ypm-actions-legend">';
     echo '<span><span class="ypm-legend-icon" aria-hidden="true">⏻</span>' . yourls__('Activate/Deactivate', 'yourls-plugin-manager') . '</span>';
     echo '<span><span class="ypm-legend-icon" aria-hidden="true">🔗</span>' . yourls__('Repository', 'yourls-plugin-manager') . '</span>';
     echo '<span><span class="ypm-legend-icon" aria-hidden="true">🔎</span>' . yourls__('Check for updates', 'yourls-plugin-manager') . '</span>';
     echo '<span><span class="ypm-legend-icon" aria-hidden="true">⬆️</span>' . yourls__('Update', 'yourls-plugin-manager') . '</span>';
     echo '<span><span class="ypm-legend-icon" aria-hidden="true">🗑️</span>' . yourls__('Delete', 'yourls-plugin-manager') . '</span>';
-    echo '</div>';
-
-    echo '<table class="widefat ypm-plugins-table">';
-    echo '<thead><tr>';
-    echo '<th class="ypm-col-name">' . yourls__('Plugin', 'yourls-plugin-manager') . '</th>';
-    echo '<th class="ypm-col-updated">' . yourls__('Last Updated', 'yourls-plugin-manager') . '</th>';
-    echo '<th class="ypm-col-actions">' . yourls__('Actions', 'yourls-plugin-manager') . '</th>';
-    echo '</tr></thead><tbody>';
+    echo '</div></th>';
+    echo '</tr>';
+    echo '</thead><tbody>';
 
     if (empty($plugins)) {
         echo '<tr><td colspan="3" class="ypm-empty-state">' . yourls__('No plugins match the selected filter.', 'yourls-plugin-manager') . '</td></tr>';
