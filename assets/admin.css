@@ -525,7 +525,7 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
 .ypm-associate-input { width:100%; max-width:none; margin:0; }
 
 /* Legend row inside thead */
-.ypm-legend-row th { padding-top:0 !important; padding-bottom:6px !important; border-top:none !important; }
+.ypm-legend-row th { padding-top:8px !important; padding-bottom:6px !important; border-top:none !important; }
 .ypm-actions-legend {
     display:flex;
     flex-wrap:wrap;
@@ -548,8 +548,8 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
 .ypm-actions-row > form { margin:0; flex:0 0 auto; display:flex; }
 .ypm-actions-row > button { flex:0 0 auto; }
 .ypm-icon-button {
-    width:30px !important;
-    height:30px !important;
+    width:36px !important;
+    height:36px !important;
     padding:0 !important;
     display:inline-flex !important;
     align-items:center !important;
