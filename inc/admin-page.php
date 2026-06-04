@@ -143,7 +143,7 @@ function ypm_render_plugin_page() {
                 if (!empty($r['success'])) {
                     $installed++;
                 } elseif ($item) {
-                    $failed_names[] = htmlentities($item['name']) . ': ' . htmlentities((string) ($r['message'] ?? ''));
+                    $failed_names[] = htmlentities($item['name']) . ': ' . htmlentities(strip_tags((string) ($r['message'] ?? '')));
                 }
             }
             $failed = count($failed_names);
