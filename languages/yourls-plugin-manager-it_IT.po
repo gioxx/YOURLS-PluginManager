@@ -491,3 +491,6 @@ msgstr "Questi plugin sono stati pensati per integrare YOURLS Advanced Plugin Ma
 
 msgid "Version: "
 msgstr "Versione: "
+
+msgid "Activate/Deactivate"
+msgstr "Attiva/Disattiva"

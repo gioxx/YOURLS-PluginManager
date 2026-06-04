@@ -727,6 +727,14 @@ function ypm_render_plugin_page() {
     echo ' | ' . ypm_render_filter_link('errors', yourls__('Errors', 'yourls-plugin-manager'), $selected_filter, $filter_counts['errors']);
     echo '</div>';
 
+    echo '<div class="ypm-actions-legend">';
+    echo '<span><span class="ypm-legend-icon" aria-hidden="true">⏻</span>' . yourls__('Activate/Deactivate', 'yourls-plugin-manager') . '</span>';
+    echo '<span><span class="ypm-legend-icon" aria-hidden="true">🔗</span>' . yourls__('Repository', 'yourls-plugin-manager') . '</span>';
+    echo '<span><span class="ypm-legend-icon" aria-hidden="true">🔎</span>' . yourls__('Check for updates', 'yourls-plugin-manager') . '</span>';
+    echo '<span><span class="ypm-legend-icon" aria-hidden="true">⬆️</span>' . yourls__('Update', 'yourls-plugin-manager') . '</span>';
+    echo '<span><span class="ypm-legend-icon" aria-hidden="true">🗑️</span>' . yourls__('Delete', 'yourls-plugin-manager') . '</span>';
+    echo '</div>';
+
     echo '<table class="widefat ypm-plugins-table">';
     echo '<thead><tr>';
     echo '<th class="ypm-col-name">' . yourls__('Plugin', 'yourls-plugin-manager') . '</th>';
@@ -811,12 +819,13 @@ function ypm_render_plugin_page() {
         $current_status = $update_status['status'] ?? '';
         $has_update = ($current_status === 'update_available');
 
-        // Row 1: Activate/Deactivate · Delete
+        // Single row, icon-only <button> elements: Toggle · Repo · Check · Update · Delete
         echo '<div class="ypm-actions-row">';
 
+        // Toggle
         $toggle_action = $is_active ? 'deactivate' : 'activate';
         $toggle_label = $is_active ? yourls__('Deactivate', 'yourls-plugin-manager') : yourls__('Activate', 'yourls-plugin-manager');
-        $toggle_icon = $is_active ? '⏻' : '▶';
+        $toggle_icon  = $is_active ? '⏻' : '▶';
         $toggle_class = $is_active ? 'ypm-toggle-deactivate' : 'ypm-toggle-activate';
         $is_self_toggle = (basename(dirname(__DIR__)) === $plugin['slug']) && $is_active;
         $confirm_attr = '';
@@ -828,51 +837,50 @@ function ypm_render_plugin_page() {
         echo '<input type="hidden" name="ypm_toggle_plugin" value="' . htmlentities($plugin['slug']) . '" />';
         echo '<input type="hidden" name="ypm_toggle_action" value="' . $toggle_action . '" />';
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_toggle_plugin') . '" />';
-        echo '<input type="submit" class="button ypm-toggle-button ' . $toggle_class . '"' . $confirm_attr . ' title="' . yourls_esc_attr($toggle_label) . '" value="' . yourls_esc_attr($toggle_icon . ' ' . $toggle_label) . '" />';
+        echo '<button type="submit" class="button ypm-icon-button ypm-toggle-button ' . $toggle_class . '"' . $confirm_attr . ' title="' . yourls_esc_attr($toggle_label) . '" aria-label="' . yourls_esc_attr($toggle_label) . '">' . $toggle_icon . '</button>';
         echo '</form>';
 
+        // Repository
+        if (!$is_default_plugin) {
+            $repo_url_attr = $repo_data ? ' data-repo-url="' . yourls_esc_attr((string) ($repo_data['url'] ?? '')) . '"' : '';
+            echo '<button type="button" class="button ypm-icon-button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '"' . $repo_url_attr . ' title="' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '">🔗</button>';
+        } else {
+            echo '<button type="button" class="button ypm-icon-button ypm-open-associate" disabled title="' . yourls_esc_attr(yourls__('Repository association not needed for default plugins.', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '">🔗</button>';
+        }
+
+        // Check
+        echo '<form method="post" class="ypm-inline-form">';
+        if ($is_default_plugin) {
+            echo '<button type="submit" class="button ypm-icon-button ypm-check-single-button" disabled title="' . yourls_esc_attr(yourls__('Default plugins do not require repository association.', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '">🔎</button>';
+        } else {
+            echo '<input type="hidden" name="ypm_check_single" value="' . htmlentities($plugin['slug']) . '" />';
+            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_single') . '" />';
+            echo '<button type="submit" class="button ypm-icon-button ypm-check-single-button" title="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Check for updates', 'yourls-plugin-manager')) . '">🔎</button>';
+        }
+        echo '</form>';
+
+        // Update
+        echo '<form method="post" class="ypm-inline-form">';
+        if ($has_update) {
+            echo '<input type="hidden" name="ypm_update_plugin" value="' . $plugin['slug'] . '" />';
+            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_plugin') . '" />';
+            echo '<button type="submit" class="button ypm-icon-button ypm-update-button ypm-update-available" title="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '">⬆️</button>';
+        } else {
+            echo '<button type="submit" class="button ypm-icon-button ypm-update-button" disabled title="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '">⬆️</button>';
+        }
+        echo '</form>';
+
+        // Delete
         echo '<form method="post" class="ypm-inline-form">';
         echo '<input type="hidden" name="ypm_delete_plugin" value="' . $plugin['slug'] . '" />';
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_delete_plugin') . '" />';
         $is_self_plugin = (basename(dirname(__DIR__)) === $plugin['slug']);
         if ($is_self_plugin) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑️ ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<button type="submit" class="button ypm-icon-button ypm-delete-icon-button" disabled title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '">🗑️</button>';
         } elseif ($is_active) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑️ ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<button type="submit" class="button ypm-icon-button ypm-delete-icon-button" disabled title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '">🗑️</button>';
         } else {
-            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" value="🗑️ ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
-        }
-        echo '</form>';
-
-        echo '</div>';
-
-        // Row 2: Repository · Check · Update
-        echo '<div class="ypm-actions-row ypm-actions-row-secondary">';
-
-        if (!$is_default_plugin) {
-            $repo_url_attr = $repo_data ? ' data-repo-url="' . yourls_esc_attr((string) ($repo_data['url'] ?? '')) . '"' : '';
-            echo '<input type="button" class="button ypm-open-associate" data-plugin-slug="' . htmlentities($plugin['slug']) . '" data-plugin-name="' . htmlentities($plugin['name']) . '"' . $repo_url_attr . ' value="🔗 ' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '" />';
-        } else {
-            echo '<input type="button" class="button ypm-open-associate" disabled title="' . yourls_esc_attr(yourls__('Repository association not needed for default plugins.', 'yourls-plugin-manager')) . '" value="🔗 ' . yourls_esc_attr(yourls__('Repository', 'yourls-plugin-manager')) . '" />';
-        }
-
-        echo '<form method="post" class="ypm-inline-form">';
-        if ($is_default_plugin) {
-            echo '<input type="submit" class="button ypm-check-single-button" disabled title="' . yourls_esc_attr(yourls__('Default plugins do not require repository association.', 'yourls-plugin-manager')) . '" value="🔎 ' . yourls_esc_attr(yourls__('Check', 'yourls-plugin-manager')) . '" />';
-        } else {
-            echo '<input type="hidden" name="ypm_check_single" value="' . htmlentities($plugin['slug']) . '" />';
-            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_check_single') . '" />';
-            echo '<input type="submit" class="button ypm-check-single-button" value="🔎 ' . yourls_esc_attr(yourls__('Check', 'yourls-plugin-manager')) . '" />';
-        }
-        echo '</form>';
-
-        echo '<form method="post" class="ypm-inline-form">';
-        if ($has_update) {
-            echo '<input type="hidden" name="ypm_update_plugin" value="' . $plugin['slug'] . '" />';
-            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_plugin') . '" />';
-            echo '<input type="submit" class="button ypm-update-button ypm-update-available" value="⬆️ ' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" />';
-        } else {
-            echo '<input type="submit" class="button ypm-update-button" disabled value="⬆️ ' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" />';
+            echo '<button type="submit" class="button ypm-icon-button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '">🗑️</button>';
         }
         echo '</form>';
 

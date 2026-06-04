@@ -629,3 +629,6 @@ msgstr ""
 
 msgid "Version: "
 msgstr ""
+
+msgid "Activate/Deactivate"
+msgstr ""
