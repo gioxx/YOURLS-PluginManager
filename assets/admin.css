@@ -519,12 +519,10 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
 .ypm-check-error { color:var(--ypm-error-fg); font-size:11px; }
 
 .ypm-inline-form { margin:0; }
-.ypm-inline-form-spaced { margin:0 0 6px; }
 .ypm-associate-input { width:100%; max-width:none; margin:0; }
 
 /* Action buttons in the table — standard style matching all other plugin buttons */
 .ypm-actions-cell { vertical-align:top; }
-.ypm-update-form { margin-bottom:4px; }
 .ypm-actions-row {
     display:flex;
     align-items:stretch;
@@ -567,10 +565,23 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
     box-shadow:none !important;
     cursor:not-allowed;
 }
+.ypm-actions-row-secondary { margin-top:4px; }
 .ypm-toggle-button,
 .ypm-open-associate,
 .ypm-check-single-button,
+.ypm-update-button,
 .ypm-delete-icon-button { white-space:nowrap; }
+.ypm-actions-cell .ypm-update-available {
+    border-color:#0073aa !important;
+    color:#0073aa !important;
+    font-weight:600 !important;
+}
+.ypm-actions-cell .ypm-update-available:hover:not(:disabled),
+.ypm-actions-cell .ypm-update-available:focus:not(:disabled) {
+    background:#e6f4ff !important;
+    border-color:#005177 !important;
+    color:#005177 !important;
+}
 
 /* Notes / info box — matches LogoSuite info-box style */
 .ypm-table-infobox {
