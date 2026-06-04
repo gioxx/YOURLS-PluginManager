@@ -119,10 +119,10 @@ function ypm_render_plugin_page() {
     }
 
     if (isset($_POST['ypm_install_my_plugins']) && yourls_verify_nonce('ypm_install_my_plugins')) {
-        $catalog    = ypm_get_my_plugins_catalog();
-        $valid_urls = array_column($catalog, 'repo_url');
-        $selected   = array_filter((array) ($_POST['ypm_my_plugins_selected'] ?? []), function ($url) use ($valid_urls) {
-            return in_array((string) $url, $valid_urls, true);
+        $catalog        = ypm_get_my_plugins_catalog();
+        $catalog_by_url = array_column($catalog, null, 'repo_url');
+        $selected       = array_filter((array) ($_POST['ypm_my_plugins_selected'] ?? []), function ($url) use ($catalog_by_url) {
+            return isset($catalog_by_url[(string) $url]);
         });
 
         if (empty($selected)) {
@@ -132,18 +132,17 @@ function ypm_render_plugin_page() {
             $installed    = 0;
             $failed_names = [];
             foreach ($selected as $repo_url) {
-                $item = null;
-                foreach ($catalog as $c) {
-                    if ($c['repo_url'] === (string) $repo_url) {
-                        $item = $c;
-                        break;
-                    }
-                }
-                $r = ypm_process_github_url((string) $repo_url);
+                $item = $catalog_by_url[(string) $repo_url] ?? null;
+                $r    = ypm_process_github_url((string) $repo_url);
                 if (!empty($r['success'])) {
                     $installed++;
                 } elseif ($item) {
-                    $failed_names[] = '<li><strong>' . htmlentities($item['name']) . '</strong>' . ((string) ($r['message'] ?? '') !== '' ? ': ' . (string) $r['message'] : '') . '</li>';
+                    $msg = (string) ($r['message'] ?? '');
+                    // $msg is already safe HTML: all ypm_process_github_url paths apply
+                    // htmlentities() to any external/API-supplied content before building
+                    // the message string, so it is safe to echo verbatim inside the notice.
+                    $failed_names[] = '<li><strong>' . htmlentities($item['name']) . '</strong>'
+                        . ($msg !== '' ? ': ' . $msg : '') . '</li>';
                 }
             }
             $failed = count($failed_names);
@@ -863,16 +862,24 @@ function ypm_render_plugin_page() {
         }
         echo '</form>';
 
-        // Update
-        echo '<form method="post" class="ypm-inline-form">';
+        // Update / Reinstall from source
+        $is_source_only = ($current_status === 'source_only');
         if ($has_update) {
-            echo '<input type="hidden" name="ypm_update_plugin" value="' . $plugin['slug'] . '" />';
+            echo '<form method="post" class="ypm-inline-form">';
+            echo '<input type="hidden" name="ypm_update_plugin" value="' . htmlentities($plugin['slug']) . '" />';
             echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_update_plugin') . '" />';
             echo '<button type="submit" class="button ypm-icon-button ypm-update-button ypm-update-available" title="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '">⬆️</button>';
+            echo '</form>';
+        } elseif ($is_source_only) {
+            echo '<form method="post" class="ypm-inline-form">';
+            echo '<input type="hidden" name="ypm_reinstall_source" value="' . htmlentities($plugin['slug']) . '" />';
+            echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_reinstall_source') . '" />';
+            echo '<button type="submit" class="button ypm-icon-button ypm-update-button ypm-reinstall-available" title="' . yourls_esc_attr(yourls__('Reinstall from source', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Reinstall from source', 'yourls-plugin-manager')) . '">⬆️</button>';
+            echo '</form>';
         } else {
-            echo '<button type="submit" class="button ypm-icon-button ypm-update-button" disabled title="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '">⬆️</button>';
+            // No form wrapper: disabled button cannot submit and has nothing to submit.
+            echo '<button type="button" class="button ypm-icon-button ypm-update-button" disabled title="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '" aria-label="' . yourls_esc_attr(yourls__('Update', 'yourls-plugin-manager')) . '">⬆️</button>';
         }
-        echo '</form>';
 
         // Delete
         echo '<form method="post" class="ypm-inline-form">';

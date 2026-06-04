@@ -494,3 +494,6 @@ msgstr "Versione: "
 
 msgid "Activate/Deactivate"
 msgstr "Attiva/Disattiva"
+
+msgid "Reinstall from source"
+msgstr "Reinstalla da sorgente"

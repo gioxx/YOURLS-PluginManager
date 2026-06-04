@@ -632,3 +632,6 @@ msgstr ""
 
 msgid "Activate/Deactivate"
 msgstr ""
+
+msgid "Reinstall from source"
+msgstr ""

@@ -590,6 +590,16 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
     background:#e6f4ff !important;
     border-color:#005177 !important;
 }
+.ypm-reinstall-available.ypm-icon-button {
+    border-color:#b26b00 !important;
+    color:#b26b00 !important;
+}
+.ypm-reinstall-available.ypm-icon-button:hover:not(:disabled),
+.ypm-reinstall-available.ypm-icon-button:focus:not(:disabled) {
+    background:#fff8e6 !important;
+    border-color:#8a5200 !important;
+    color:#8a5200 !important;
+}
 
 /* Notes / info box — matches LogoSuite info-box style */
 .ypm-table-infobox {
