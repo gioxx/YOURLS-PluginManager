@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: YOURLS Advanced Plugin Manager\n"
-"POT-Creation-Date: 2026-05-28\n"
+"POT-Creation-Date: 2026-06-04\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -311,17 +311,11 @@ msgstr ""
 msgid "Not run yet"
 msgstr ""
 
-#: inc/admin-page.php:249
-msgid "No file was uploaded."
-msgstr ""
-
-#: inc/installer.php:249 inc/installer.php:477
+#: inc/admin-page.php:249 inc/installer.php:249 inc/installer.php:477
 msgid "No file was uploaded."
 msgstr ""
 
 #: inc/admin-page.php:228
-msgid "Plugin deleted successfully."
-msgstr ""
 
 #: inc/admin-page.php:426
 msgid "Plugin install"
@@ -365,10 +359,6 @@ msgstr ""
 
 #: inc/admin-page.php:116
 msgid "Plugin deactivated successfully."
-msgstr ""
-
-#: inc/admin-page.php:118
-msgid "Failed to deactivate plugin."
 msgstr ""
 
 #: inc/admin-page.php:121
@@ -593,4 +583,49 @@ msgstr ""
 
 #: inc/admin-page.php:622
 msgid "Unknown Version"
+msgstr ""
+
+msgid "%d installed, %d failed:"
+msgstr ""
+
+msgid "%d plugin(s) installed successfully."
+msgstr ""
+
+msgid "Back to top"
+msgstr ""
+
+msgid "Deselect all"
+msgstr ""
+
+msgid "Install selected"
+msgstr ""
+
+msgid "Installed"
+msgstr ""
+
+msgid "No plugins selected."
+msgstr ""
+
+msgid "Recommended plugins"
+msgstr ""
+
+msgid "Select all"
+msgstr ""
+
+msgid "Save Token"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "These plugins are designed to complement YOURLS Advanced Plugin Manager."
+msgstr ""
+
+msgid "This plugin is active and cannot be deleted."
+msgstr ""
+
+msgid "To generate a token, visit your GitHub account settings:"
+msgstr ""
+
+msgid "Version: "
 msgstr ""

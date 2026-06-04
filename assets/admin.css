@@ -532,7 +532,7 @@ body.ypm-sleeky-dark .ypm-status-dot-inactive { background:#5a5a5a; }
     flex-wrap:wrap;
 }
 .ypm-actions-row > form,
-.ypm-actions-row > input[type="button"] { flex:1 1 0; min-width:0; }
+.ypm-actions-row > input[type="button"] { flex:1 1 0; min-width:fit-content; }
 .ypm-actions-row > form .button { width:100%; }
 .ypm-actions-cell .button {
     text-align:center;

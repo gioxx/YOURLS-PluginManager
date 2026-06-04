@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YOURLS Advanced Plugin Manager\n"
 "POT-Creation-Date: 2025-05-26 16:15+0200\n"
-"PO-Revision-Date: 2026-05-28 00:00+0200\n"
+"PO-Revision-Date: 2026-06-04 00:00+0200\n"
 "Last-Translator: Giovanni Solone <giovanni@solone.it>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -103,9 +103,6 @@ msgstr "Estrazione fallita: impossibile estrarre l'archivio ZIP."
 
 msgid "Extraction failed: unable to open ZIP archive."
 msgstr "Estrazione fallita: impossibile aprire l'archivio ZIP."
-
-msgid "Failed to delete plugin."
-msgstr "Impossibile eliminare il plugin."
 
 msgid "Failed to move extracted plugin directory."
 msgstr "Impossibile spostare la directory del plugin estratto."
@@ -461,3 +458,36 @@ msgstr "Un'estensione PHP ha interrotto il caricamento."
 
 msgid "Unknown upload error."
 msgstr "Errore di caricamento sconosciuto."
+
+msgid "%d installed, %d failed:"
+msgstr "%d installati, %d falliti:"
+
+msgid "%d plugin(s) installed successfully."
+msgstr "%d plugin installati correttamente."
+
+msgid "Back to top"
+msgstr "Torna all'inizio"
+
+msgid "Deselect all"
+msgstr "Deseleziona tutti"
+
+msgid "Install selected"
+msgstr "Installa selezionati"
+
+msgid "Installed"
+msgstr "Installato"
+
+msgid "No plugins selected."
+msgstr "Nessun plugin selezionato."
+
+msgid "Recommended plugins"
+msgstr "Plugin consigliati"
+
+msgid "Select all"
+msgstr "Seleziona tutti"
+
+msgid "These plugins are designed to complement YOURLS Advanced Plugin Manager."
+msgstr "Questi plugin sono stati pensati per integrare YOURLS Advanced Plugin Manager."
+
+msgid "Version: "
+msgstr "Versione: "

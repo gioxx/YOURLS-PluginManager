@@ -564,12 +564,12 @@ function ypm_render_plugin_page() {
         . '</small>';
     echo '<div class="ypm-token-input-row">';
     echo '<input type="password" name="ypm_github_token" id="ypm_github_token" class="ypm-token-input" value="' . yourls_esc_attr($stored_token) . '" ' . ($has_token && !$force_edit_token ? 'readonly' : '') . ' />';
-    echo '<input type="button" class="button ypm-token-toggle ypm-token-visibility-toggle" value="👁" aria-label="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" />';
+    echo '<input type="button" class="button ypm-token-toggle ypm-token-visibility-toggle" value="👁️" aria-label="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" title="' . yourls_esc_attr(yourls__('Show / hide token', 'yourls-plugin-manager')) . '" />';
     echo '</div>';
     echo '</div>';
     echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_save_token') . '" />';
     if ($has_token) {
-        echo '<input type="submit" name="ypm_delete_token" value="🗑 ' . yourls__('Delete Token', 'yourls-plugin-manager') . '" class="button ypm-button-gap-right" />';
+        echo '<input type="submit" name="ypm_delete_token" value="🗑️ ' . yourls__('Delete Token', 'yourls-plugin-manager') . '" class="button ypm-button-gap-right" />';
         echo '<input type="submit" name="ypm_edit_token" value="✏️ ' . yourls__('Edit Token', 'yourls-plugin-manager') . '" class="button" />';
     } else {
         echo '<input type="submit" name="ypm_save_token_submit" value="💾 ' . yourls__('Save Token', 'yourls-plugin-manager') . '" class="button button-primary" />';
@@ -861,11 +861,11 @@ function ypm_render_plugin_page() {
         echo '<input type="hidden" name="nonce" value="' . yourls_create_nonce('ypm_delete_plugin') . '" />';
         $is_self_plugin = (basename(dirname(__DIR__)) === $plugin['slug']);
         if ($is_self_plugin) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('You cannot delete the Plugin Manager itself from its own UI.', 'yourls-plugin-manager')) . '" disabled value="🗑️ ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         } elseif ($is_active) {
-            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-delete-icon-button" title="' . yourls_esc_attr(yourls__('This plugin is active and cannot be deleted.', 'yourls-plugin-manager')) . '" disabled value="🗑️ ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         } else {
-            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" value="🗑 ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
+            echo '<input type="submit" class="button ypm-delete-confirm ypm-delete-icon-button" data-confirm-message="' . yourls_esc_attr(yourls__('Are you sure you want to delete this plugin?', 'yourls-plugin-manager')) . '" value="🗑️ ' . yourls_esc_attr(yourls__('Delete', 'yourls-plugin-manager')) . '" />';
         }
         echo '</form>';
         echo '</div>';
