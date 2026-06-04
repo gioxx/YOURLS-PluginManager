@@ -143,7 +143,7 @@ function ypm_render_plugin_page() {
                 if (!empty($r['success'])) {
                     $installed++;
                 } elseif ($item) {
-                    $failed_names[] = htmlentities($item['name']) . ': ' . htmlentities(strip_tags((string) ($r['message'] ?? '')));
+                    $failed_names[] = '<li><strong>' . htmlentities($item['name']) . '</strong>' . ((string) ($r['message'] ?? '') !== '' ? ': ' . (string) $r['message'] : '') . '</li>';
                 }
             }
             $failed = count($failed_names);
@@ -159,7 +159,7 @@ function ypm_render_plugin_page() {
                         yourls__('%d installed, %d failed:', 'yourls-plugin-manager'),
                         $installed,
                         $failed
-                    ) . ' ' . implode('; ', $failed_names),
+                    ) . '<ul>' . implode('', $failed_names) . '</ul>',
                 ];
             }
             $message = $result['message'];
