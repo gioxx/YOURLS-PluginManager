@@ -219,11 +219,12 @@ function ypm_build_manual_install_message($zip_url, $plugins_dir, $latest = []) 
     }
 
     return sprintf(
-        '<p>%s%s</p><p><a class="button button-primary" href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
+        '<p>%s%s</p><p><a class="button button-primary" href="%s" target="_blank" rel="noopener noreferrer">%s</a></p><p><small><a href="https://yourls.gioxx.org/plugins/plugin-manager#manual-install" target="_blank" rel="noopener noreferrer">%s</a></small></p>',
         $intro,
         $meta,
         htmlentities($zip_url),
-        htmlentities(yourls__('Download ZIP package', 'yourls-plugin-manager'))
+        htmlentities(yourls__('Download ZIP package', 'yourls-plugin-manager')),
+        htmlentities(yourls__('SSH / FTP manual installation guide', 'yourls-plugin-manager'))
     );
 }
 

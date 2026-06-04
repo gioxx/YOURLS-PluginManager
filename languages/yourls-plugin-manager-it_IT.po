@@ -497,3 +497,6 @@ msgstr "Attiva/Disattiva"
 
 msgid "Reinstall from source"
 msgstr "Reinstalla da sorgente"
+
+msgid "SSH / FTP manual installation guide"
+msgstr "Guida all'installazione manuale via SSH / FTP"
