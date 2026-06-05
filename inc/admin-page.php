@@ -54,6 +54,24 @@ function ypm_build_manual_delete_message($path) {
 function ypm_get_my_plugins_catalog() {
     return [
         [
+            'name'        => 'YOURLS Alternative Index',
+            'description' => 'Turn the YOURLS root into a Linktree-style profile page.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-AlternativeIndex',
+            'slug'        => 'YOURLS-AlternativeIndex',
+        ],
+        [
+            'name'        => 'YOURLS Change Notifier',
+            'description' => 'Instant email notifications for every change to your short URLs.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-ChangeNotifier',
+            'slug'        => 'YOURLS-ChangeNotifier',
+        ],
+        [
+            'name'        => 'YOURLS Language Switcher',
+            'description' => 'Switch the YOURLS admin panel language on the fly without editing config files.',
+            'repo_url'    => 'https://github.com/gioxx/YOURLS-LanguageSwitcher',
+            'slug'        => 'YOURLS-LanguageSwitcher',
+        ],
+        [
             'name'        => 'YOURLS Logo Suite',
             'description' => 'Customize the YOURLS admin panel with your own logo and title.',
             'repo_url'    => 'https://github.com/gioxx/YOURLS-LogoSuite',
@@ -64,18 +82,6 @@ function ypm_get_my_plugins_catalog() {
             'description' => 'Redirect visitors to a fallback URL when a short URL does not exist.',
             'repo_url'    => 'https://github.com/gioxx/YOURLS-URLFallback',
             'slug'        => 'YOURLS-URLFallback',
-        ],
-        [
-            'name'        => 'YOURLS Change Notifier',
-            'description' => 'Instant email notifications for every change to your short URLs.',
-            'repo_url'    => 'https://github.com/gioxx/YOURLS-ChangeNotifier',
-            'slug'        => 'YOURLS-ChangeNotifier',
-        ],
-        [
-            'name'        => 'YOURLS Alternative Index',
-            'description' => 'Turn the YOURLS root into a Linktree-style profile page.',
-            'repo_url'    => 'https://github.com/gioxx/YOURLS-AlternativeIndex',
-            'slug'        => 'YOURLS-AlternativeIndex',
         ],
     ];
 }
