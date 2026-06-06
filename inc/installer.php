@@ -1,6 +1,6 @@
 <?php
 
-function ypm_process_github_url($url, $branch = '', $version = '') {
+function ypm_process_github_url($url, $branch = '', $version = '', $existing_slug = '') {
     if (!class_exists('ZipArchive')) {
         return [
             'success' => false,
@@ -61,8 +61,10 @@ function ypm_process_github_url($url, $branch = '', $version = '') {
         ];
     }
 
+    $slug = ($existing_slug !== '') ? basename((string) $existing_slug) : $repo;
+
     $active_plugins = (array) yourls_get_option('active_plugins');
-    $plugin_basename = $repo . '/plugin.php';
+    $plugin_basename = $slug . '/plugin.php';
     $was_active = in_array($plugin_basename, $active_plugins, true);
     $is_deactivated = false;
 
@@ -92,7 +94,7 @@ function ypm_process_github_url($url, $branch = '', $version = '') {
 
     $wildcard = $plugins_dir . '/' . $owner . '-' . $repo . '-*';
     $found = glob($wildcard);
-    $target_dir = $plugins_dir . '/' . $repo;
+    $target_dir = $plugins_dir . '/' . $slug;
     $extracted = null;
     $target_replaced = false;
 
@@ -176,15 +178,26 @@ function ypm_process_github_url($url, $branch = '', $version = '') {
         ];
     }
 
-    yourls_update_option('ypm_last_updated_' . $repo, time());
-    ypm_set_repo_binding($repo, $owner, $repo);
-    ypm_set_update_status($repo, [
+    yourls_update_option('ypm_last_updated_' . $slug, time());
+    ypm_set_repo_binding($slug, $owner, $repo);
+    ypm_set_update_status($slug, [
         'status' => 'up_to_date',
         'remote_version' => (string) $latest['version'],
         'checked_at' => time(),
         'source' => $latest['source'],
         'message' => '',
     ]);
+
+    // When the existing slug differs from the GitHub repo name (e.g. the plugin
+    // was originally installed with a lowercase directory name), a stale directory
+    // named after the repo may have been left behind by a previous failed update.
+    // Remove it so YOURLS does not pick it up as a separate plugin.
+    if ($slug !== $repo) {
+        $stale_dir = $plugins_dir . '/' . $repo;
+        if (is_dir($stale_dir) && realpath($stale_dir) !== realpath($target_dir)) {
+            ypm_delete_dir($stale_dir);
+        }
+    }
 
     $restore_plugin();
 

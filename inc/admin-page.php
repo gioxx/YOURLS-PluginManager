@@ -236,7 +236,9 @@ function ypm_render_plugin_page() {
                     $branch_name = explode('@', (string) $branch_info['version'])[0];
                     $result = ypm_process_github_url(
                         'https://github.com/' . $repo_data['owner'] . '/' . $repo_data['repo'],
-                        $branch_name
+                        $branch_name,
+                        '',
+                        $slug
                     );
                 }
             }
@@ -334,7 +336,7 @@ function ypm_render_plugin_page() {
             if (!$repo_data) {
                 $result = ['success' => false, 'message' => yourls__('No GitHub repository metadata available for this plugin.', 'yourls-plugin-manager')];
             } else {
-                $result = ypm_process_github_url('https://github.com/' . $repo_data['owner'] . '/' . $repo_data['repo']);
+                $result = ypm_process_github_url('https://github.com/' . $repo_data['owner'] . '/' . $repo_data['repo'], '', '', $slug);
             }
         }
         $message = $result['message'];
@@ -362,7 +364,7 @@ function ypm_render_plugin_page() {
                     $failed++;
                     continue;
                 }
-                $bulk_result = ypm_process_github_url('https://github.com/' . $repo_data['owner'] . '/' . $repo_data['repo']);
+                $bulk_result = ypm_process_github_url('https://github.com/' . $repo_data['owner'] . '/' . $repo_data['repo'], '', '', $slug);
                 if (!empty($bulk_result['success'])) {
                     $updated++;
                 } else {
