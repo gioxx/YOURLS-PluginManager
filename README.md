@@ -4,6 +4,7 @@
 
 [![Latest Release](https://img.shields.io/github/v/release/gioxx/YOURLS-PluginManager)](https://github.com/gioxx/YOURLS-PluginManager/releases)
 [![License](https://img.shields.io/github/license/gioxx/YOURLS-PluginManager)](LICENSE)
+[![Listed in Awesome YOURLS!](https://img.shields.io/badge/Awesome-YOURLS-C5A3BE)](https://github.com/YOURLS/awesome)
 
 **Install, update and manage YOURLS plugins directly from the admin interface.**  
 Just feed it a GitHub URL and it handles the rest 🧙‍♂️
